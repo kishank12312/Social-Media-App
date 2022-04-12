@@ -29,12 +29,16 @@ class Posts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     Title = models.CharField(max_length=150)
     Body = models.CharField(max_length=150)
+    PostedOn = models.DateTimeField(auto_now_add=True, null=True)
+    HasComment = models.BooleanField(null=True)
+    LikeCount = models.IntegerField(null=True)
     page = models.ForeignKey(Pages, null=True, on_delete=models.CASCADE)
 
 class Comments(models.Model):
     CommentID = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Posts, on_delete=models.CASCADE)
+    CommentedOn = models.DateTimeField(auto_now_add=True, null=True)
     Body = models.CharField(max_length=300)
 
 class Friends(models.Model):
