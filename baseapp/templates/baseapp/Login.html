@@ -1,16 +1,42 @@
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="../../../static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="post"> 
-        {%csrf_token%}
-        <input type="text" name="username" placeholder="username">
-        <input type="password" name="password" placeholder="password">
-        <input type="submit" name="Login">
-    </form>
+    <div class="navbar">
+        <p class="navbar--text">Signup</p>
+        <i class="material-icons">arrow_forward</i>
+    </div>
+
+    <div class="login--card">
+        <div class="login--header">
+            <p class="login--big--text">Here you can Login</p>
+            <p class="login--small--text">Let's join us :)</p>
+        </div>
+
+        <div class="login--form">
+            <form action="" class="form--items">
+                <label for="email">Email</label>
+                <br/>
+                <input type="text" id="email" name="email" class="form--email"/>
+                <br/>
+                <label for="password">Password</label>
+                <br/>
+                <input type="password" id="password" name="password" class="form--password"/>
+                <br/>
+                <input type="submit" placeholder="Login" class="form--login"/>
+            </form>
+            <a href="#">Forgot password?</a> 
+        </div>
+    </div>
 </body>
 </html>

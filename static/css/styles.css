@@ -1,0 +1,91 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: #0B2434;
+    padding: 20px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: aqua;
+}
+
+.material-icons{
+    color: aqua;
+}
+
+.login--card{
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+    color: azure;
+    border: solid;
+    border-width: 1px;
+    border-color: azure;
+    border-radius: 5px;
+    margin-top: 70px;
+}
+
+.login--header{
+    margin-top: 10px;
+    margin-right: 250px;
+    margin-left: 250px;
+}
+
+.login--big--text{
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 0px;
+}
+
+.login--small--text{
+    margin-top: 7px;
+}
+
+.login--items{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.login--form{
+    margin-right: 250px;
+    margin-left: 250px;
+    margin-bottom: 30px;
+    font-size: large;
+}
+
+.form--email{
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    height: 40px;
+    background-color: cadetblue;
+    width: 300px;
+}
+
+.form--password{
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    width: 300px;
+    height: 40px;
+    background-color: cadetblue;
+}
+
+.form--login{
+    width: 300px;
+    height: 40px;
+    margin-top: 25px;
+    border-radius: 5px;
+    background-color: chocolate
+}
+
