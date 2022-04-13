@@ -82,7 +82,7 @@ def feed(request):
     return render(request, 'baseapp/Feed.html',context)
 
 def posts(request,postID):
-    context = []
+    context = {}
     post = Posts.objects.get(PostID=postID)
     postedUserDetail = UserDetails.objects.get(user=post.user)
 
@@ -103,5 +103,10 @@ def posts(request,postID):
                 Likers = [likeobjecct.user] + Likers
             else:
                 Likers.append(likeobjecct.user)
-        commentWithLikes.append((comment,Likers))
+        commentWithLikes.append((comment,Likers,len(Likers)))
+
+    context['this_post']= post
+    context['comment_info'] = commentWithLikes
+
+    return render(request,'baseapp/Post.html',context)
     
