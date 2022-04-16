@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="../../../static/css/feed--styles.css">
+    <link rel="stylesheet" href="{% static 'css/feed--styles.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
@@ -14,17 +14,14 @@
 </head>
 
 <body>
-    <!-- {% if request.user.is_authenticated %}
-        {{request.user.username}}
-    {% endif %} -->
 
     <div class="navbar">
         <p class="navbar--appname">Uni Network</p>
         <div class="navbar--icons">
-            <i class="material-icons">create</i>
-            <i class="material-icons">pages</i>
-            <i class="material-icons">people</i>
-            <i class="material-icons">person</i>
+            <a href=""><i class="material-icons">create</i></a>
+            <a href=""><i class="material-icons">pages</i></a>
+            <a href=""><i class="material-icons">people</i></a>
+            <a href=""><i class="material-icons">person</i></a>
         </div>
 
     </div>

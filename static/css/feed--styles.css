@@ -10,6 +10,7 @@ body {
 }
 
 .navbar{
+    z-index: 10;
     display: flex;
     align-items: center;
     width: 100%;
@@ -45,6 +46,7 @@ body {
 }
 
 .main--page{
+    z-index: -10;
     display: flex;
     overflow: hidden;
     height: 100vh;
