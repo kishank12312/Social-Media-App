@@ -9,6 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import CreateUserForm
 from .models import *
 from .functions import *
+from django.db.models import Q
+ 
 
 cursor = connection.cursor()
 
@@ -99,14 +101,14 @@ def feed(request):
 def posts(request,postID):
     context = {}
     post = Posts.objects.get(PostID=postID)
-    postedUserDetail = UserDetails.objects.get(user=post.user)
+    #postedUserDetail = UserDetails.objects.get(user=post.user)
 
     #CHECKING PRIVACY
-    if postedUserDetail.Private:
-        if (not request.user.is_authenticated):
-            return redirect(reverse('login'))
-        elif (not checkFriends(post.user, request.user)):
-            return redirect(reverse('feed'))
+    # if postedUserDetail.Private:
+    #     if (not request.user.is_authenticated):
+    #         return redirect(reverse('login'))
+    #     elif (not checkFriends(post.user, request.user)):
+    #         return redirect(reverse('feed'))
     
 
     comments = Comments.objects.filter(post=post)
@@ -122,7 +124,7 @@ def posts(request,postID):
 
     context['this_post']= post
     context['comment_info'] = commentWithLikes
-
+    print(context)
     return render(request,'baseapp/Post.html',context)
     
 
@@ -138,3 +140,35 @@ def abcd(request):
     p.save()
 
     return HttpResponse("added")
+
+def friends(request):
+    context = {}
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
+    
+    userFriends = findfriends(request.user)
+    context['myFriends'] = userFriends
+ 
+    requestingUsers = friendRequests(request.user)
+    context['friendRequests'] = requestingUsers
+    megaOthers = userFriends + requestingUsers
+    megaOthers.append(request.user)
+        
+    allOthers = [user for user in (User.objects.filter(~Q(id__in=[o.id for o in megaOthers])))]
+    
+    requestedFellas = usersRequested(request.user)
+    unrequisitedFellas = [el for el in allOthers if el not in requestedFellas]
+    
+    context['unknownPeople'] = unrequisitedFellas
+    context['mySentPendingReqs'] = requestedFellas
+
+    if request.method == 'GET':
+        if request.GET.get('tag') == 'sendrequest':
+            uname = request.GET.get('userid')
+            print(uname,request)
+            usermodel = User.objects.get(username=uname)
+            frnd = Friends(Requester = request.user, Requested = usermodel, Confirmed = False)
+            frnd.save()
+
+ 
+    return render(request,'baseapp/Friends.html',context)

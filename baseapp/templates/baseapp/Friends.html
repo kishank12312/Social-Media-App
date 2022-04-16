@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="{% static 'css/feed--styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/post--styles.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
-    <title>Document</title>
+    <title>Post</title>
 </head>
 
 <body>
@@ -18,20 +19,20 @@
     <div class="navbar">
         <p class="navbar--appname">Uni Network</p>
         <div class="navbar--icons">
-            <a href=""><i class="material-icons">create</i></a>
-            <a href=""><i class="material-icons">pages</i></a>
-            <a href="/friends"><i class="material-icons">people</i></a>
-            <a href=""><i class="material-icons">person</i></a>
+            <a class="link" href=""><i class="material-icons">create</i></a>
+            <a class="link" href=""><i class="material-icons">pages</i></a>
+            <a class="link" href="/friends"><i class="material-icons">people</i></a>
+            <a class="link" href=""><i class="material-icons">person</i></a>
         </div>
 
     </div>
 
     <div class="main--page">
         <div class="left--panel">
-            <p class="left--text">Pending Friend Request</p>
+            <p class="left--text">Pending Friend Requests</p>
             {% for requester in friendRequests %}
             <div class="pending--friends">
-                <img src="{% static 'images/testimg.jpg' %}" class="profilePic" alt="">
+                <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
                 &nbsp;&nbsp;
                 <p class="left--accountName">{{ requester.username }}</p>
                 <button class="friendRequest" id="accept{{ requester.username }}">Accept</button>
@@ -39,51 +40,36 @@
             </div>
             {% endfor %}
         </div>
+        
+
         <div class="middle--panel">
-            {% for post in posts %}
-            <div class="post--card">
-                <div class="card--navbar">
-                    <img class="profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
-                    &nbsp;
-                    <div class="name--time--page">
-                        <div class="name--page">
-                            <p class="profile--name">{{ post.0.user.username }}</p>
-                            {% if post.0.page != None %}
-                                <i class="material-icons">play_arrow</i>
-                                <p class="page--name">L Merchants</p>
-                            {% endif %}
-                        </div>
-                        <div class="time">
-                            <p class="post--time">{{ post.0.PostedOn }}</p>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="card--title">{{ post.0.Title }}</div>
-                <div class="card--content">
-                    {{ post.0.Body }}
-                </div>
-
-                <div class="like--comment">
-                    <i class="material-icons">thumb_up_off_alt</i>
-                    <p class="like">Like</p>
-                    <p class="likenumber">{{ post.0.LikeCount }}</p>
-
-                    <i class="material-icons">chat_bubble_outline</i>
-                    <p class="comment">Comment</p>
-                    <p class="comment">{{ post.0.CommentCount }}</p>
-                </div>
-
+            <p class="left--text">My Friends</p>
+            {% for friend in myFriends %}
+            <div class="pending--friends">
+                <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                &nbsp;&nbsp;
+                <p class="left--accountName">{{ friend.username }}</p>
             </div>
             {% endfor %}
         </div>
         <div class="right--panel">
-            <p class="right--text">Pages you follow</p>
-            {% for page in pagesFollowed %}
-            <div class="pages--followed">
-                <i class="material-icons">auto_stories</i><a href="#">{{ page.PageName }}</a>
+            <p class="right--text">Explore</p>
+            {% for person in unknownPeople %}
+            <div class="pending--friends">
+                <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                &nbsp;&nbsp;
+                <p class="left--accountName">{{ person.username }}</p>
+                <button class="sendRequest" id="{{person.username}}"> Send Request </button>
+
+            </div>
+            {% endfor %}
+            {% for person in mySentPendingReqs %}
+            <div class="pending--friends">
+                <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                &nbsp;&nbsp;
+                <p class="left--accountName">{{ person.username }}</p>
+                <button type="button" disabled>Follow request sent</button>
+
             </div>
             {% endfor %}
         </div>
@@ -92,6 +78,29 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+    $(document).on('click', '.sendRequest', function(event){
+    event.preventDefault();
+    var id = event.target.id;
+    var userid = id;
+    $.ajax({
+        type:'GET',
+        url:'',
+        data:{
+            tag:'sendrequest',
+            userid:userid,
+        },
+        success:function(){
+        elem = $('#popupmessage-add');
+              elem.fadeIn(400);
+              elem.delay(2200);
+              elem.fadeOut(400);
+              
+              }
+          });
+      }
+
+    );
+
     $(document).on('click', '.friendRequest', function(event){
     event.preventDefault();
     var id = event.target.id;
@@ -135,6 +144,8 @@
     }
     
     });
+
+
 </script>
 
 </html>

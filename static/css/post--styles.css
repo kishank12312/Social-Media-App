@@ -32,7 +32,9 @@ body {
     justify-content: flex-end;
 }
 
-
+.link{
+    color: #4CAF50 !important;
+}
 
 .navbar--icons > .material-icons{
     align-content: flex-end;
@@ -41,17 +43,20 @@ body {
     
 }
 
+.commentTitle{
+    margin: 0; 
+    display: inline !important; 
+    font-size: 25px; 
+    color: white;
+}
 .material-icons:hover{
     opacity: 50%;
 }
 
 .main--page{
-    padding-top: 0px;
     display: flex;
     overflow: hidden;
     height: 100vh;
-    margin-top: -100px;
-    padding-top: 100px;
     position: relative;
     width: 100%;
     backface-visibility: hidden;
@@ -119,6 +124,7 @@ body::-webkit-scrollbar,
 .card--navbar{
     display: flex;
     padding-left: 5px;
+    padding-top: 5px;
     align-items: center;
 }
 
@@ -133,7 +139,6 @@ body::-webkit-scrollbar,
     padding: 0px;
     margin: 0px;
     line-height: 0px;
-    font-size: small;
 }
 
 .name--page{
@@ -149,7 +154,7 @@ body::-webkit-scrollbar,
 
 .card--content{
     padding: 10px;
-    font-size: small;
+    font-size: medium;
 }
 
 .page--list{
@@ -175,25 +180,37 @@ a{
 }
 
 .like--comment{
-    display: flex;
+    display: inline-flex;
     align-items: center;
     padding-left: 10px;
 }
 
-.like{
-    margin-left: 10px;
-    margin-right: 10px;
-}
 .likenumber{
     margin-right: 40px;
 }
+.likebutton{
+    margin: 5px;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #4CAF50 !important;
+    border-radius: 10px !important;
+}
 
+.likebutton:hover {
+    background-color: #4CAF50 !important;
+    color: white;
+  }
 .comment{
     margin-left: 10px;
 }
 
 .profilePic{
-    height: 40px !important;
-    width: 40px !important;
+    height: 55px !important;
+    width: 55px !important;
     border-radius: 50% !important;
+}
+.profile--name{
+    font-size: medium;
+}
+.post--time{
+    font-size: small;
 }

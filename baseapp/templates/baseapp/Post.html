@@ -1,0 +1,133 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{% static 'css/post--styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <title>Post</title>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <p class="navbar--appname">Uni Network</p>
+        <div class="navbar--icons">
+            <a class="link" href=""><i class="material-icons">create</i></a>
+            <a class="link" href=""><i class="material-icons">pages</i></a>
+            <a class="link" href="/friends"><i class="material-icons">people</i></a>
+            <a class="link" href=""><i class="material-icons">person</i></a>
+        </div>
+
+    </div>
+
+    <div class="main--page">
+        <div class="middle--panel">
+            <!-- POST CARD BEGIN -->
+            <div class="post--card">
+                <div class="card--navbar">
+                    <img class="profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                    &nbsp;
+                    <div class="name--time--page">
+                        <div class="name--page">
+                            <p class="profile--name">Shashank Pandey</p>
+                            <i class="material-icons">play_arrow</i>
+                            <p class="page--name">L Merchants</p>
+                        </div>
+                        <div class="time">
+                            <p class="post--time">14/4/22, 3:00pm</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card--title">Man utd is finished club</div>
+                <div class="card--content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut sem viverra. Quis
+                    lectus nulla at volutpat diam. Amet tellus cras adipiscing enim eu turpis egestas pretium aenean.
+                    Mus mauris vitae ultricies leo integer malesuada nunc. Ultricies mi quis hendrerit dolor magna eget
+                    est lorem. Urna duis convallis convallis tellus id interdum velit laoreet id. Viverra adipiscing at
+                    in tellus integer feugiat. Et malesuada fames ac turpis egestas sed tempus urna. In vitae turpis
+                    massa sed. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Purus gravida quis blandit
+                    turpis cursus in hac habitasse. Porttitor leo a diam sollicitudin tempor. Nam libero justo laoreet
+                    sit amet. Sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus. Nisi
+                    scelerisque eu ultrices vitae auctor eu augue ut. Aliquet nec ullamcorper sit amet risus nullam eget
+                    felis eget.
+                </div>
+
+                <div class="row">
+                    <div class="col xl3">
+                        <a class="likebutton waves-effect waves-light btn">
+                            <i class="material-icons left">thumb_up_off_alt</i>LIKE
+                        </a>
+                    </div>
+                    <div class="col xl6">
+                    <a href="">
+                        <div class="row">
+                            <div class="col xl1"><p style="font-size: 16px" id="likeCount">10</p></div>
+                            <div class="col xl9"><p style="font-size: 16px">People Have liked this post</p></div>
+                        </div>
+                    </a>
+                    </div>
+                </div>
+            </div>
+            <!-- END OF POST CARD -->
+            <p class="commentTitle"> Comments &nbsp;<span>(12)</span> </p>
+        </div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).on('click', '.friendRequest', function(event){
+    event.preventDefault();
+    var id = event.target.id;
+    var type = id.slice(0,6);
+    var userid = id.slice(6);
+    if(type === 'accept'){
+          $.ajax({
+              type:'GET',
+              url:'',
+              data:{
+                  tag:'friendrequest',
+                  type:'accept',
+                  userid:userid,
+              },  
+              success:function(){
+              elem = $('#popupmessage-add');
+              elem.fadeIn(400);
+              elem.delay(2200);
+              elem.fadeOut(400);
+              
+              }
+          });
+      }
+    else{
+        $.ajax({
+              type:'GET',
+              url:'',
+              data:{
+                  tag:'friendrequest',
+                  type:'reject',
+                  userid:userid,
+              },  
+              success:function(){
+              elem = $('#popupmessage-add');
+              elem.fadeIn(400);
+              elem.delay(2200);
+              elem.fadeOut(400);
+              
+              }
+          });
+    }
+    
+    });
+</script>
+
+</html>

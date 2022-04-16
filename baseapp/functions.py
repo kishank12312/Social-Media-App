@@ -34,6 +34,13 @@ def friendRequests(user):
         wannabeFriends.append(frienditem.Requester)
     return wannabeFriends
 
+def usersRequested(user):
+    userWannabe = []
+    listOfThem = Friends.objects.filter(Requester=user,Confirmed=False)
+    for friendsItem in listOfThem:
+        userWannabe.append(friendsItem.Requested)
+    return userWannabe
+
 def checkFriends(user1,user2):
     one = Friends.objects.filter(Requester=user1,Requested=user2,Confirmed=True).first()
     two = Friends.objects.filter(Requester=user2,Requested=user1,Confirmed=True).first()

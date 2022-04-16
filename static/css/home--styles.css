@@ -1,0 +1,76 @@
+::placeholder{
+    color:aliceblue;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #212529;
+    padding: 20px;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    align-items: center;
+}
+.body--div {
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #dee2e6;
+}
+
+.form--login{
+    width: 300px;
+    height: 40px;
+    margin-top: 25px;
+    border-radius: 25px;
+    background-color: rgb(29 155 240);
+    color: #ffffff;
+    font-size: large;
+    font-weight: 600;
+
+    box-shadow: inset 0 0 0 0 #34526f;
+    color: #ffffff;
+    margin: 0 -.25rem;
+    padding: 0 .25rem;
+    cursor: pointer;
+}
+
+hr{
+    color: #343a40;
+    border-color: #343a40;
+}
+
+.form--signup{
+    width: 300px;
+    height: 40px;
+    margin-top: 25px;
+    border-radius: 25px;
+    background-color: #273360;
+    color: #ffffff;
+    font-size: large;
+    font-weight: 600;
+
+    box-shadow: inset 0 0 0 0 #34526f;
+    color: #dee2e6;
+    margin: 0 -.25rem;
+    padding: 0 .25rem;
+    cursor: pointer;
+}
+
+.form--login:hover {
+    box-shadow: inset 300px 0 0 0 rgb(25, 131, 202);
+    color: white;
+}
+
+.form--signup:hover {
+    box-shadow: inset 300px 0 0 0 #32417a;
+    color: white;
+}
