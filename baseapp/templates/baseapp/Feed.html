@@ -1,13 +1,241 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="../../../static/css/feed--styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
+
 <body>
-    {% if request.user.is_authenticated %}
+    <!-- {% if request.user.is_authenticated %}
         {{request.user.username}}
-    {% endif %}
+    {% endif %} -->
+
+    <div class="navbar">
+        <p class="navbar--appname">Uni Network</p>
+        <div class="navbar--icons">
+            <i class="material-icons">create</i>
+            <i class="material-icons">pages</i>
+            <i class="material-icons">people</i>
+            <i class="material-icons">person</i>
+        </div>
+
+    </div>
+
+    <div class="main--page">
+        <div class="left--panel">
+            <p class="left--text">Pending Friend Request</p>
+            <div class="pending--friends">
+                <i class="material-icons">account_box</i>
+                <p class="left--accountName">Hegde</p>
+            </div>
+            <div class="pending--friends">
+                <i class="material-icons">account_box</i>
+                <p class="left--accountName">Kishan</p>
+            </div>
+            <div class="pending--friends">
+                <i class="material-icons">account_box</i>
+                <p class="left--accountName">Shashank</p>
+            </div>
+            <div class="pending--friends">
+                <i class="material-icons">account_box</i>
+                <p class="left--accountName">Rajan</p>
+            </div>
+            <div class="pending--friends">
+                <i class="material-icons">account_box</i>
+                <p class="left--accountName">L</p>
+            </div>
+        </div>
+        <div class="middle--panel">
+            <div class="post--card">
+                <div class="card--navbar">
+                    <i class="material-icons">account_circle</i>
+                    <div class="name--time--page">
+                        <div class="name--page">
+                            <p class="profile--name">Shashank Pandey</p>
+                            <i class="material-icons">play_arrow</i>
+                            <p class="page--name">L Merchants</p>
+                        </div>
+                        <div class="time">
+                            <p class="post--time">14/4/22, 3:00pm</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card--title">Man utd is finished club</div>
+                <div class="card--content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut sem viverra. Quis
+                    lectus nulla at volutpat diam. Amet tellus cras adipiscing enim eu turpis egestas pretium aenean.
+                    Mus mauris vitae ultricies leo integer malesuada nunc. Ultricies mi quis hendrerit dolor magna eget
+                    est lorem. Urna duis convallis convallis tellus id interdum velit laoreet id. Viverra adipiscing at
+                    in tellus integer feugiat. Et malesuada fames ac turpis egestas sed tempus urna. In vitae turpis
+                    massa sed. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Purus gravida quis blandit
+                    turpis cursus in hac habitasse. Porttitor leo a diam sollicitudin tempor. Nam libero justo laoreet
+                    sit amet. Sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus. Nisi
+                    scelerisque eu ultrices vitae auctor eu augue ut. Aliquet nec ullamcorper sit amet risus nullam eget
+                    felis eget.
+                </div>
+
+                <div class="like--comment">
+                    <i class="material-icons">thumb_up_off_alt</i>
+                    <p class="like">Like</p>
+
+                    <i class="material-icons">chat_bubble_outline</i>
+                    <p class="comment">Comment</p>
+                </div>
+
+            </div>
+
+            <div class="post--card">
+                <div class="card--navbar">
+                    <i class="material-icons">account_circle</i>
+                    <div class="name--time--page">
+                        <div class="name--page">
+                            <p class="profile--name">Shashank Pandey</p>
+                            <i class="material-icons">play_arrow</i>
+                            <p class="page--name">L Merchants</p>
+                        </div>
+                        <div class="time">
+                            <p class="post--time">14/4/22, 3:00pm</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card--title">Man utd is finished club</div>
+                <div class="card--content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut sem viverra. Quis
+                    lectus nulla at volutpat diam. Amet tellus cras adipiscing enim eu turpis egestas pretium aenean.
+                    Mus mauris vitae ultricies leo integer malesuada nunc. Ultricies mi quis hendrerit dolor magna eget
+                    est lorem. Urna duis convallis convallis tellus id interdum velit laoreet id. Viverra adipiscing at
+                    in tellus integer feugiat. Et malesuada fames ac turpis egestas sed tempus urna. In vitae turpis
+                    massa sed. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Purus gravida quis blandit
+                    turpis cursus in hac habitasse. Porttitor leo a diam sollicitudin tempor. Nam libero justo laoreet
+                    sit amet. Sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus. Nisi
+                    scelerisque eu ultrices vitae auctor eu augue ut. Aliquet nec ullamcorper sit amet risus nullam eget
+                    felis eget.
+                </div>
+
+                <div class="like--comment">
+                    <i class="material-icons">thumb_up_off_alt</i>
+                    <p class="like">Like</p>
+
+                    <i class="material-icons">chat_bubble_outline</i>
+                    <p class="comment">Comment</p>
+                </div>
+            </div>
+
+            <div class="post--card">
+                <div class="card--navbar">
+                    <i class="material-icons">account_circle</i>
+                    <div class="name--time--page">
+                        <div class="name--page">
+                            <p class="profile--name">Shashank Pandey</p>
+                            <i class="material-icons">play_arrow</i>
+                            <p class="page--name">L Merchants</p>
+                        </div>
+                        <div class="time">
+                            <p class="post--time">14/4/22, 3:00pm</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card--title">Man utd is finished club</div>
+                <div class="card--content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut sem viverra. Quis
+                    lectus nulla at volutpat diam. Amet tellus cras adipiscing enim eu turpis egestas pretium aenean.
+                    Mus mauris vitae ultricies leo integer malesuada nunc. Ultricies mi quis hendrerit dolor magna eget
+                    est lorem. Urna duis convallis convallis tellus id interdum velit laoreet id. Viverra adipiscing at
+                    in tellus integer feugiat. Et malesuada fames ac turpis egestas sed tempus urna. In vitae turpis
+                    massa sed. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Purus gravida quis blandit
+                    turpis cursus in hac habitasse. Porttitor leo a diam sollicitudin tempor. Nam libero justo laoreet
+                    sit amet. Sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus. Nisi
+                    scelerisque eu ultrices vitae auctor eu augue ut. Aliquet nec ullamcorper sit amet risus nullam eget
+                    felis eget.
+                </div>
+
+                <div class="like--comment">
+                    <i class="material-icons">thumb_up_off_alt</i>
+                    <p class="like">Like</p>
+
+                    <i class="material-icons">chat_bubble_outline</i>
+                    <p class="comment">Comment</p>
+                </div>
+            </div>
+
+            <div class="post--card">
+                <div class="card--navbar">
+                    <i class="material-icons">account_circle</i>
+                    <div class="name--time--page">
+                        <div class="name--page">
+                            <p class="profile--name">Shashank Pandey</p>
+                            <i class="material-icons">play_arrow</i>
+                            <p class="page--name">L Merchants</p>
+                        </div>
+                        <div class="time">
+                            <p class="post--time">14/4/22, 3:00pm</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card--title">Man utd is finished club</div>
+                <div class="card--content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut sem viverra. Quis
+                    lectus nulla at volutpat diam. Amet tellus cras adipiscing enim eu turpis egestas pretium aenean.
+                    Mus mauris vitae ultricies leo integer malesuada nunc. Ultricies mi quis hendrerit dolor magna eget
+                    est lorem. Urna duis convallis convallis tellus id interdum velit laoreet id. Viverra adipiscing at
+                    in tellus integer feugiat. Et malesuada fames ac turpis egestas sed tempus urna. In vitae turpis
+                    massa sed. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Purus gravida quis blandit
+                    turpis cursus in hac habitasse. Porttitor leo a diam sollicitudin tempor. Nam libero justo laoreet
+                    sit amet. Sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus. Nisi
+                    scelerisque eu ultrices vitae auctor eu augue ut. Aliquet nec ullamcorper sit amet risus nullam eget
+                    felis eget.
+                </div>
+
+                <div class="like--comment">
+                    <i class="material-icons">thumb_up_off_alt</i>
+                    <p class="like">Like</p>
+
+                    <i class="material-icons">chat_bubble_outline</i>
+                    <p class="comment">Comment</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="right--panel">
+            <p class="right--text">Pages you follow</p>
+            <div class="pages--followed">
+                <i class="material-icons">auto_stories</i><a href="#">F1</a>
+            </div>
+            <div class="pages--followed">
+                <i class="material-icons">auto_stories</i><a href="#">NBA</a>
+            </div>
+            <div class="pages--followed">
+                <i class="material-icons">auto_stories</i><a href="#">DBMS</a>
+            </div>
+            <div class="pages--followed">
+                <i class="material-icons">auto_stories</i><a href="#">Man Utd</a>
+            </div>
+            <div class="pages--followed">
+                <i class="material-icons">auto_stories</i><a href="#">Premier League</a>
+                
+            </div>
+        </div>
+
+    </div>
 </body>
+
 </html>
