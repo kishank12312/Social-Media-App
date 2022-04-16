@@ -26,10 +26,11 @@
         </div>
 
         <div class="login--form">
-            <form action="" class="form--items">
-                <label for="email">Email</label>
+            <form action="" method="post" class="form--items">
+                {% csrf_token %}
+                <label for="email">Username</label>
                 <br/>
-                <input type="text" id="email" name="email" class="form--email"/>
+                <input type="text" id="email" name="username" class="form--email"/>
                 <br/>
                 <label for="password">Password</label>
                 <br/>

@@ -1,3 +1,4 @@
+from tkinter import Image
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -15,7 +16,7 @@ class UserDetails(models.Model):
     About = models.CharField(max_length=300,blank=True)
     Gender = models.CharField(max_length=100, choices=GENDERS)
     Private = models.BooleanField()
-    #ProfilePic = models.ImageField(null= True, blank=True)
+    ProfilePic = models.ImageField(null= True, blank=True)
 
 
 class Pages(models.Model):
@@ -23,16 +24,18 @@ class Pages(models.Model):
     PageName = models.CharField(max_length=150)
     PageAdmin = models.ForeignKey(User, on_delete=models.CASCADE)
     About = models.CharField(max_length=300)
+    PageImage = models.ImageField(null= True, blank=True)
 
 class Posts(models.Model):
     PostID = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     Title = models.CharField(max_length=150)
-    Body = models.CharField(max_length=150)
+    Body = models.CharField(max_length=1000)
     PostedOn = models.DateTimeField(auto_now_add=True, null=True)
-    HasComment = models.BooleanField(null=True)
+    CommentCount = models.IntegerField(null=True)
     LikeCount = models.IntegerField(null=True)
     page = models.ForeignKey(Pages, null=True, on_delete=models.CASCADE)
+    Image = models.ImageField(null= True, blank=True)
 
 class Comments(models.Model):
     CommentID = models.AutoField(primary_key=True)

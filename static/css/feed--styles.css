@@ -180,9 +180,18 @@ a{
 
 .like{
     margin-left: 10px;
+    margin-right: 10px;
+}
+.likenumber{
     margin-right: 40px;
 }
 
 .comment{
     margin-left: 10px;
+}
+
+.profilePic{
+    height: 40px !important;
+    width: 40px !important;
+    border-radius: 50% !important;
 }

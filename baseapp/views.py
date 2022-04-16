@@ -71,11 +71,26 @@ def feed(request):
             final_posts_with_likes.append((post,False))
     context['posts'] = final_posts_with_likes
 
-
     #FRIEND REQUESTS
     requestingUsers = friendRequests(request.user)
     context['friendRequests'] = requestingUsers
 
+
+    if request.method == 'GET':
+        if request.GET.get('tag') == 'friendrequest':
+            req = request.GET.get('type')
+            uname = request.GET.get('userid')
+            print(uname,request)
+            usermodel = User.objects.get(username=uname)
+            if req == 'accept':
+                frnd = Friends.objects.get(Requester=usermodel, Requested=request.user)
+                frnd.Confirmed = True
+                frnd.save()
+            if req == 'reject':
+                frnd = Friends.objects.get(Requester=usermodel, Requested=request.user)
+                frnd.delete()
+            
+            
 
     
 
@@ -110,3 +125,16 @@ def posts(request,postID):
 
     return render(request,'baseapp/Post.html',context)
     
+
+def abcd(request):
+    p = Posts(
+        user=User.objects.get(username='user1'), 
+        Title='Proof that penandes is a fraud',
+        Body="I was doing my LLM in Manchester and my professor told me that I couldn’t use a pencil, I had to use a pen. I checked my bag, and all my pens were gone. after looking at the security footage, I saw that PRUNO PENADES had taken all my pens! I was furious. Shame on you Penades",
+        CommentCount=0,
+        LikeCount=0,
+        page=None
+        )
+    p.save()
+
+    return HttpResponse("added")
