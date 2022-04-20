@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="{% static 'css/home--styles.css' %}">
+    <link rel="stylesheet" href="../../../static/css/home--styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
@@ -15,13 +15,14 @@
 
 
 <body>
-    <div class="navbar">
-    </div>
-
-    <div class="Icon">
-
-    </div>
+    
     <div class="body--div">
+
+        <div class="Icon">
+
+        </div>
+
+        <h2 style="color: white; font-size: 400%;">Welcome to UniNetwork</h1>
         <div class="Signup--button">
             <a class="btn btn-primary" href="/signup">
                 <input type="Click here to Sign Up" placeholder="SignUp" class="form--signup"/>
@@ -29,10 +30,10 @@
         </div>
 
         <br>
-        <h3>Already have an account?</h3>
+        <h3 style="color: white; font-size: 200%;">Already have an account?</h3>
         <br>
         <div class="Login--button">
-            <a class="btn btn-primary" href="/login">
+            <a class="btn-primary" href="/login">
                 <input type="Click here to Login" placeholder="Login" class="form--login"/>
             </a>
         </div>
@@ -40,4 +41,5 @@
     </div>    
     
 </body>
+
 </html>
