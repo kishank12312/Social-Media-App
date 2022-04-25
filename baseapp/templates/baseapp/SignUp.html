@@ -1,7 +1,92 @@
-<h5>Register Here</h5>
-<form method="POST" action="">
-    {%csrf_token%}
-    {{form.as_p}}
+{% load static %}
+{% load extratags %}
 
-    <input type="submit" name="Create User">
-</form>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{% static 'css/signup--styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <title>Post</title>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <p class="navbar--appname">Uni Network</p>
+        <div class="navbar--icons">
+            <a class="link" href=""><i class="material-icons">create</i></a>
+            <a class="link" href=""><i class="material-icons">pages</i></a>
+            <a class="link" href="/friends"><i class="material-icons">people</i></a>
+            <a class="link" href=""><i class="material-icons">person</i></a>
+        </div>
+
+    </div>
+    <br>
+    <div class="row center-align">
+        <div class="col s12 m4 offset-m4">
+          <div class="card" style="background-color: #343a40; border: 1px solid white; border-radius: 5px;">
+            <div class="card-content white-text" style="padding-left: 1%;">
+              <span class="card-title">Signup</span>
+              <br><br>
+              <form action="" method="POST" id="SignupForm">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="row" style="display: flex; align-items: center; margin-left: 0%;">
+                <div class="col s1" style="display: flex; align-items: center;">
+                    {% if field.name == 'username' %}<i class = 'material-icons' style="color: #f0f0f0;">account_circle</i>
+                    {% elif field.name == 'email' %}<i class = 'material-icons' style="color: #f0f0f0;">email</i>
+                    {% else %}<i class = 'material-icons' style="color: #f0f0f0;">key</i>{% endif %}
+                </div>
+                        <div style="margin-top: 0%;" class="col s10">
+                        <div style="width: 100%;margin-top: 0%;" class="input-field inline">
+                            {{ field }} 
+                            {{ field.label_tag }}
+                            {% for error in field.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        </div>
+                        {% if field.help_text %}
+                        <div class="col s1">
+                            <span class="tooltipped" data-position="right" data-tooltip="{{ field.help_text }}">
+                                <i class='material-icons' style="color: #f0f0f0;">info</i>
+                            </span>
+                        </div>
+                        {% endif %}
+                        
+                    </div>
+                        {% endfor %}
+                    <a href="{% url 'login' %}">Already Have an Account? Login</a><br><br>
+                    <div class="row center-align">
+                        <a onclick="submitMethod()" style="padding-bottom: 35px !important;" class="likebuttonUnliked waves-effect waves-light btn likecomment" type="submit" >CREATE ACCOUNT</a>
+                    </div>
+                    <br>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
+  });
+  function submitMethod() {
+        document.getElementById("SignupForm").submit();
+    }
+</script>
+</html>
+
