@@ -109,6 +109,18 @@ body::-webkit-scrollbar,
     color: #dee2e6; 
 }
 
+.liker{
+    display: flex;
+    align-items: center;
+    color: #dee2e6;
+    margin: 10px; 
+}
+
+.modal .modal-footer {
+    display: flex;
+    justify-content: center;
+}
+
 .post--card{
     height: fit-content;
     width: 600px;
@@ -188,14 +200,20 @@ a{
 .likenumber{
     margin-right: 40px;
 }
-.likebutton{
+.likebuttonUnliked{
     margin: 5px;
     background-color: rgba(0, 0, 0, 0.1) !important;
     border: 2px solid #4CAF50 !important;
     border-radius: 10px !important;
 }
+.likebuttonLiked{
+    margin: 5px;
+    background-color: #4CAF50 !important;
+    border: 2px solid #4CAF50 !important;
+    border-radius: 10px !important;
+}
 
-.likebutton:hover {
+.likebuttonUnliked:hover {
     background-color: #4CAF50 !important;
     color: white;
   }
@@ -208,9 +226,30 @@ a{
     width: 55px !important;
     border-radius: 50% !important;
 }
+.commentprofilePic{
+    height: 45px !important;
+    width: 45px !important;
+    border-radius: 50% !important;
+}
 .profile--name{
     font-size: medium;
 }
 .post--time{
     font-size: small;
+}
+#postlikes{
+    width: fit-content;
+    border: solid 2px #4CAF50 !important;
+    border-radius: 23px;
+}
+#commentlikes{
+    width: fit-content;
+    border: solid 2px #4CAF50 !important;
+    border-radius: 23px;
+}
+.modal-content{
+    background-color: #131416 !important;
+}
+.modal-footer{
+    background-color: #131416 !important;
 }

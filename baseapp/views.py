@@ -1,5 +1,6 @@
 from ast import Lambda
 import imp
+from turtle import pos
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
@@ -110,7 +111,8 @@ def posts(request,postID):
     #     elif (not checkFriends(post.user, request.user)):
     #         return redirect(reverse('feed'))
     
-
+    postlikeobjects = PostLikes.objects.filter(post=post)
+    postLikers = [i.user for i in postlikeobjects]
     comments = Comments.objects.filter(post=post)
     commentWithLikes = []
     for comment in comments:
@@ -124,7 +126,30 @@ def posts(request,postID):
 
     context['this_post']= post
     context['comment_info'] = commentWithLikes
-    print(context)
+    context['postLikers'] = postLikers
+
+    if request.method == 'GET':
+        if request.GET.get('tag') == 'likepost':
+            post.LikeCount += 1
+            post.save()
+            newlike = PostLikes(post=post, user=request.user)
+            newlike.save()
+        elif request.GET.get('tag') == 'unlikepost':
+            post.LikeCount -= 1
+            post.save()
+            likeobj = PostLikes.objects.get(post=post, user=request.user)
+            likeobj.delete()
+        elif request.GET.get('tag') == 'likecomment':
+            cid = int(request.GET.get("cid"))
+            cmnt = Comments.objects.get(CommentID = cid)
+            newlike = CommentLikes(comment=cmnt, user=request.user)
+            newlike.save()
+        elif request.GET.get('tag') == 'unlikecomment':
+            cid = int(request.GET.get("cid"))
+            cmnt = Comments.objects.get(CommentID = cid)
+            like = CommentLikes.objects.get(comment=cmnt, user=request.user)
+            like.delete()
+
     return render(request,'baseapp/Post.html',context)
     
 

@@ -1,4 +1,6 @@
 {% load static %}
+{% load extratags %}
+
 <html lang="en">
 
 <head>
@@ -10,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <title>Post</title>
 </head>
@@ -32,99 +37,264 @@
             <!-- POST CARD BEGIN -->
             <div class="post--card">
                 <div class="card--navbar">
-                    <img class="profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                    <img class="profilePic" src="{{ this_post.user|profilepicfromuser }}" alt="">
                     &nbsp;
                     <div class="name--time--page">
                         <div class="name--page">
-                            <p class="profile--name">Shashank Pandey</p>
-                            <i class="material-icons">play_arrow</i>
-                            <p class="page--name">L Merchants</p>
+                            <p class="profile--name">{{ this_post.user.username }}</p>
+                            {% if this_post.page != None %}
+                                <i class="material-icons">play_arrow</i>
+                                <p class="page--name">L Merchants</p>
+                            {% endif %}
                         </div>
                         <div class="time">
-                            <p class="post--time">14/4/22, 3:00pm</p>
+                            <p class="post--time">{{ this_post.PostedOn }}</p>
                         </div>
 
                     </div>
 
                 </div>
 
-                <div class="card--title">Man utd is finished club</div>
-                <div class="card--content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut sem viverra. Quis
-                    lectus nulla at volutpat diam. Amet tellus cras adipiscing enim eu turpis egestas pretium aenean.
-                    Mus mauris vitae ultricies leo integer malesuada nunc. Ultricies mi quis hendrerit dolor magna eget
-                    est lorem. Urna duis convallis convallis tellus id interdum velit laoreet id. Viverra adipiscing at
-                    in tellus integer feugiat. Et malesuada fames ac turpis egestas sed tempus urna. In vitae turpis
-                    massa sed. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Purus gravida quis blandit
-                    turpis cursus in hac habitasse. Porttitor leo a diam sollicitudin tempor. Nam libero justo laoreet
-                    sit amet. Sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus. Nisi
-                    scelerisque eu ultrices vitae auctor eu augue ut. Aliquet nec ullamcorper sit amet risus nullam eget
-                    felis eget.
+                <div class="card--title">{{ this_post.Title }}</div>
+                <div class="card--content">
+                    {{ this_post.Body }}
                 </div>
 
                 <div class="row">
                     <div class="col xl3">
-                        <a class="likebutton waves-effect waves-light btn">
+                        <button class="likebuttonUnliked waves-effect waves-light btn likepost">
                             <i class="material-icons left">thumb_up_off_alt</i>LIKE
-                        </a>
+                        </button>
                     </div>
                     <div class="col xl6">
-                    <a href="">
+                    <a href="#postlikes" class="modal-trigger">
                         <div class="row">
-                            <div class="col xl1"><p style="font-size: 16px" id="likeCount">10</p></div>
+                            <div class="col xl1"><p style="font-size: 16px" id="PostlikeCount">{{ this_post.LikeCount }}</p></div>
                             <div class="col xl9"><p style="font-size: 16px">People Have liked this post</p></div>
                         </div>
                     </a>
+                    <div id="postlikes" class="modal">
+                        <div id="postlikesmodal" class="modal-content">
+                          <h5>People Who liked this post</h5>
+                          <br>
+                          {% for liker in postLikers %}
+                          <a href="" class="liker" id="postLiker{{ liker.username }}">
+                            <img src="{{ liker|profilepicfromuser }}" class="commentprofilePic" alt="">
+                            &nbsp;&nbsp;
+                            <p class="left--accountName">{{ liker.username }}</p>
+                          </a>
+                          {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                          <a href="#!" class="modal-close left .center-align waves-effect waves-red btn-flat white-text">CLOSE</a>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
             <!-- END OF POST CARD -->
-            <p class="commentTitle"> Comments &nbsp;<span>(12)</span> </p>
+            <p class="commentTitle"> Comments &nbsp;<span>({{ this_post.CommentCount }})</span></p>
+            {% for cwl in comment_info %}
+            <div style="width: 600px !important; border-radius: 10px;" class="card blue-grey darken-1">
+                <div style="padding:10px;" class="card-content white-text">
+                    <div style="margin-bottom: 10px;" class="row valign-wrapper">
+                        <div class="col xl1" style="margin-left: 0 !important; padding: 0;">
+                                <a href="" style="text-decoration: none; color: white;">
+                                <img class="commentprofilePic" src="{{ cwl.0.user|profilepicfromuser }}" alt="">
+                                </a>
+                            </div>
+                        <div class="col xl6" style="font-size: large; margin-left: 0px !important;">
+                            <a href="" style="text-decoration: none; color: white;">
+                                {{ cwl.0.user.username }}
+                            </a>
+                        </div>
+                    </div>
+                  <p>
+                      {{ cwl.0.Body }}
+                  </p>
+                </div>
+                <div class="card-action" style="padding: 0; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                    <div class="row"  style="margin-bottom: 0 !important; height: fit-content;">
+                        <div class="col xl3">
+                            {% if cwl|liked %}
+                            <a id="{{ cwl.0.CommentID }}" class="likebuttonLiked waves-effect waves-light btn likecomment">
+                                <i class="material-icons left">thumb_up_off_alt</i>LIKED
+                            </a>
+                            {% else %}
+                            <a id="{{ cwl.0.CommentID }}" class="likebuttonUnliked waves-effect waves-light btn likecomment">
+                                <i class="material-icons left">thumb_up_off_alt</i>LIKE
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="col xl2">
+                            <a href="#commentlikes{{ cwl.0.CommentID }}" class="modal-trigger">
+                                <div class="row" style="color: aqua; margin-bottom: 10px;">
+                                    <div class="col xl1"><p style="font-size: 15px; margin-bottom: 0px;" id="commentlikeCount1">{{ cwl.2 }}</p></div>
+                                    <div class="col xl9"><p style="font-size: 15px; margin-bottom: 0px;">Likes</p></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+              </div>
+              <div id="commentlikes{{ cwl.0.CommentID }}" class="modal">
+                <div id="commentLikesModal{{ cwl.0.CommentID }}" class="modal-content">
+                  <h5 class="white-text">People Who liked this comment</h5>
+                  <br>
+                  {% for liker in cwl.1 %}
+                  <a id="{{ cwl.0.CommentID }}commentLike{{ liker.username }}" href="" class="liker">
+                    <img src="{{ liker|profilepicfromuser }}" class="commentprofilePic" alt="">
+                    &nbsp;&nbsp;
+                    <p class="left--accountName">{{ liker.username }}</p>
+                  </a>
+                  {% endfor %}
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="modal-close left .center-align waves-effect waves-red btn-flat white-text">CLOSE</a>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- END OF COMMENT CARD -->
+           
         </div>
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script>
-    $(document).on('click', '.friendRequest', function(event){
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+</script>
+<script>
+    $(document).on('click', '.likepost', function(event){
     event.preventDefault();
-    var id = event.target.id;
-    var type = id.slice(0,6);
-    var userid = id.slice(6);
-    if(type === 'accept'){
-          $.ajax({
-              type:'GET',
-              url:'',
-              data:{
-                  tag:'friendrequest',
-                  type:'accept',
-                  userid:userid,
-              },  
-              success:function(){
-              elem = $('#popupmessage-add');
-              elem.fadeIn(400);
-              elem.delay(2200);
-              elem.fadeOut(400);
-              
-              }
-          });
+    var elem = event.currentTarget;
+    var classes = elem.classList;
+    
+    if(classes.contains('likebuttonUnliked')){
+        
+        $.ajax({
+            type:'GET',
+            url:'',
+            data:{
+                tag:'likepost',
+            },  
+            success:function(){
+        //   elem = $('#popupmessage-add');
+        //   elem.fadeIn(400);
+        //   elem.delay(2200);
+        //   elem.fadeOut(400);
+            elem.childNodes[2].nodeValue = "LIKED";
+            elem.className = "likebuttonLiked waves-effect waves-light btn likepost";
+            var lk = document.getElementById("PostlikeCount");
+            lk.innerHTML = String(parseInt(lk.innerHTML) + 1);
+            var newliker = document.createElement('a');
+            var prpic = document.createElement('img');
+            prpic.src = "{% static 'images/testimg.jpg' %}";
+            prpic.className = "commentprofilePic";
+            newliker.appendChild(prpic);
+            newliker.className = "liker";
+            newliker.href = "";
+            newliker.innerHTML += '&nbsp;&nbsp;';
+            var newp = document.createElement("p");
+            newp.className = "left--accountName";
+            newp.innerHTML = "{{ request.user.username }}";
+            newliker.appendChild(newp);
+            newliker.id = "postLiker{{ request.user.username }}"
+            document.getElementById("postlikesmodal").appendChild(newliker);
+            }
+        });
       }
     else{
         $.ajax({
-              type:'GET',
-              url:'',
-              data:{
-                  tag:'friendrequest',
-                  type:'reject',
-                  userid:userid,
-              },  
-              success:function(){
-              elem = $('#popupmessage-add');
-              elem.fadeIn(400);
-              elem.delay(2200);
-              elem.fadeOut(400);
-              
-              }
-          });
+            type:'GET',
+            url:'',
+            data:{
+                tag:'unlikepost',
+            },  
+            success:function(){
+        //   elem = $('#popupmessage-add');
+        //   elem.fadeIn(400);
+        //   elem.delay(2200);
+        //   elem.fadeOut(400);
+            elem.childNodes[2].nodeValue = "LIKE";
+            elem.className = "likebuttonUnliked waves-effect waves-light btn likepost";
+            var lk = document.getElementById("PostlikeCount");
+            lk.innerHTML = String(parseInt(lk.innerHTML) - 1);
+            var liker = document.getElementById("postLiker{{ request.user.username }}");
+            liker.remove();
+            }
+        });
+    }
+    
+    });
+</script>
+<script>
+    $(document).on('click', '.likecomment', function(event){
+    event.preventDefault();
+    var elem = event.currentTarget;
+    var commentID = elem.id;
+    var classes = elem.classList;
+    
+    if(classes.contains('likebuttonUnliked')){
+        
+        $.ajax({
+            type:'GET',
+            url:'',
+            data:{
+                tag:'likecomment',
+                cid:commentID,
+            },  
+            success:function(){
+        //   elem = $('#popupmessage-add');
+        //   elem.fadeIn(400);
+        //   elem.delay(2200);
+        //   elem.fadeOut(400);
+            elem.childNodes[2].nodeValue = "LIKED";
+            elem.className = "likebuttonLiked waves-effect waves-light btn likecomment";
+            var lk = document.getElementById("commentlikeCount" + String(commentID));
+            lk.innerHTML = String(parseInt(lk.innerHTML) + 1);
+            var newliker = document.createElement('a');
+            var prpic = document.createElement('img');
+            prpic.src = "{% static 'images/testimg.jpg' %}";
+            prpic.className = "commentprofilePic";
+            newliker.appendChild(prpic);
+            newliker.className = "liker";
+            newliker.href = "";
+            newliker.innerHTML += '&nbsp;&nbsp;';
+            var newp = document.createElement("p");
+            newp.className = "left--accountName";
+            newp.innerHTML = "{{ request.user.username }}";
+            newliker.appendChild(newp);
+            newliker.id = String(commentID) + "commentLiker{{ request.user.username }}"
+            document.getElementById("commentLikesModal1").appendChild(newliker);
+            }
+        });
+      }
+    else{
+        $.ajax({
+            type:'GET',
+            url:'',
+            data:{
+                tag:'unlikecomment',
+                cid:commentID,
+            },  
+            success:function(){
+        //   elem = $('#popupmessage-add');
+        //   elem.fadeIn(400);
+        //   elem.delay(2200);
+        //   elem.fadeOut(400);
+            elem.childNodes[2].nodeValue = "LIKE";
+            elem.className = "likebuttonUnliked waves-effect waves-light btn likecomment";
+            var lk = document.getElementById("commentlikeCount" + String(commentID));
+            lk.innerHTML = String(parseInt(lk.innerHTML) - 1);
+            var liker = document.getElementById(String(commentID) + "commentLiker{{ request.user.username }}");
+            liker.remove();
+            }
+        });
     }
     
     });
