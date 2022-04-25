@@ -13,7 +13,7 @@ class UserDetails(models.Model):
     Name = models.CharField(max_length=150,null=True,blank=True)
     DateOfBirth = models.DateField()
     PhoneNumber = models.CharField(max_length=10)
-    About = models.CharField(max_length=300,blank=True)
+    About = models.CharField(max_length=10000,blank=True)
     Gender = models.CharField(max_length=100, choices=GENDERS)
     Private = models.BooleanField()
     ProfilePic = models.ImageField(null= True, blank=True)

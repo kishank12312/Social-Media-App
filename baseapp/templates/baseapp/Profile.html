@@ -1,0 +1,161 @@
+{% load static %}
+{% load extratags %}
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="{% static 'css/signup--styles.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+                
+        <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+        <title>Post</title>
+    </head>
+
+<body>
+
+    <div class="navbar">
+        <p class="navbar--appname">Uni Network</p>
+        <div class="navbar--icons">
+            <a href=""><i class="material-icons">create</i></a>
+            <a href=""><i class="material-icons">pages</i></a>
+            <a href="/friends"><i class="material-icons">people</i></a>
+            <a href=""><i class="material-icons">person</i></a>
+        </div>
+
+    </div>
+
+
+    <div id="index-banner">
+        <div class="section no-pad-bot">
+          <div class="container">
+            <br> <br>
+    
+    
+            <div class="row center">
+              <h3 class="header" style="color:white;"> {{ theirInfo.Name }} </h3>
+            </div>
+            <br>
+            <div class="section">
+                <h4 style="color:white;"> About Me</h4>
+                <p style="color:white;"> {{ theirInfo.About }}</p>
+            </div>
+
+            <div class="row">
+
+                <div class="col s4">
+                  <p style="color:white;"> Date of Birth </p>
+                  <p style="color:white;"> {{ theirInfo.DateOfBirth }} </p>
+                </div>
+                <div class="col s4">
+                    <p style="color:white;">Phone No. </p>
+                    <p style="color:white;"> {{ theirInfo.PhoneNumber }} </p>
+                </div>
+                <div class="col s4">
+                    <p style="color:white;"> Gender </p>
+                    <p style="color:white;"> {{ theirInfo.Gender }} </p>
+                </div>
+          
+            </div>
+
+          </div> 
+        </div>
+    </div> 
+
+    <div class="section">
+        &nbsp;&nbsp;
+        <button class="sendRequest"> Send Request </button>
+
+    </div>
+
+
+    <div class="main--page">
+        <div class="col s3">
+            <p class="left--text"> Their Friends</p>
+            {% for friend in theirFriends %}
+            <div class="pending--friends">
+                <img src="{% static 'images/testimg.jpg' %}" class="profilePic" alt="">
+                &nbsp;&nbsp;
+                <p class="left--accountName">{{ friend.username }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="col s9">
+            {% for post in theirPosts %}
+            <div class="post--card">
+                <div class="card--navbar">
+                    <img class="profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                    &nbsp;
+                    <div class="name--time--page">
+                        <div class="name--page">
+                            <p class="profile--name">{{ post.0.user.username }}</p>
+                            {% if post.0.page != None %}
+                                <i class="material-icons">play_arrow</i>
+                                <p class="page--name">L Merchants</p>
+                            {% endif %}
+                        </div>
+                        <div class="time">
+                            <p class="post--time">{{ post.0.PostedOn }}</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card--title">{{ post.0.Title }}</div>
+                <div class="card--content">
+                    {{ post.0.Body }}
+                </div>
+
+                <div class="like--comment">
+                    <i class="material-icons">thumb_up_off_alt</i>
+                    <p class="like">Like</p>
+                    <p class="likenumber">{{ post.0.LikeCount }}</p>
+
+                    <i class="material-icons">chat_bubble_outline</i>
+                    <p class="comment">Comment</p>
+                    <p class="comment">{{ post.0.CommentCount }}</p>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).on('click', '.sendRequest', function(event){
+    event.preventDefault();
+    var id = event.target.id;
+    var userid = id;
+    $.ajax({
+        type:'GET',
+        url:'',
+        data:{
+            tag:'sendrequest',
+        },
+        success:function(){
+        elem = $('#popupmessage-add');
+              elem.fadeIn(400);
+              elem.delay(2200);
+              elem.fadeOut(400);
+              
+              }
+          });
+      }
+
+    );
+
+
+
+</script>
+
+</html>

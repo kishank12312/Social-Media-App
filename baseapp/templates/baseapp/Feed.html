@@ -47,7 +47,7 @@
                     &nbsp;
                     <div class="name--time--page">
                         <div class="name--page">
-                            <p class="profile--name">{{ post.0.user.username }}</p>
+                            <p class="profile--name" ><a href="/user/{{ post.0.user.username }}"> {{ post.0.user.username }}</a></p>
                             {% if post.0.page != None %}
                                 <i class="material-icons">play_arrow</i>
                                 <p class="page--name">L Merchants</p>

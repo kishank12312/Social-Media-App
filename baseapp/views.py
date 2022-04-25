@@ -1,4 +1,5 @@
 from ast import Lambda
+from contextlib import nullcontext
 import imp
 from turtle import pos
 from django.shortcuts import render, redirect
@@ -197,3 +198,72 @@ def friends(request):
 
  
     return render(request,'baseapp/Friends.html',context)
+
+
+
+def userpage(request,name):
+    context = {}
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
+    
+    
+    accessuser = User.objects.get(username = name)
+    #context['them']=accessuser
+    accessUserDetails = UserDetails.objects.get(user = accessuser)
+    context['them']=accessUserDetails.Name
+    if accessUserDetails.Private:
+        if checkFriends(accessuser, request.user):
+            #THEIR FRIENDS
+            accessUserFriends = findfriends(accessuser)
+            context['theirFriends'] = accessUserFriends
+
+            #THEIR POSTS
+            postsMade = Posts.objects.filter(user=accessuser,page=None).order_by('PostedOn')
+            final_posts = []
+            final_posts_with_likes = []
+            for post in postsMade:
+                final_posts.append(post)
+            final_posts.sort(key=lambda x:x.PostedOn)
+            for post in final_posts:
+                if PostLikes.objects.filter(post=post,user=request.user).first():
+                    final_posts_with_likes.append((post,True))
+                else:
+                    final_posts_with_likes.append((post,False))
+            context['theirPosts'] = final_posts_with_likes 
+
+            #ABOUT THEM
+            context['theirInfo'] = accessUserDetails
+        else:
+            context['theirFriends']=None
+            context['theirInfo']=accessUserDetails
+            context['theirPosts']=None
+    
+    else:
+        #THEIR FRIENDS
+        accessUserFriends = findfriends(accessuser)
+        context['theirFriends'] = accessUserFriends
+        #THEIR POSTS
+        postsMade = Posts.objects.filter(user=accessuser,page=None).order_by('PostedOn')
+        final_posts = []
+        final_posts_with_likes = []
+        for post in postsMade:
+            final_posts.append(post)
+        final_posts.sort(key=lambda x:x.PostedOn)
+        for post in final_posts:
+            if PostLikes.objects.filter(post=post,user=request.user).first():
+                final_posts_with_likes.append((post,True))
+            else:
+                final_posts_with_likes.append((post,False))
+        context['theirPosts'] = final_posts_with_likes 
+
+        #ABOUT THEM
+        context['theirInfo'] = accessUserDetails
+
+
+    if request.method == 'GET':
+        if request.GET.get('tag') == 'sendrequest':
+            frnd = Friends(Requester = request.user, Requested = accessuser, Confirmed = False)
+            frnd.save()
+
+    return render(request,'baseapp/Profile.html',context)
+    

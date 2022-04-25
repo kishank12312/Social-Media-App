@@ -197,3 +197,10 @@ a{
     width: 40px !important;
     border-radius: 50% !important;
 }
+
+.displayPic{
+    height: 100px !important;
+    width: 100px !important;
+    border-radius: 50% !important;
+
+}
