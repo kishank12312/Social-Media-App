@@ -4,19 +4,9 @@
 }
 
 body {
-    margin: 0;
-    height: 90vh;
-    background-color: #172939;
+    background-color: #343a40;
     padding: 20px;
     font-family: 'Nunito', sans-serif;
-    display: flex;
-    align-items: center;
-}
-.body--div {
-    margin: auto;
-    width: fit-content;
-    height: fit-content;
-
 }
 
 .form--login{
