@@ -71,7 +71,18 @@
 
     <div class="section">
         &nbsp;&nbsp;
-        <button class="sendRequest"> Send Request </button>
+        {% if accesseduser != request.user %}
+            <button class="sendRequest"> Send Request </button>
+        {% endif %}
+
+    </div>
+
+    <div class="section">
+        &nbsp;&nbsp;
+        {% if accesseduser == request.user %}
+            <a href = "/edituser"> <button>Edit Profile </button></a>
+        {% endif %}
+    
 
     </div>
 
@@ -81,7 +92,7 @@
             <p class="left--text"> Their Friends</p>
             {% for friend in theirFriends %}
             <div class="pending--friends">
-                <img src="{% static 'images/testimg.jpg' %}" class="profilePic" alt="">
+                <!--<img src="{% static 'images/testimg.jpg' %}" class="profilePic" alt=""> -->
                 &nbsp;&nbsp;
                 <p class="left--accountName">{{ friend.username }}</p>
             </div>
@@ -92,7 +103,7 @@
             {% for post in theirPosts %}
             <div class="post--card">
                 <div class="card--navbar">
-                    <img class="profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                    <!-- <img class="profilePic" src="{% static 'images/testimg.jpg' %}" alt=""> -->
                     &nbsp;
                     <div class="name--time--page">
                         <div class="name--page">

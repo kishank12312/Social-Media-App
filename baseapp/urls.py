@@ -11,5 +11,6 @@ urlpatterns = [
     path('friends', views.friends, name='friends'),
     path('post/<int:postID>/', views.posts, name='post'),
     path('user/<str:name>/',views.userpage,name='profile'),
-    path('accountSetup',views.accountSetup,name='accountSetup')
+    path('accountSetup',views.accountSetup,name='accountSetup'),
+    path('edituser',views.editProfile,name='editProfile')
 ]

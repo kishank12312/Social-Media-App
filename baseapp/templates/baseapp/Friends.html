@@ -34,7 +34,8 @@
             <div class="pending--friends">
                 <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
                 &nbsp;&nbsp;
-                <p class="left--accountName">{{ requester.username }}</p>
+                <p class="left--accountName"><a href="/user/{{ requester.username }}">{{ requester.username }}</a></p>
+                &nbsp;&nbsp;
                 <button class="friendRequest" id="accept{{ requester.username }}">Accept</button>
                 <button class="friendRequest" id="reject{{ requester.username }}">Reject</button>
             </div>
@@ -48,7 +49,7 @@
             <div class="pending--friends">
                 <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
                 &nbsp;&nbsp;
-                <p class="left--accountName">{{ friend.username }}</p>
+                <p class="left--accountName"><a href="/user/{{ friend.username }}">{{ friend.username }}</a></p>
             </div>
             {% endfor %}
         </div>
@@ -58,7 +59,8 @@
             <div class="pending--friends">
                 <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
                 &nbsp;&nbsp;
-                <p class="left--accountName">{{ person.username }}</p>
+                <p class="left--accountName"><a href="/user/{{ person.username }}">{{ person.username }} </a></p>
+                &nbsp;&nbsp;
                 <button class="sendRequest" id="{{person.username}}"> Send Request </button>
 
             </div>
@@ -67,7 +69,7 @@
             <div class="pending--friends">
                 <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
                 &nbsp;&nbsp;
-                <p class="left--accountName">{{ person.username }}</p>
+                <p class="left--accountName"><a href="/user/{{ person.username }}">{{ person.username }} </a></p>
                 <button type="button" disabled>Friend request sent</button>
 
             </div>
