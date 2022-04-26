@@ -19,7 +19,7 @@ body {
     font-size: large;
     margin-top: 0px;
     padding-top: 0px;
-    box-shadow: 1px 1px 10px #37474f ;
+    box-shadow: 1px 1px 10px #37474f;
 }
 
 .navbar--appname{
@@ -52,7 +52,7 @@ body {
 .likebuttonUnliked:hover {
     background-color: #263238 !important;
     color: white !important;
-  }
+}
 
 #singupbutton:hover{
     text-decoration: underline;
