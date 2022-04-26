@@ -12,13 +12,95 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <title>Document</title>
+    <title>Feed</title>
+    <style>
+        .input-field {
+            width: 95%;
+        }
+
+        .input-field label {
+            color: #90a4ae;
+        }
+
+        .input-field input[type=text]:focus+label {
+            color: #90a4ae;
+        }
+
+        .input-field input:focus+label {
+            color: #546e7a !important;
+        }
+
+        /* label underline focus color */
+        .row .input-field input:focus {
+            border-bottom: 1px solid #607d8b !important;
+            box-shadow: 0 1px 0 0 #263238 !important
+        }
+
+        .input-field .prefix.active {
+            color: #263238;
+        }
+
+        .input-field input[type=text].valid {
+            border-bottom: 1px solid #263238;
+            box-shadow: 0 1px 0 0 #263238;
+        }
+
+        .input-field input[type=text].invalid {
+            border-bottom: 1px solid #263238;
+            box-shadow: 0 1px 0 0 #263238;
+        }
+
+        input:not([type]),
+        input[type=text]:not(.browser-default),
+        input[type=password]:not(.browser-default),
+        input[type=email]:not(.browser-default),
+        input[type=url]:not(.browser-default),
+        input[type=time]:not(.browser-default),
+        input[type=date]:not(.browser-default),
+        input[type=datetime]:not(.browser-default),
+        input[type=datetime-local]:not(.browser-default),
+        input[type=tel]:not(.browser-default),
+        input[type=number]:not(.browser-default),
+        input[type=search]:not(.browser-default),
+        textarea.materialize-textarea {
+            border-bottom: 1px solid #90a4ae;
+        }
+
+
+        .input-field textarea:focus+label {
+            color: #90a4ae;
+        }
+
+        .input-field textarea:focus+label {
+            color: #546e7a !important;
+        }
+
+        /* label underline focus color */
+        .row .input-field textarea:focus {
+            border-bottom: 1px solid #607d8b  !important;
+            box-shadow: 0 1px 0 0 #263238 !important
+        }
+
+        .input-field .prefix.active {
+            color: #263238;
+        }
+
+        .input-field textarea.valid {
+            border-bottom: 1px solid #90a4ae;
+            box-shadow: 0 1px 0 0 #263238;
+        }
+
+        .input-field textarea.invalid {
+            border-bottom: 1px solid #607d8b ;
+            box-shadow: 0 1px 0 0 #263238;
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="navbar">
-        <p class="navbar--appname">Uni Network</p>
+        <p class="navbar--appname">UniNetwork</p>
         <div class="navbar--icons">
             <a href=""><i class="material-icons">create</i></a>
             <a href=""><i class="material-icons">pages</i></a>
@@ -48,14 +130,14 @@
                 <div class="card--title">Create A New Post</div>
                     Let everyone know what you're upto
                 <br><br>
-                <a href="#createPostModal" class="waves-effect waves-light btn modal-trigger"><i class="material-icons left">create</i>CREATE POST</a>
+                <a href="#createPostModal" class="waves-effect waves-light btn modal-trigger likebuttonUnliked"><i class="material-icons left">create</i>CREATE POST</a>
                 <br><br>
             </div>
 
-            <div id="createPostModal" class="modal">
-                <div class="modal-content">
+            <div id="createPostModal" class="modal blue-grey darken-3">
+                <div style="padding-bottom: 5px; margin-top: 5px;" class="modal-content blue-grey-text text-lighten-4">
                   <h4>Create New Post</h4>
-                  <form action="" method="POST" enctype="multipart/form-data">
+                  <form action="" method="POST" style="margin-bottom: 0;" enctype="multipart/form-data">
                       {% csrf_token %}
                     <div style="margin-top: 1px; margin-bottom: 1px;" class="row">
                         <div class="col s12">
@@ -92,8 +174,8 @@
                         <input style="margin-top: 1rem;" type="file" name="PostImage" accept="image/*" id="id_ProfilePic">
                     </div>
                 </div>
-                <div style="text-align: center !important;" class="modal-footer">
-                    <button type="submit" class="waves-effect waves-green btn">CREATE POST</button>
+                <div style="text-align: center !important;" class="modal-footer blue-grey darken-3">
+                    <button type="submit" class="modalbuttonunliked waves-effect waves-green btn">CREATE POST</button>
                 </div>
             </form>
               </div>

@@ -4,7 +4,7 @@
 
 body {
     margin: 0;
-    background-color: #212529;
+    background-color: #263238;
     
     font-family: 'Nunito', sans-serif;
 }
@@ -15,30 +15,38 @@ body {
     align-items: center;
     width: 100%;
     justify-content: flex-end;
-    color: #dee2e6;
-    background-color: #343a40;
+    color: #4dd0e1;
+    background-color: #212121;
     margin: 0px;
     padding: 0px;
+    position: fixed;
+    box-shadow: 1px 1px 10px #37474f;
 }
 
 .navbar--appname{
-    padding: 30px;
-    
+    padding-left: 30px;
+    margin-top: 25px;
+    margin-bottom: 25px;
     margin-right: auto;
+    font-weight: 600;
+    font-size: large;
+    color: #4dd0e1;
 }
 
 .navbar--icons{
-    padding: 30px;
+    padding-right: 30px;
     justify-content: flex-end;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 
 
-.navbar--icons > .material-icons{
+.navbar--icons > a > .material-icons{
     align-content: flex-end;
     width: 24px;
     margin: 10px;
-    
+    color: #4dd0e1 !important; 
 }
 
 .material-icons:hover{
@@ -46,13 +54,13 @@ body {
 }
 
 .main--page{
-    padding-top: 0px;
+    padding-top: 80px;
     display: flex;
     overflow: hidden;
     height: 100vh;
-    margin-top: -100px;
-    padding-top: 100px;
-    position: relative;
+    /* margin-top: -100px;
+    padding-top: 100px; */
+    top:100px;
     width: 100%;
     backface-visibility: hidden;
     will-change: overflow;
@@ -109,8 +117,8 @@ body::-webkit-scrollbar,
     width: 600px;
     border: solid 2px;
     border-color: #343a40;
-    background-color: #343a40;
-    color: #dee2e6;
+    background-color: #90a4ae;
+    color: #263238;
     margin-top: 15px;
     margin-bottom: 15px;
     border-radius: 5px;
@@ -203,4 +211,30 @@ a{
     width: 100px !important;
     border-radius: 50% !important;
 
+}
+
+.likebuttonUnliked{
+    margin: 5px;
+    color: #263238 !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #263238 !important;
+    border-radius: 10px !important;
+}
+
+.likebuttonUnliked:hover {
+    background-color: #263238 !important;
+    color: white !important;
+}
+
+.modalbuttonunliked{
+    margin: 5px;
+    color: #b0bec5 !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #90a4ae !important;
+    border-radius: 10px !important;
+}
+
+.modalbuttonunliked:hover {
+    background-color: #90a4ae !important;
+    color: #263238 !important;
 }
