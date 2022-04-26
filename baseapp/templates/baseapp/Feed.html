@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <title>Document</title>
 </head>
 
@@ -40,6 +42,62 @@
             {% endfor %}
         </div>
         <div class="middle--panel">
+
+
+            <div class="post--card center-align">
+                <div class="card--title">Create A New Post</div>
+                    Let everyone know what you're upto
+                <br><br>
+                <a href="#createPostModal" class="waves-effect waves-light btn modal-trigger"><i class="material-icons left">create</i>CREATE POST</a>
+                <br><br>
+            </div>
+
+            <div id="createPostModal" class="modal">
+                <div class="modal-content">
+                  <h4>Create New Post</h4>
+                  <form action="" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                    <div style="margin-top: 1px; margin-bottom: 1px;" class="row">
+                        <div class="col s12">
+                          Title of your Post:
+                          <div style="width: 60% !important;" class="input-field inline">
+                            <input required name="Title" id="postTtile" type="text">
+                            <label for="postTtile">Title</label>
+                          </div>
+                        </div>
+                      </div>
+                    <div style="margin-top: 1px; margin-bottom: 1px;" class="row">
+                        <div class="col s12">
+                            Body of your Post:
+                          <div style="width: 60% !important;" class="input-field inline">
+                            <textarea name="Body" id="postBody" type="text" class="materialize-textarea"></textarea>
+                            <label for="postBody">Body</label>
+                        </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col s12">
+                            Which page do you want to post this to
+                            <select name="Page">
+                            <option value="profile" selected>Post this on my profile</option>
+                            {% for page in pagesFollowed %}
+                                <option value="{{ page.PageID }}">{{ page.PageName }}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: inline-flex; align-items: center;" class="input-field inline">
+                        <p style="font-size: large;" class="left" for="id_ProfilePic">Image: &nbsp;</p>
+                        <input style="margin-top: 1rem;" type="file" name="PostImage" accept="image/*" id="id_ProfilePic">
+                    </div>
+                </div>
+                <div style="text-align: center !important;" class="modal-footer">
+                    <button type="submit" class="waves-effect waves-green btn">CREATE POST</button>
+                </div>
+            </form>
+              </div>
+
             {% for post in posts %}
             <div class="post--card">
                 <div class="card--navbar">
@@ -92,6 +150,16 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+  });
+</script>
+<script>
     $(document).on('click', '.friendRequest', function(event){
     event.preventDefault();
     var id = event.target.id;
@@ -107,10 +175,6 @@
                   userid:userid,
               },  
               success:function(){
-              elem = $('#popupmessage-add');
-              elem.fadeIn(400);
-              elem.delay(2200);
-              elem.fadeOut(400);
               
               }
           });
