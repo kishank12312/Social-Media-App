@@ -17,6 +17,11 @@
             
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <title>Post</title>
+    <style>
+        #commentModal{
+            width: 500px;
+        }
+    </style>
 </head>
 
 <body>
@@ -96,8 +101,33 @@
                         </div>
                     </div>
                     </div>
+                    <div class="col xl3">
+                        <a href="#commentModal" class="likebuttonUnliked waves-effect waves-light btn modal-trigger">
+                            COMMENT
+                        </a>
+                    </div>
                 </div>
             </div>
+            <div id="commentModal" class="modal">
+                <div class="modal-content">
+                  <h4>Add a new comment</h4>
+                  <form action="" method="POST">
+                      {% csrf_token %}
+                    <div style="margin-top: 1px; margin-bottom: 1px;" class="row">
+                        <div class="col s12">
+                          <div style="width: 100% !important;" class="input-field inline">
+                            <input required name="comment" id="postTtile" type="text">
+                            <label for="postTtile">Comment</label>
+                          </div>
+                        </div>
+                      </div>
+                    
+                <div style="text-align: center !important;" class="modal-footer">
+                    <button type="submit" class="waves-effect waves-green btn">Comment</button>
+                </div>
+            </form>
+              </div>
+              </div>
             <!-- END OF POST CARD -->
             <p class="commentTitle"> Comments &nbsp;<span>({{ this_post.CommentCount }})</span></p>
             {% for cwl in comment_info %}
@@ -149,7 +179,7 @@
                   <h5 class="white-text">People Who liked this comment</h5>
                   <br>
                   {% for liker in cwl.1 %}
-                  <a id="{{ cwl.0.CommentID }}commentLike{{ liker.username }}" href="" class="liker">
+                  <a id="{{ cwl.0.CommentID }}commentLiker{{ liker.username }}" href="" class="liker">
                     <img src="{{ liker|profilepicfromuser }}" class="commentprofilePic" alt="">
                     &nbsp;&nbsp;
                     <p class="left--accountName">{{ liker.username }}</p>
@@ -298,6 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var lk = document.getElementById("commentlikeCount" + String(commentID));
             lk.innerHTML = String(parseInt(lk.innerHTML) - 1);
             var liker = document.getElementById(String(commentID) + "commentLiker{{ request.user.username }}");
+            console.log(String(commentID) + "commentLiker{{ request.user.username }}");
             liker.remove();
             }
         });
@@ -305,5 +336,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     });
 </script>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var elems2 = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems2);
+    var instances = M.Modal.init(elems);
+  });
+</script>
 </html>
