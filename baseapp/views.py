@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from django.db import connection
 from django.contrib.auth import authenticate, login, logout
@@ -79,6 +78,21 @@ def feed(request):
     requestingUsers = friendRequests(request.user)
     context['friendRequests'] = requestingUsers
 
+    if request.method=="POST":
+        newpost = Posts()
+        newpost.user = request.user
+        newpost.Title = request.POST.get('Title')
+        newpost.Body = request.POST.get('Body') if 'Body' in request.POST else None
+        newpost.LikeCount, newpost.CommentCount = 0,0
+        pageval = request.POST.get('Page')
+        if pageval == 'profile':
+            newpost.page = None
+        else:
+            newpost.page = Pages.objects.get(PageId = int(pageval))
+        newpost = request.FILES['PostImage'] if 'PostImage' in request.FILES else None
+
+        newpost.save()
+
 
     if request.method == 'GET':
         if request.GET.get('tag') == 'friendrequest':
@@ -128,6 +142,17 @@ def posts(request,postID):
     context['this_post']= post
     context['comment_info'] = commentWithLikes
     context['postLikers'] = postLikers
+
+    
+    if request.method == 'POST':
+        comment = request.POST.get('comment')
+        newcomment = Comments(user=request.user, post=post)
+        newcomment.Body = comment
+        post.CommentCount += 1
+        post.save()
+        newcomment.save()
+
+        return redirect(reverse('post', kwargs={'postID': post.PostID}))
 
     if request.method == 'GET':
         if request.GET.get('tag') == 'likepost':
@@ -288,3 +313,22 @@ def accountSetup(request):
         return redirect(reverse('feed'))
     return render(request,'baseapp/accountSetup.html',context)
     
+def editProfile(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
+    
+    context = {}
+    if request.method == "POST":
+        details = UserDetails.objects.get(user = request.user)
+ 
+        details.Name = request.POST.get('Name')
+        details.PhoneNumber = request.POST.get('PhoneNumber')
+        details.Gender = request.POST.get('Gender')
+        details.About = request.POST.get('About')
+        details.Private = 'Private' in request.POST
+        details.ProfilePic = request.FILES['ProfilePic']
+ 
+        details.save()
+ 
+        return redirect(reverse('feed'))
+    return render(request,'baseapp/editUser.html',context)

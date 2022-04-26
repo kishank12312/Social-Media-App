@@ -30,7 +30,7 @@ class Posts(models.Model):
     PostID = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     Title = models.CharField(max_length=150)
-    Body = models.CharField(max_length=1000)
+    Body = models.CharField(max_length=1000, null=True)
     PostedOn = models.DateTimeField(auto_now_add=True, null=True)
     CommentCount = models.IntegerField(null=True)
     LikeCount = models.IntegerField(null=True)
