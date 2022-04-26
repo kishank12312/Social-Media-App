@@ -1,44 +1,171 @@
-
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="../../../static/css/login--styles.css">
+    <link rel="stylesheet" href="/static/css/login--styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
-    <title>Login</title>
+    <title>Post</title>
+    <style>
+        .input-field {
+            width: 95%;
+        }
+
+        .input-field label {
+            color: #263238;
+        }
+
+        .input-field input[type=text]:focus+label {
+            color: #263238;
+        }
+
+        .input-field input:focus+label {
+            color: #263238 !important;
+        }
+
+        /* label underline focus color */
+        .row .input-field input:focus {
+            border-bottom: 1px solid #263238 !important;
+            box-shadow: 0 1px 0 0 #263238 !important
+        }
+
+        .input-field .prefix.active {
+            color: #263238;
+        }
+
+        .input-field input[type=text].valid {
+            border-bottom: 1px solid #263238;
+            box-shadow: 0 1px 0 0 #263238;
+        }
+
+        .input-field input[type=text].invalid {
+            border-bottom: 1px solid #263238;
+            box-shadow: 0 1px 0 0 #263238;
+        }
+
+        input:not([type]),
+        input[type=text]:not(.browser-default),
+        input[type=password]:not(.browser-default),
+        input[type=email]:not(.browser-default),
+        input[type=url]:not(.browser-default),
+        input[type=time]:not(.browser-default),
+        input[type=date]:not(.browser-default),
+        input[type=datetime]:not(.browser-default),
+        input[type=datetime-local]:not(.browser-default),
+        input[type=tel]:not(.browser-default),
+        input[type=number]:not(.browser-default),
+        input[type=search]:not(.browser-default),
+        textarea.materialize-textarea {
+            border-bottom: 1px solid #3e4a50;
+        }
+    </style>
 </head>
+
 <body>
+
     <div class="navbar">
-        <p class="navbar--text">Signup</p>
-        <i class="material-icons">arrow_forward</i>
-    </div>
+        <p class="navbar--appname">UniNetwork</p>
+        <div class="navbar--icons">
+            <p class="nav--signup">Signup</p>
+            <a class="link" href=""><i class="material-icons">arrow_forward</i></a>
 
-    <hr />
-
-    <div class="login--card">
-        <div class="login--header">
-            <p class="login--big--text">Here you can Login</p>
-            <p class="login--small--text">Let's join us :)</p>
         </div>
 
-        <div class="login--form">
-            <form action="" method="post" class="form--items">
-                {% csrf_token %}
-                <label for="email">Username</label>
-                <br/>
-                <input type="text" id="email" name="username" class="form--email"/>
-                <br/>
-                <label for="password">Password</label>
-                <br/>
-                <input type="password" id="password" name="password" class="form--password"/>
-                <br/>
-                <input type="submit" placeholder="Login" class="form--login"/>
-            </form>
+    </div>
+    <br>
+    <div class="row center-align">
+        <div class="col s12 m4 offset-m4">
+            <div class="card" style="background-color: #90a4ae; border: 1px solid white; border-radius: 5px;">
+                <div class="card-content white-text" style="padding-left: 1%;">
+                    <span style="color: #263238;" class="card-title">Login</span>
+                    <br><br>
+                    <form action="" method="POST" id="LoginForm" autocomplete="off">
+                        {% csrf_token %}
+                        <div class="row" style="display: flex; align-items: center; margin-left: 0%;">
+                            <div class="col s1" style="display: flex; align-items: center;">
+                                <i class='material-icons' style="color: #263238;">account_circle</i>
+
+                            </div>
+                            <div style="margin-top: 0%;" class="col s10">
+                                <div style="width: 100%;margin-top: 0%;" class="input-field inline">
+                                    <input type="text" name="username" maxlength="150" autofocus required
+                                        id="id_username">
+                                    <label for="id_username">Username:</label>
+
+                                </div>
+                            </div>
+
+                            <div class="col s1">
+                                <span class="tooltipped" data-position="right"
+                                    data-tooltip="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.">
+                                    <i class='material-icons' style="color: #263238;">info</i>
+                                </span>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row" style="display: flex; align-items: center; margin-left: 0%;">
+                            <div class="col s1" style="display: flex; align-items: center;">
+                                <i class='material-icons' style="color: #263238;">key</i>
+                            </div>
+                            <div style="margin-top: 0%;" class="col s10">
+                                <div style="width: 100%;margin-top: 0%;" class="input-field inline">
+                                    <input type="password" name="password" autocomplete="new-password" required
+                                        id="id_password1">
+                                    <label for="id_password1">Password:</label>
+
+                                </div>
+                            </div>
+
+                            <div class="col s1">
+                                <span class="tooltipped" data-position="right"
+                                    data-tooltip="<ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul>">
+                                    <i class='material-icons' style="color: #263238;">info</i>
+                                </span>
+                            </div>
+
+
+                        </div>
+
+
+
+
+                </div>
+
+                <a style="color: #263238;" href="/login">Don't Have an Account? Signup</a><br><br>
+                <div class="row center-align">
+                    <a onclick="submitMethod()" style="padding-bottom: 35px !important;"
+                        class="likebuttonUnliked waves-effect waves-light btn likecomment" type="submit">LOGIN
+                    </a>
+                </div>
+                <br>
+                </form>
+            </div>
         </div>
     </div>
+    </div>
+
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.tooltipped');
+        var instances = M.Tooltip.init(elems);
+    });
+    function submitMethod() {
+        document.getElementById("LoginForm").submit();
+    }
+</script>
+
 </html>
