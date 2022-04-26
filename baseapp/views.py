@@ -8,11 +8,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from django.db import connection
 from django.contrib.auth import authenticate, login, logout
-from .forms import CreateUserForm
 from .models import *
 from .functions import *
 from django.db.models import Q
- 
+from .forms import CreateUserForm,AccountSetupForm
+
 
 cursor = connection.cursor()
 
@@ -266,4 +266,25 @@ def userpage(request,name):
             frnd.save()
 
     return render(request,'baseapp/Profile.html',context)
+
+def accountSetup(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
+        
+    context = {}
+    context['form'] = AccountSetupForm()
+    if request.method == "POST":
+        details = UserDetails()
+        details.user = request.user
+        details.Name = request.POST.get('Name')
+        details.DateOfBirth = parsedDate(request.POST.get('DateOfBirth'))
+        details.PhoneNumber = request.POST.get('PhoneNumber')
+        details.About = request.POST.get('About')
+        details.Private = 'Private' in request.POST
+        details.ProfilePic = request.FILES['ProfilePic']
+ 
+        details.save()
+ 
+        return redirect(reverse('feed'))
+    return render(request,'baseapp/accountSetup.html',context)
     
