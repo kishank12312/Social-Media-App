@@ -94,20 +94,13 @@
                                 <i class='material-icons' style="color: #263238;">account_circle</i>
 
                             </div>
-                            <div style="margin-top: 0%;" class="col s10">
+                            <div style="margin-top: 0%;" class="col s11">
                                 <div style="width: 100%;margin-top: 0%;" class="input-field inline">
                                     <input type="text" name="username" maxlength="150" autofocus required
                                         id="id_username">
                                     <label for="id_username">Username:</label>
 
                                 </div>
-                            </div>
-
-                            <div class="col s1">
-                                <span class="tooltipped" data-position="right"
-                                    data-tooltip="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.">
-                                    <i class='material-icons' style="color: #263238;">info</i>
-                                </span>
                             </div>
 
 
@@ -119,7 +112,7 @@
                             <div class="col s1" style="display: flex; align-items: center;">
                                 <i class='material-icons' style="color: #263238;">key</i>
                             </div>
-                            <div style="margin-top: 0%;" class="col s10">
+                            <div style="margin-top: 0%;" class="col s11">
                                 <div style="width: 100%;margin-top: 0%;" class="input-field inline">
                                     <input type="password" name="password" autocomplete="new-password" required
                                         id="id_password1">
@@ -127,23 +120,17 @@
 
                                 </div>
                             </div>
-
-                            <div class="col s1">
-                                <span class="tooltipped" data-position="right"
-                                    data-tooltip="<ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul>">
-                                    <i class='material-icons' style="color: #263238;">info</i>
-                                </span>
-                            </div>
-
-
                         </div>
+                        {% for message in messages %}
+                            <p class="red-text" style="margin-left: 10%;" > {{ message }}</p>
+                        {% endfor %}
 
 
 
 
                 </div>
 
-                <a style="color: #263238;" href="/login">Don't Have an Account? Signup</a><br><br>
+                <a id="singupbutton" style="color: #263238;" href="{% url 'signup' %}">Don't Have an Account? Signup</a><br><br>
                 <div class="row center-align">
                     <a onclick="submitMethod()" style="padding-bottom: 35px !important;"
                         class="likebuttonUnliked waves-effect waves-light btn likecomment" type="submit">LOGIN

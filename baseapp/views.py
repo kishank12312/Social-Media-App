@@ -8,6 +8,7 @@ from .models import *
 from .functions import *
 from django.db.models import Q
 from .forms import CreateUserForm
+from django.contrib import messages
 
 
 cursor = connection.cursor()
@@ -27,6 +28,9 @@ def loginPage(request):
         if user is not None:
             login(request, user)
             return redirect(reverse('feed'))
+        else:
+            messages.info(request, 'Username or Password is incorrect.')
+
             
 
     return render(request, 'baseapp/Login.html')
