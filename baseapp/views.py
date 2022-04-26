@@ -88,8 +88,8 @@ def feed(request):
         if pageval == 'profile':
             newpost.page = None
         else:
-            newpost.page = Pages.objects.get(PageId = int(pageval))
-        newpost = request.FILES['PostImage'] if 'PostImage' in request.FILES else None
+            newpost.page = Pages.objects.get(PageID = int(pageval))
+        newpost.Image = request.FILES['PostImage'] if 'PostImage' in request.FILES else None
 
         newpost.save()
 
@@ -233,11 +233,11 @@ def userpage(request,name):
     
     
     accessuser = User.objects.get(username = name)
-    #context['them']=accessuser
+    context['accesseduser']=accessuser
     accessUserDetails = UserDetails.objects.get(user = accessuser)
     context['them']=accessUserDetails.Name
     if accessUserDetails.Private:
-        if checkFriends(accessuser, request.user):
+        if checkFriends(accessuser, request.user) |( accessuser == request.user):
             #THEIR FRIENDS
             accessUserFriends = findfriends(accessuser)
             context['theirFriends'] = accessUserFriends
@@ -332,3 +332,40 @@ def editProfile(request):
  
         return redirect(reverse('feed'))
     return render(request,'baseapp/editUser.html',context)
+
+def pagesPage(request,id):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
+    
+    context = {}
+    
+    currpage = Pages.objects.get(PageID=id)
+    context['page']=currpage
+    postsMade = Posts.objects.filter(page=currpage).order_by('PostedOn')
+    final_posts = []
+    final_posts_with_likes = []
+    for post in postsMade:
+        final_posts.append(post)
+    final_posts.sort(key=lambda x:x.PostedOn)
+    for post in final_posts:
+        if PostLikes.objects.filter(post=post,user=request.user).first():
+            final_posts_with_likes.append((post,True))
+        else:
+            final_posts_with_likes.append((post,False))
+    context['posts']=final_posts_with_likes
+    pageFollows = PageFollowers.objects.filter(page=currpage)
+    context['followers'] = pageFollows
+
+    pageOwner = currpage.PageAdmin
+    context['owner'] = pageOwner
+
+    if request.method == 'GET':
+
+        if request.GET.get('tag') == 'followpage':
+            newflr = PageFollowers.objects.filter(page = currpage, user = request.user)
+            print(newflr)
+            if newflr==None:
+                newflr = PageFollowers(user = request.user, page = currpage)
+                newflr.save()
+
+    return render(request,'baseapp/Pages.html',context)

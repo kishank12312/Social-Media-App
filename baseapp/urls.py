@@ -12,5 +12,6 @@ urlpatterns = [
     path('post/<int:postID>/', views.posts, name='post'),
     path('user/<str:name>/',views.userpage,name='profile'),
     path('accountSetup',views.accountSetup,name='accountSetup'),
-    path('edituser',views.editProfile,name='editProfile')
+    path('edituser',views.editProfile,name='editProfile'),
+    path('page/<int:id>',views.pagesPage,name='pages')
 ]

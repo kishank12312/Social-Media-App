@@ -23,7 +23,7 @@ class Pages(models.Model):
     PageID = models.AutoField(primary_key=True)
     PageName = models.CharField(max_length=150)
     PageAdmin = models.ForeignKey(User, on_delete=models.CASCADE)
-    About = models.CharField(max_length=300)
+    About = models.CharField(max_length=10000)
     PageImage = models.ImageField(null= True, blank=True)
 
 class Posts(models.Model):

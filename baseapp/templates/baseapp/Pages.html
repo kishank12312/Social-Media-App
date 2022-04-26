@@ -1,0 +1,294 @@
+{% load static %}
+{% load extratags %}
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="{% static 'css/signup--styles.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+                
+        <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+        <title>Post</title>
+    </head>
+
+<body>
+
+    <div class="navbar">
+        <p class="navbar--appname">Uni Network</p>
+        <div class="navbar--icons">
+            <a href=""><i class="material-icons">create</i></a>
+            <a href=""><i class="material-icons">pages</i></a>
+            <a href="/friends"><i class="material-icons">people</i></a>
+            <a href=""><i class="material-icons">person</i></a>
+        </div>
+
+    </div>
+
+
+    <div id="index-banner">
+        <div class="section no-pad-bot">
+          <div class="container">
+            <br> <br>
+    
+    
+            <div class="row center">
+                <img src="{{ theirInfo.ProfilePic.url }}" alt="">
+              <h3 class="header" style="color:white;"> {{ page.PageName }} </h3>
+            </div>
+            <br>
+            <div class="section">
+                <h4 style="color:white;"> This Page is About...</h4>
+                <p style="color:white;"> {{ page.About }}</p>
+            </div>
+
+            <br><br>
+
+          </div> 
+        </div>
+    </div> 
+
+    <div class="section">
+        &nbsp;&nbsp;
+        {% if owner != request.user %}
+            <button class="followPage"> Follow the page </button>
+        {% endif %}
+
+    </div>
+
+    <div class="section">
+        &nbsp;&nbsp;
+        {% if owner == request.user %}
+            <a href = "/editpage"> <button>Edit the page </button></a>
+        {% endif %}
+    
+
+    </div>
+
+
+    <div class="main--page">
+        <div class="col s3">
+            <p class="left--text"> Page Followers</p>
+            {% for flwr in followers %}
+            <div class="followers">
+                <!--<img src="{% static 'images/testimg.jpg' %}" class="profilePic" alt=""> -->
+                
+                <p class="left--accountName"><a href = "/profile/{{ flwr.username }}">{{ flwr.user }}</a></p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="col s9">
+            {% for post in posts %}
+            <div class="post--card">
+                <div class="card--navbar">
+                    <!-- <img class="profilePic" src="{% static 'images/testimg.jpg' %}" alt=""> -->
+                    &nbsp;
+                    <div class="name--time--page">
+                        <div class="name--page">
+                            <p class="profile--name">{{ post.0.user.username }}</p>
+                            {% if post.0.page != None %}
+                                <i class="material-icons">play_arrow</i>
+                                <p class="page--name">{{ post.0.page.PageName }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="time">
+                            <p class="post--time">{{ post.0.PostedOn }}</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card--title">{{ post.0.Title }}</div>
+                <div class="card--content">
+                    {{ post.0.Body }}
+                </div>
+
+                <div class="like--comment">
+                    <i class="material-icons">thumb_up_off_alt</i>
+                    <p class="like">Like</p>
+                    <p class="likenumber">{{ post.0.LikeCount }}</p>
+
+                    <i class="material-icons">chat_bubble_outline</i>
+                    <p class="comment">Comment</p>
+                    <p class="comment">{{ post.0.CommentCount }}</p>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).on('click', '.followPage', function(event){
+    event.preventDefault();
+    $.ajax({
+        type:'GET',
+        url:'',
+        data:{
+            tag:'followpage',
+        },
+        success:function(){
+        elem = $('#popupmessage-add');
+              elem.fadeIn(400);
+              elem.delay(2200);
+              elem.fadeOut(400);
+              
+              }
+          });
+      }
+
+    );
+</script>
+
+<script>
+    $(document).on('click', '.likepost', function(event){
+    event.preventDefault();
+    var elem = event.currentTarget;
+    var classes = elem.classList;
+    
+    if(classes.contains('likebuttonUnliked')){
+        
+        $.ajax({
+            type:'GET',
+            url:'',
+            data:{
+                tag:'likepost',
+            },  
+            success:function(){
+        //   elem = $('#popupmessage-add');
+        //   elem.fadeIn(400);
+        //   elem.delay(2200);
+        //   elem.fadeOut(400);
+            elem.childNodes[2].nodeValue = "LIKED";
+            elem.className = "likebuttonLiked waves-effect waves-light btn likepost";
+            var lk = document.getElementById("PostlikeCount");
+            lk.innerHTML = String(parseInt(lk.innerHTML) + 1);
+            var newliker = document.createElement('a');
+            var prpic = document.createElement('img');
+            prpic.src = "{{ request.user|profilepicfromuser }}";
+            prpic.className = "commentprofilePic";
+            newliker.appendChild(prpic);
+            newliker.className = "liker";
+            newliker.href = "";
+            newliker.innerHTML += '&nbsp;&nbsp;';
+            var newp = document.createElement("p");
+            newp.className = "left--accountName";
+            newp.innerHTML = "{{ request.user.username }}";
+            newliker.appendChild(newp);
+            newliker.id = "postLiker{{ request.user.username }}"
+            document.getElementById("postlikesmodal").appendChild(newliker);
+            }
+        });
+      }
+    else{
+        $.ajax({
+            type:'GET',
+            url:'',
+            data:{
+                tag:'unlikepost',
+            },  
+            success:function(){
+        //   elem = $('#popupmessage-add');
+        //   elem.fadeIn(400);
+        //   elem.delay(2200);
+        //   elem.fadeOut(400);
+            elem.childNodes[2].nodeValue = "LIKE";
+            elem.className = "likebuttonUnliked waves-effect waves-light btn likepost";
+            var lk = document.getElementById("PostlikeCount");
+            lk.innerHTML = String(parseInt(lk.innerHTML) - 1);
+            var liker = document.getElementById("postLiker{{ request.user.username }}");
+            liker.remove();
+            }
+        });
+    }
+    
+    });
+</script>
+<script>
+    $(document).on('click', '.likecomment', function(event){
+    event.preventDefault();
+    var elem = event.currentTarget;
+    var commentID = elem.id;
+    var classes = elem.classList;
+    
+    if(classes.contains('likebuttonUnliked')){
+        
+        $.ajax({
+            type:'GET',
+            url:'',
+            data:{
+                tag:'likecomment',
+                cid:commentID,
+            },  
+            success:function(){
+        //   elem = $('#popupmessage-add');
+        //   elem.fadeIn(400);
+        //   elem.delay(2200);
+        //   elem.fadeOut(400);
+            elem.childNodes[2].nodeValue = "LIKED";
+            elem.className = "likebuttonLiked waves-effect waves-light btn likecomment";
+            var lk = document.getElementById("commentlikeCount" + String(commentID));
+            lk.innerHTML = String(parseInt(lk.innerHTML) + 1);
+            var newliker = document.createElement('a');
+            var prpic = document.createElement('img');
+            prpic.src = "{{ request.user|profilepicfromuser }}";
+            prpic.className = "commentprofilePic";
+            newliker.appendChild(prpic);
+            newliker.className = "liker";
+            newliker.href = "";
+            newliker.innerHTML += '&nbsp;&nbsp;';
+            var newp = document.createElement("p");
+            newp.className = "left--accountName";
+            newp.innerHTML = "{{ request.user.username }}";
+            newliker.appendChild(newp);
+            newliker.id = String(commentID) + "commentLiker{{ request.user.username }}"
+            document.getElementById("commentLikesModal1").appendChild(newliker);
+            }
+        });
+      }
+    else{
+        $.ajax({
+            type:'GET',
+            url:'',
+            data:{
+                tag:'unlikecomment',
+                cid:commentID,
+            },  
+            success:function(){
+        //   elem = $('#popupmessage-add');
+        //   elem.fadeIn(400);
+        //   elem.delay(2200);
+        //   elem.fadeOut(400);
+            elem.childNodes[2].nodeValue = "LIKE";
+            elem.className = "likebuttonUnliked waves-effect waves-light btn likecomment";
+            var lk = document.getElementById("commentlikeCount" + String(commentID));
+            lk.innerHTML = String(parseInt(lk.innerHTML) - 1);
+            var liker = document.getElementById(String(commentID) + "commentLiker{{ request.user.username }}");
+            console.log(String(commentID) + "commentLiker{{ request.user.username }}");
+            liker.remove();
+            }
+        });
+    }
+    
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var elems2 = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems2);
+    var instances = M.Modal.init(elems);
+  });
+</script>
+
+</html>
