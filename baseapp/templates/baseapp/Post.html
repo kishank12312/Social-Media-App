@@ -62,9 +62,15 @@
 
                 <div class="row">
                     <div class="col xl3">
+                        {% if this_post|likedpost:request.user %}
+                        <button class="likebuttonLiked waves-effect waves-light btn likepost">
+                            <i class="material-icons left">thumb_up_off_alt</i>LIKED
+                        </button>
+                        {% else %}
                         <button class="likebuttonUnliked waves-effect waves-light btn likepost">
                             <i class="material-icons left">thumb_up_off_alt</i>LIKE
                         </button>
+                        {% endif %}
                     </div>
                     <div class="col xl6">
                     <a href="#postlikes" class="modal-trigger">
@@ -116,7 +122,7 @@
                 <div class="card-action" style="padding: 0; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                     <div class="row"  style="margin-bottom: 0 !important; height: fit-content;">
                         <div class="col xl3">
-                            {% if cwl|liked %}
+                            {% if cwl|liked:request.user %}
                             <a id="{{ cwl.0.CommentID }}" class="likebuttonLiked waves-effect waves-light btn likecomment">
                                 <i class="material-icons left">thumb_up_off_alt</i>LIKED
                             </a>
@@ -193,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
             lk.innerHTML = String(parseInt(lk.innerHTML) + 1);
             var newliker = document.createElement('a');
             var prpic = document.createElement('img');
-            prpic.src = "{% static 'images/testimg.jpg' %}";
+            prpic.src = "{{ request.user|profilepicfromuser }}";
             prpic.className = "commentprofilePic";
             newliker.appendChild(prpic);
             newliker.className = "liker";
@@ -259,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
             lk.innerHTML = String(parseInt(lk.innerHTML) + 1);
             var newliker = document.createElement('a');
             var prpic = document.createElement('img');
-            prpic.src = "{% static 'images/testimg.jpg' %}";
+            prpic.src = "{{ request.user|profilepicfromuser }}";
             prpic.className = "commentprofilePic";
             newliker.appendChild(prpic);
             newliker.className = "liker";

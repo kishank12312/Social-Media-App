@@ -1,7 +1,3 @@
-from ast import Lambda
-from contextlib import nullcontext
-import imp
-from turtle import pos
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
@@ -11,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import *
 from .functions import *
 from django.db.models import Q
-from .forms import CreateUserForm,AccountSetupForm
+from .forms import CreateUserForm
 
 
 cursor = connection.cursor()
@@ -156,9 +152,9 @@ def posts(request,postID):
 
 def abcd(request):
     p = Posts(
-        user=User.objects.get(username='user1'), 
-        Title='Proof that penandes is a fraud',
-        Body="I was doing my LLM in Manchester and my professor told me that I couldn’t use a pencil, I had to use a pen. I checked my bag, and all my pens were gone. after looking at the security footage, I saw that PRUNO PENADES had taken all my pens! I was furious. Shame on you Penades",
+        user=request.user, 
+        Title='Why harry maguire could actually be the greatest defender of all time',
+        Body="Harry Maguire has played in a World Cup semifinal and become one of the most highly rated defenders in the Premier League, but even his most ardent supporters would struggle to argue that he is the very best at his position.  Yet if Leicester get their way and force Manchester United to pay in excess of £80 million, the 26-year-old will become the most expensive defender in the world. That would eclipse the £75m that Liverpool paid for Virgil van Dijk -- not only the world's best defender but the favourite to win the Ballon d'Or this year.  All this for a player Leicester signed from relegated Hull City for an initial £12m just two years ago.",
         CommentCount=0,
         LikeCount=0,
         page=None
@@ -272,13 +268,13 @@ def accountSetup(request):
         return redirect(reverse('login'))
         
     context = {}
-    context['form'] = AccountSetupForm()
     if request.method == "POST":
         details = UserDetails()
         details.user = request.user
         details.Name = request.POST.get('Name')
         details.DateOfBirth = parsedDate(request.POST.get('DateOfBirth'))
         details.PhoneNumber = request.POST.get('PhoneNumber')
+        details.Gender = request.POST.get('Gender')
         details.About = request.POST.get('About')
         details.Private = 'Private' in request.POST
         details.ProfilePic = request.FILES['ProfilePic']
