@@ -1,0 +1,461 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: #263238;
+    
+    font-family: 'Nunito', sans-serif;
+}
+
+.navbar{
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+    color: #4dd0e1;
+    background-color: #212121;
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+    box-shadow: 1px 1px 10px #37474f;
+    opacity: 80%;
+}
+
+.navbar--appname{
+    padding-left: 30px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-right: auto;
+    font-weight: 600;
+    font-size: large;
+    color: #4dd0e1;
+}
+
+.navbar--icons{
+    padding-right: 30px;
+    justify-content: flex-end;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.navbar--icons > a > .material-icons{
+    align-content: flex-end;
+    width: 24px;
+    margin: 10px;
+    color: #4dd0e1 !important; 
+}
+
+.material-icons:hover{
+    opacity: 50%;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.main--page{
+    display: flex;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+
+.left--panel{
+    width: 450px;
+    padding-left: 50px;
+}
+
+.middle--panel{
+    overflow: auto;
+    height: auto;
+    
+    padding: .5rem;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+}
+
+.right--panel{
+    width: 450px;
+    padding-right: 50px;
+}
+
+body::-webkit-scrollbar,
+.left--panel::-webkit-scrollbar,
+.middle--panel::-webkit-scrollbar,
+.right--panel::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+.post--card{
+    height: fit-content;
+    width: 600px;
+    border: solid 2px;
+    border-color: #343a40;
+    background-color: #343a40;
+    color: #dee2e6;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+
+a{
+    color: #dee2e6;
+    text-decoration: none;
+}
+
+
+.likebuttonUnliked{
+    margin: 5px;
+    color: #263238 !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #263238 !important;
+    border-radius: 10px !important;
+}
+
+.likebuttonUnliked:hover {
+    background-color: #263238 !important;
+    color: white !important;
+  }
+
+input{
+    color: #263238 !important;
+}
+  /* label color */
+.input-field label {
+color: #263238;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+color: #263238;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+border-bottom: 1px solid #263238;
+box-shadow: 0 1px 0 0 #263238;
+}
+/* valid color */
+.input-field input[type=text].valid {
+border-bottom: 1px solid #263238;
+box-shadow: 0 1px 0 0 #263238;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+border-bottom: 1px solid #263238;
+box-shadow: 0 1px 0 0 #263238;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+color: #263238;
+}
+
+#loginbutton:hover{
+    text-decoration: underline;
+}
+
+.image{
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+}
+*{
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: #263238;
+    
+    font-family: 'Nunito', sans-serif;
+}
+
+.navbar{
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+    color: #4dd0e1;
+    background-color: #212121;
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+    box-shadow: 1px 1px 10px #37474f;
+}
+
+.navbar--appname{
+    padding-left: 30px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-right: auto;
+    font-weight: 600;
+    font-size: large;
+    color: #4dd0e1;
+}
+
+.navbar--icons{
+    padding-right: 30px;
+    justify-content: flex-end;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+
+
+.navbar--icons > a > .material-icons{
+    align-content: flex-end;
+    width: 24px;
+    margin: 10px;
+    color: #4dd0e1 !important; 
+}
+
+.material-icons:hover{
+    opacity: 50%;
+}
+
+.main--page{
+    padding-top: 80px;
+    display: flex;
+    overflow: hidden;
+    height: 100vh;
+    /* margin-top: -100px;
+    padding-top: 100px; */
+    top:100px;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+
+.left--panel,
+.middle--panel,
+.right--panel {
+    overflow: auto;
+    height: auto;
+    
+    padding: .5rem;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+}
+.left--panel{
+    width: 25%;
+    border-right: solid 1px #343a40;
+}
+
+.left--text{
+    color: #dee2e6;
+}
+
+
+.middle--panel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.right--panel{
+    width: 25%;
+    border-left: solid 1px #343a40;
+    color: #dee2e6;
+}
+
+body::-webkit-scrollbar,
+.left--panel::-webkit-scrollbar,
+.middle--panel::-webkit-scrollbar,
+.right--panel::-webkit-scrollbar {
+    display: none;
+}
+
+.left--accountName{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 120px;
+}
+
+
+
+.pending--friends{
+    display: flex;
+    align-items: center;
+    color: #dee2e6; 
+    max-width: 400px;
+}
+
+.post--card{
+    height: fit-content;
+    width: 600px;
+    border: solid 2px;
+    border-color: #343a40;
+    background-color: #90a4ae;
+    color: #263238;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.card--navbar{
+    display: flex;
+    padding-left: 5px;
+    align-items: center;
+}
+
+.card--navbar > .material-icons{
+    color: red;
+    font-size: 45px;
+}
+
+.name--time--page{
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    margin: 0px;
+    line-height: 0px;
+    font-size: small;
+}
+
+.name--page{
+    display: flex;
+    align-items: center;
+}
+
+.card--title{
+    padding: 10px;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.card--content{
+    padding: 10px;
+    font-size: small;
+}
+
+.page--list{
+    list-style: none;
+    padding-left: 0px;
+    color: #dee2e6;
+}
+
+a{
+    color: #dee2e6;
+    text-decoration: none;
+}
+
+.pages--followed{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.pages--followed > a{
+    margin-left: 7px;
+}
+
+.like--comment{
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.like{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.likenumber{
+    margin-right: 40px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: #263238;
+    color: #90a4ae;
+    border-radius: 50%;
+}
+
+.likenumber:hover{
+    color: #4dd0e1 !important;
+}
+.comment{
+    margin-left: 10px;
+}
+
+.profilePic{
+    height: 40px !important;
+    width: 40px !important;
+    border-radius: 50% !important;
+}
+
+.displayPic{
+    height: 100px !important;
+    width: 100px !important;
+    border-radius: 50% !important;
+
+}
+
+.likebuttonUnliked{
+    margin: 5px;
+    color: #263238 !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #263238 !important;
+    border-radius: 10px !important;
+}
+
+.likebuttonUnliked:hover {
+    background-color: #263238 !important;
+    color: white !important;
+}
+
+.likebuttonLiked{
+    margin: 5px;
+    background-color: #263238 !important;
+    border: 2px solid #263238 !important;
+    border-radius: 10px !important;
+}
+
+.modalbuttonunliked{
+    margin: 5px;
+    color: #b0bec5 !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #90a4ae !important;
+    border-radius: 10px !important;
+}
+
+.modalbuttonunliked:hover {
+    background-color: #90a4ae !important;
+    color: #263238 !important;
+}
+
+.friendaccept{
+    margin: 5px;
+    color: #2f5d3e !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #2f5d3e !important;
+    border-radius: 10px !important;
+}
+
+.friendaccept:hover {
+    background-color: #2f5d3e !important;
+    color: white !important;
+}
+.friendreject{
+    margin: 5px;
+    color: #5d2f33 !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #5d2f33 !important;
+    border-radius: 10px !important;
+}
+
+.friendreject:hover {
+    background-color: #5d2f33 !important;
+    color: white !important;
+}

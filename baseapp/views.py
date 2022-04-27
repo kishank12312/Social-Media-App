@@ -246,7 +246,8 @@ def userpage(request,name):
     if not request.user.is_authenticated:
         return redirect(reverse('login'))
     
-    
+    userPages = findFollowedPages(request.user)
+    context['pagesFollowed'] = userPages
     accessuser = User.objects.get(username = name)
     context['accesseduser']=accessuser
     accessUserDetails = UserDetails.objects.get(user = accessuser)
@@ -304,6 +305,20 @@ def userpage(request,name):
         if request.GET.get('tag') == 'sendrequest':
             frnd = Friends(Requester = request.user, Requested = accessuser, Confirmed = False)
             frnd.save()
+        elif request.GET.get('tag') == 'likepost':
+            post_id = int(request.GET.get('id'))
+            postobject = Posts.objects.get(PostID = post_id)
+            newlike = PostLikes(post=postobject, user=request.user)
+            newlike.save()
+            postobject.LikeCount += 1
+            postobject.save()
+        elif request.GET.get('tag') == 'unlikepost':
+            post_id = int(request.GET.get('id'))
+            postobject = Posts.objects.get(PostID = post_id)
+            existinglike = PostLikes.objects.get(post=postobject, user=request.user)
+            existinglike.delete()
+            postobject.LikeCount -= 1
+            postobject.save()
 
     return render(request,'baseapp/Profile.html',context)
 
@@ -426,7 +441,7 @@ def pagesPage(request):
     if request.method=="POST":
         newpage = Pages()
         newpage.PageAdmin = request.user
-        newpage.PageName = request.POST.get('Page name:')
+        newpage.PageName = request.POST.get('PageName')
         newpage.About = request.POST.get('About') if 'About' in request.POST else None
         newpage.PageImage = request.FILES['PostImage'] if 'PostImage' in request.FILES else None
 

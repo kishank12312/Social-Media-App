@@ -1,5 +1,6 @@
 from django import template
 from ..models import *
+from ..functions import checkFriends
 register = template.Library()
 
 @register.filter
@@ -23,3 +24,8 @@ def likedpost(thispost,user):
         if i.user == user:
             return True
     return False
+
+@register.filter
+def isNotFriendOf(user1,user2):
+    print(user1,user2)
+    return checkFriends(user1.user2)

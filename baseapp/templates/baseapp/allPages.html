@@ -1,6 +1,6 @@
 {% load static %}
 <html lang="en">
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,23 +10,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <title>Post</title>
 </head>
-
+ 
 <body>
-
+ 
     <div class="navbar">
         <p class="navbar--appname"><a href="{% url 'feed' %}" style="color: inherit">UniNetwork</a></p>
         <div class="navbar--icons">
-            <a href="#createPageModal" class="modal-trigger"><i class="material-icons">create</i></a>
             <a href="{% url 'allPages' %}"><i class="material-icons">pages</i></a>
             <a href="{% url 'friends' %}"><i class="material-icons">people</i></a>
             <a href="{% url 'profile' request.user.username %}"><i class="material-icons">person</i></a>
         </div>
     </div>
-
+ 
     <div class="main--page">
+ 
         <div class="left--panel">
             <p class="left--text">Pages you created</p>
             {% for page in created %}
@@ -38,64 +39,64 @@
             </div>
             {% endfor %}
         </div>
-        
-
+ 
         <div class="middle--panel">
-
-
-            <div class="post--card center-align">
-                <div class="card--title">Create A New Page</div>
-                    Start your own page! Bring people with similar interests together
-                <br><br>
-                <a href="#createPageModal" class="waves-effect waves-light btn modal-trigger likebuttonUnliked"><i class="material-icons left">create</i>CREATE PAGE</a>
-                <br><br>
-            </div>
-
-            <div id="createPageModal" class="modal blue-grey darken-3">
-                <div style="padding-bottom: 5px; margin-top: 5px;" class="modal-content blue-grey-text text-lighten-4">
-                  <h4>Create New Page</h4>
-                  <form action="" method="POST" style="margin-bottom: 0;" enctype="multipart/form-data">
-                      {% csrf_token %}
-                    <div style="margin-top: 1px; margin-bottom: 1px;" class="row">
-                        <div class="col s12">
-                          Title of your page:
-                          <div style="width: 60% !important;" class="input-field inline">
-                            <input required name="Title" id="postTtile" type="text">
-                            <label for="pageTitle">Title</label>
-                          </div>
-                        </div>
-                      </div>
-                    <div style="margin-top: 1px; margin-bottom: 1px;" class="row">
-                        <div class="col s12">
-                            Body of your Post:
-                          <div style="width: 60% !important;" class="input-field inline">
-                            <textarea name="Body" id="postBody" type="text" class="materialize-textarea"></textarea>
-                            <label for="pageAbout">About the page</label>
-                        </div>
-                        </div>
-                    </div>
-                    <br>
-                
-                    <div style="display: inline-flex; align-items: center;" class="input-field inline">
-                        <p style="font-size: large;" class="left" for="id_ProfilePic">Page Image: &nbsp;</p>
-                        <input style="margin-top: 1rem;" type="file" name="PageImage" accept="image/*" id="id_ProfilePic">
-                    </div>
-                </div>
-                <div style="text-align: center !important;" class="modal-footer blue-grey darken-3">
-                    <button type="submit" class="modalbuttonunliked waves-effect waves-green btn">CREATE PAGE</button>
-                </div>
-            </form>
-              </div>
-            <p class="left--text">Pages you follow</p>
-            {% for page in follow %}
-            <div class="pending--friends">
-                <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
-                &nbsp;&nbsp;
-                <p class="left--accountName"><a href="/page/{{ page.PageID }}">{{ page.PageName }}</a></p>
-            </div>
-            {% endfor %}
+        <div class="post--card center-align">
+            <div class="card--title">Create a new Page</div>
+            Start your own page! Bring people with similar interests together
+            <br><br>
+            <a href="#createPageModal" class="waves-effect waves-light btn modal-trigger likebuttonUnliked"><i class="material-icons left">create</i>CREATE PAGE</a>
+            <br><br>
         </div>
-
+ 
+        <div id="createPageModal" class="modal blue-grey darken-3">
+            <div style="padding-bottom: 5px; margin-top: 5px;" class="modal-content blue-grey-text text-lighten-4">
+              <h4>Create New Page</h4>
+              <form action="" method="POST" style="margin-bottom: 0;" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div style="margin-top: 1px; margin-bottom: 1px;" class="row">
+                    <div class="col s12">
+                        Title of your page:
+                        <div style="width: 60% !important;" class="input-field inline">
+                            <input required name="PageName" id="pageTtile" type="text">
+                            <label for="pageTtile">Page Name</label>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 1px; margin-bottom: 1px;" class="row">
+                    <div class="col s12">
+                        About your page:
+                        <div style="width: 60% !important;" class="input-field inline">
+                            <textarea name="About" id="pageBody" type="text" class="materialize-textarea"></textarea>
+                            <label for="pageBody">About the Page </label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div style="display: inline-flex; align-items: center;" class="input-field inline">
+                    <p style="font-size: large;" class="left" for="id_ProfilePic">Image: &nbsp;</p>
+                    <input style="margin-top: 1rem;" type="file" name="PageImage" accept="image/*" id="id_ProfilePic">
+                
+                </div>
+            </div>
+            <div style="text-align: center !important;" class="modal-footer blue-grey darken-3">
+                <button type="submit" class="modalbuttonunliked waves-effect waves-green btn">CREATE PAGE</button>
+            </div>
+        </form>
+        </div>
+ 
+        
+        <p class="left--text">Pages you follow</p>
+        {% for page in follow %}
+        <div class="pending--friends">
+            <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+            &nbsp;&nbsp;
+            <p class="left--accountName"><a href="/page/{{ page.PageID }}">{{ page.PageName }}</a></p>
+        </div>
+        {% endfor %}
+    </div>
+ 
+ 
         <div class="right--panel">
             <p class="right--text">Explore</p>
             {% for page in others %}
@@ -108,11 +109,11 @@
             {% endfor %}
             </div>
         </div>
-
+ 
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+ 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.modal');
@@ -123,7 +124,7 @@
     var instances = M.FormSelect.init(elems);
   });
 </script>
-
+ 
 <script>
     $(document).on('click', '.followPage', function(event){
     event.preventDefault();
@@ -145,10 +146,10 @@
               }
           });
       }
-
+ 
     );
-
-
+ 
+ 
 </script>
-
+ 
 </html>
