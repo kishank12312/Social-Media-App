@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="{% static 'css/signup--styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/accountSetup--styles.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -18,9 +18,63 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <title>Account Setup</title>
     <style>
-        .datepicker-calendar-container{
-            background-color: wheat;
+        .input-field {
+            width: 95%;
         }
+
+        .input-field label {
+            color: #263238;
+            font-weight: 500;
+        }
+
+        .input-field input[type=text]:focus+label {
+            color: #263238;
+        }
+
+        .input-field input:focus+label {
+            color: #263238 !important;
+        }
+
+        /* label underline focus color */
+        .row .input-field input:focus {
+            border-bottom: 1px solid #263238 !important;
+            box-shadow: 0 1px 0 0 #263238 !important
+        }
+
+        .input-field .prefix.active {
+            color: #263238;
+        }
+
+        .input-field input[type=text].valid {
+            border-bottom: 1px solid #263238;
+            box-shadow: 0 1px 0 0 #263238;
+        }
+
+        .input-field input[type=text].invalid {
+            border-bottom: 1px solid #263238;
+            box-shadow: 0 1px 0 0 #263238;
+        }
+
+        input:not([type]),
+        input[type=text]:not(.browser-default),
+        input[type=password]:not(.browser-default),
+        input[type=email]:not(.browser-default),
+        input[type=url]:not(.browser-default),
+        input[type=time]:not(.browser-default),
+        input[type=date]:not(.browser-default),
+        input[type=datetime]:not(.browser-default),
+        input[type=datetime-local]:not(.browser-default),
+        input[type=tel]:not(.browser-default),
+        input[type=number]:not(.browser-default),
+        input[type=search]:not(.browser-default),
+        textarea.materialize-textarea {
+            border-bottom: 1px solid #3e4a50;
+        }
+        
+        .datepicker-calendar-container{
+            background-color: #eceff1 ;
+        }
+        
     </style>
 </head>
  
@@ -37,13 +91,13 @@
  
     </div>
     <br>
-    <div class="row center-align">
+    <div class="row center-align" style="margin-top: 100px;">
         <div class="col s12 m4 offset-m4">
-          <div class="card" style="background-color: #343a40; border: 1px solid white; border-radius: 5px;">
-            <div class="card-content white-text" style="padding-left: 1%;">
+          <div class="card" style="background-color: #90a4ae; border-radius: 5px;">
+            <div class="card-content blue-grey-text text-darken-4" style="padding-left: 1%;">
               <span class="card-title" style="font-size: 32px;">Set Up Your Account</span>
               <br><br>
-              <form id="mainform" enctype="multipart/form-data" action="" method="post">
+              <form id="mainform" enctype="multipart/form-data" action="" method="post" autocomplete="off">
                   {% csrf_token %}
                 <div style="width: 90%;" class="input-field inline">
                     <input required type="text" name="Name" maxlength="150" id="id_Name">
@@ -71,8 +125,8 @@
                 </div>
                 <div style="width: 90%;" class="input-field inline">
                     <label>
-                        <input required type="checkbox" name="Private" id="id_Private" class="filled-in"/>
-                        <span style="font-size: 15px; color: white;">Make My Account Private (This can be changed later)</span>
+                        <input required type="checkbox" name="Private" id="id_Private" class="filled-in checkbox-blue-grey-darken-4"/>
+                        <span style=" font-size: 15px; font-weight: 500; color: #263238;">Make My Account Private (This can be changed later)</span>
                     </label>
                 </div>
                 <br><br><br>
