@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="{% static 'css/post--styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/allpages--styles.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -17,14 +17,13 @@
 <body>
 
     <div class="navbar">
-        <p class="navbar--appname">Uni Network</p>
+        <p class="navbar--appname"><a href="{% url 'feed' %}" style="color: inherit">UniNetwork</a></p>
         <div class="navbar--icons">
-            <a class="link" href=""><i class="material-icons">create</i></a>
-            <a class="link" href=""><i class="material-icons">pages</i></a>
-            <a class="link" href="/friends"><i class="material-icons">people</i></a>
-            <a class="link" href=""><i class="material-icons">person</i></a>
+            <a href="#createPageModal" class="modal-trigger"><i class="material-icons">create</i></a>
+            <a href="{% url 'allPages' %}"><i class="material-icons">pages</i></a>
+            <a href="{% url 'friends' %}"><i class="material-icons">people</i></a>
+            <a href="{% url 'profile' request.user.username %}"><i class="material-icons">person</i></a>
         </div>
-
     </div>
 
     <div class="main--page">
@@ -88,7 +87,7 @@
             </form>
               </div>
             <p class="left--text">Pages you follow</p>
-            {% for page in followed %}
+            {% for page in follow %}
             <div class="pending--friends">
                 <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
                 &nbsp;&nbsp;
@@ -105,7 +104,7 @@
                 &nbsp;&nbsp;
                 <p class="left--accountName"><a href="/page/{{ page.PageID }}">{{ page.PageName }} </a></p>
                 &nbsp;&nbsp;
-                <button class="followPage" id="{{page.pageID}}"> Follow </button>
+                <button class="followPage" id="{{page.PageID}}"> Follow </button>
             {% endfor %}
             </div>
         </div>
@@ -129,7 +128,7 @@
     $(document).on('click', '.followPage', function(event){
     event.preventDefault();
     var id = event.target.id;
-    var userid = id;
+    var pageid = id;
     $.ajax({
         type:'GET',
         url:'',

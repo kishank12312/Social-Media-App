@@ -81,12 +81,11 @@
 <body>
  
     <div class="navbar">
-        <p class="navbar--appname">Uni Network</p>
+        <p class="navbar--appname"><a href="{% url 'home' %}" style="color:inherit;">UniNetwork</a></p>
         <div class="navbar--icons">
-            <a class="link" href=""><i class="material-icons">create</i></a>
-            <a class="link" href=""><i class="material-icons">pages</i></a>
-            <a class="link" href="/friends"><i class="material-icons">people</i></a>
-            <a class="link" href=""><i class="material-icons">person</i></a>
+            <a href="{% url 'allPages' %}"><i class="material-icons">pages</i></a>
+            <a href="{% url 'friends' %}"><i class="material-icons">people</i></a>
+            <a href="{% url 'profile' request.user.username %}"><i class="material-icons">person</i></a>
         </div>
  
     </div>
