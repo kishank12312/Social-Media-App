@@ -1,0 +1,156 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: #263238;
+    
+    font-family: 'Nunito', sans-serif;
+}
+
+.navbar{
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+    color: #4dd0e1;
+    background-color: #212121;
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+    box-shadow: 1px 1px 10px #37474f;
+    opacity: 80%;
+}
+
+.navbar--appname{
+    padding-left: 30px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-right: auto;
+    font-weight: 600;
+    font-size: large;
+    color: #4dd0e1;
+}
+
+.navbar--icons{
+    padding-right: 30px;
+    justify-content: flex-end;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.navbar--icons > a > .material-icons{
+    align-content: flex-end;
+    width: 24px;
+    margin: 10px;
+    color: #4dd0e1 !important; 
+}
+
+.material-icons:hover{
+    opacity: 50%;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.main--page{
+    display: flex;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+
+.middle--panel{
+    overflow: auto;
+    height: auto;
+    
+    padding: .5rem;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+}
+
+body::-webkit-scrollbar,
+.left--panel::-webkit-scrollbar,
+.middle--panel::-webkit-scrollbar,
+.right--panel::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+.post--card{
+    height: fit-content;
+    width: 600px;
+    border: solid 2px;
+    border-color: #343a40;
+    background-color: #343a40;
+    color: #dee2e6;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+
+a{
+    color: #dee2e6;
+    text-decoration: none;
+}
+
+
+.likebuttonUnliked{
+    margin: 5px;
+    color: #263238 !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #263238 !important;
+    border-radius: 10px !important;
+}
+
+.likebuttonUnliked:hover {
+    background-color: #263238 !important;
+    color: white !important;
+  }
+
+input{
+    color: #263238 !important;
+}
+  /* label color */
+.input-field label {
+color: #263238;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+color: #263238;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+border-bottom: 1px solid #263238;
+box-shadow: 0 1px 0 0 #263238;
+}
+/* valid color */
+.input-field input[type=text].valid {
+border-bottom: 1px solid #263238;
+box-shadow: 0 1px 0 0 #263238;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+border-bottom: 1px solid #263238;
+box-shadow: 0 1px 0 0 #263238;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+color: #263238;
+}
+
+#loginbutton:hover{
+    text-decoration: underline;
+}
