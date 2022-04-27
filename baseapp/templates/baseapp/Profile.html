@@ -191,68 +191,6 @@
             </div>
 
 
-    <div class="section">
-        &nbsp;&nbsp;
-        {% if accesseduser != request.user %}
-            <button class="sendRequest"> Send Request </button>
-        {% endif %}
-
-    </div>
-
-    <div class="section">
-        &nbsp;&nbsp;
-        {% if accesseduser == request.user %}
-            <a href = "/edituser"> <button>Edit Profile </button></a>
-        {% endif %}
-    
-
-    </div>
-
-
-    <div class="main--page">
-
-        <div class="col s9">
-            {% for post in theirPosts %}
-            <div class="post--card">
-                <div class="card--navbar">
-                    <!-- <img class="profilePic" src="{% static 'images/testimg.jpg' %}" alt=""> -->
-                    &nbsp;
-                    <div class="name--time--page">
-                        <div class="name--page">
-                            <p class="profile--name">{{ post.0.user.username }}</p>
-                            {% if post.0.page != None %}
-                                <i class="material-icons">play_arrow</i>
-                                <p class="page--name">L Merchants</p>
-                            {% endif %}
-                        </div>
-                        <div class="time">
-                            <p class="post--time">{{ post.0.PostedOn }}</p>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="card--title">{{ post.0.Title }}</div>
-                <div class="card--content">
-                    {{ post.0.Body }}
-                </div>
-
-                <div class="like--comment">
-                    <i class="material-icons">thumb_up_off_alt</i>
-                    <p class="like">Like</p>
-                    <p class="likenumber">{{ post.0.LikeCount }}</p>
-
-                    <i class="material-icons">chat_bubble_outline</i>
-                    <p class="comment">Comment</p>
-                    <p class="comment">{{ post.0.CommentCount }}</p>
-                </div>
-
-            </div>
-            {% endfor %}
-        </div>
-
-    </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
