@@ -108,6 +108,20 @@ def feed(request):
             if req == 'reject':
                 frnd = Friends.objects.get(Requester=usermodel, Requested=request.user)
                 frnd.delete()
+        elif request.GET.get('tag') == 'likepost':
+            post_id = int(request.GET.get('id'))
+            postobject = Posts.objects.get(PostID = post_id)
+            newlike = PostLikes(post=postobject, user=request.user)
+            newlike.save()
+            postobject.LikeCount += 1
+            postobject.save()
+        elif request.GET.get('tag') == 'unlikepost':
+            post_id = int(request.GET.get('id'))
+            postobject = Posts.objects.get(PostID = post_id)
+            existinglike = PostLikes.objects.get(post=postobject, user=request.user)
+            existinglike.delete()
+            postobject.LikeCount -= 1
+            postobject.save()
             
             
 
