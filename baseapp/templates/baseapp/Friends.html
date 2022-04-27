@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="{% static 'css/post--styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/allpages--styles.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -29,15 +29,17 @@
 
     <div class="main--page">
         <div class="left--panel">
-            <p class="left--text">Pending Friend Requests</p>
+            <p class="left--text">Pending Friend Request</p>
             {% for requester in friendRequests %}
-            <div class="pending--friends">
-                <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+            <div class="pending--friends post--card" style="width: 369px;">
+                <img src="{% static 'images/testimg.jpg' %}" class="profilePic" alt="">
                 &nbsp;&nbsp;
-                <p class="left--accountName"><a href="/user/{{ requester.username }}">{{ requester.username }}</a></p>
-                &nbsp;&nbsp;
-                <button class="friendRequest" id="accept{{ requester.username }}">Accept</button>
-                <button class="friendRequest" id="reject{{ requester.username }}">Reject</button>
+                <p class="left--accountName">{{ requester.username }}</p>
+                <div style="text-align: right;width: 193px;" id="{{ requester.username }}buttons">
+                    <button class="friendRequest friendaccept waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-right: 2px;" id="accept{{ requester.username }}">Accept</button>
+                    <button class="friendRequest friendreject waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px;" id="reject{{ requester.username }}">Reject</button>
+                    <!-- <button class="friendRequest disabled waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px; background-color: #2f5d3e !important;" id="reject{{ requester.username }}">Request Accepted</button> -->
+                </div>
             </div>
             {% endfor %}
         </div>
