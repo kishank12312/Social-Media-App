@@ -203,8 +203,16 @@ a{
 }
 .likenumber{
     margin-right: 40px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: #263238;
+    color: #90a4ae;
+    border-radius: 50%;
 }
 
+.likenumber:hover{
+    color: #4dd0e1 !important;
+}
 .comment{
     margin-left: 10px;
 }
@@ -233,6 +241,13 @@ a{
 .likebuttonUnliked:hover {
     background-color: #263238 !important;
     color: white !important;
+}
+
+.likebuttonLiked{
+    margin: 5px;
+    background-color: #263238 !important;
+    border: 2px solid #263238 !important;
+    border-radius: 10px !important;
 }
 
 .modalbuttonunliked{

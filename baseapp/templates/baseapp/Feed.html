@@ -1,4 +1,5 @@
 {% load static %}
+{% load extratags %}
 <html lang="en">
 
 <head>
@@ -100,12 +101,12 @@
 <body>
 
     <div class="navbar">
-        <p class="navbar--appname">UniNetwork</p>
+        <p class="navbar--appname"><a href="{% url 'feed' %}" style="color: inherit">UniNetwork</a></p>
         <div class="navbar--icons">
-            <a href=""><i class="material-icons">create</i></a>
-            <a href=""><i class="material-icons">pages</i></a>
-            <a href="/friends"><i class="material-icons">people</i></a>
-            <a href=""><i class="material-icons">person</i></a>
+            <a href="#createPostModal" class="modal-trigger"><i class="material-icons">create</i></a>
+            <a href="{% url 'allPages' %}"><i class="material-icons">pages</i></a>
+            <a href="{% url 'friends' %}"><i class="material-icons">people</i></a>
+            <a href="{% url 'profile' request.user.username %}"><i class="material-icons">person</i></a>
         </div>
 
     </div>
@@ -210,13 +211,23 @@
                 </div>
 
                 <div class="like--comment">
-                    <i class="material-icons">thumb_up_off_alt</i>
-                    <p class="like">Like</p>
-                    <p class="likenumber">{{ post.0.LikeCount }}</p>
-
-                    <i class="material-icons">chat_bubble_outline</i>
-                    <p class="comment">Comment</p>
-                    <p class="comment">{{ post.0.CommentCount }}</p>
+                    {% if post.1 %}
+                    <a id="unlikePost{{ post.0.PostID }}" class="likebuttonLiked waves-effect waves-light btn likepost">
+                        <i class="material-icons left">thumb_up_off_alt</i>LIKED
+                    </a>
+                    {% else %}
+                    <a id="likePost{{ post.0.PostID }}" class="likebuttonUnliked waves-effect waves-light btn likepost">
+                        <i class="material-icons left">thumb_up_off_alt</i>LIKE
+                    </a>
+                    {% endif %}
+                    &nbsp;  
+                    <a id="likenumber{{ post.0.PostID }}" href="{% url 'post' post.0.PostID %}" class="likenumber">{{ post.0.LikeCount }}</a>
+                    
+                    <a href="{% url 'post' post.0.PostID %}" class="likebuttonUnliked waves-effect waves-light btn" style="width: 157px;display: inline-flex;align-items: center;">
+                        <i class="material-icons">chat_bubble_outline</i> &nbsp;
+                        Comment
+                        <p class="comment">{{ post.0.CommentCount }}</p>
+                    </a>
                 </div>
 
             </div>
@@ -295,5 +306,50 @@
     
     });
 </script>
-
+<script>
+    $(document).on('click', '.likepost', function(event){
+    event.preventDefault();
+    var elem = event.currentTarget;
+    var classes = elem.classList;
+    
+    if(classes.contains('likebuttonUnliked')){
+        var id = parseInt(elem.id.slice(8,));
+        $.ajax({
+            type:'GET',
+            url:'',
+            data:{
+                tag:'likepost',
+                id:id,
+                
+            },  
+            success:function(){
+                elem.childNodes[2].nodeValue = "LIKED";
+                elem.className = "likebuttonLiked waves-effect waves-light btn likepost";
+                elem.id = "unlikePost" + String(id);    
+                var lk = document.getElementById("likenumber" + String(id));
+                lk.innerHTML = String(parseInt(lk.innerHTML) + 1);
+            }
+        });
+    }
+    else{
+        var id = parseInt(elem.id.slice(10,));
+        $.ajax({
+            type:'GET',
+            url:'',
+            data:{
+                tag:'unlikepost',
+                id:id,
+            },  
+            success:function(){
+            elem.childNodes[2].nodeValue = "LIKE";
+            elem.className = "likebuttonUnliked waves-effect waves-light btn likepost";
+            elem.id = "likePost" + String(id);    
+            var lk = document.getElementById("likenumber" + String(id));
+            lk.innerHTML = String(parseInt(lk.innerHTML) - 1);
+            }
+        });
+    }
+    
+    });
+</script>
 </html>
