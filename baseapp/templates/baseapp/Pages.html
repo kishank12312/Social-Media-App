@@ -56,8 +56,10 @@
 
     <div class="section">
         &nbsp;&nbsp;
-        {% if owner != request.user %}
+        {% if allowfollow %}
             <button class="followPage"> Follow the page </button>
+        {% else %}
+            <button class="unfollowPage"> Unfollow the page </button>
         {% endif %}
 
     </div>
@@ -136,6 +138,28 @@
         url:'',
         data:{
             tag:'followpage',
+        },
+        success:function(){
+        elem = $('#popupmessage-add');
+              elem.fadeIn(400);
+              elem.delay(2200);
+              elem.fadeOut(400);
+              
+              }
+          });
+      }
+
+    );
+</script>
+
+<script>
+    $(document).on('click', '.unfollowPage', function(event){
+    event.preventDefault();
+    $.ajax({
+        type:'GET',
+        url:'',
+        data:{
+            tag:'unfollowpage',
         },
         success:function(){
         elem = $('#popupmessage-add');

@@ -1,3 +1,4 @@
+from re import L
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
@@ -333,7 +334,7 @@ def editProfile(request):
         return redirect(reverse('feed'))
     return render(request,'baseapp/editUser.html',context)
 
-def pagesPage(request,id):
+def aboutPage(request,id):
     if not request.user.is_authenticated:
         return redirect(reverse('login'))
     
@@ -354,18 +355,69 @@ def pagesPage(request,id):
             final_posts_with_likes.append((post,False))
     context['posts']=final_posts_with_likes
     pageFollows = PageFollowers.objects.filter(page=currpage)
-    context['followers'] = pageFollows
+    checker = [a.user for a in PageFollowers.objects.filter(page=currpage)]
 
     pageOwner = currpage.PageAdmin
     context['owner'] = pageOwner
 
+
+    if (request.user not in checker) and request.user != pageOwner:
+        context['allowfollow'] = True
+    else:
+        context['allowfollow'] = False
+    context['followers'] = pageFollows
+
     if request.method == 'GET':
 
         if request.GET.get('tag') == 'followpage':
-            newflr = PageFollowers.objects.filter(page = currpage, user = request.user)
+            newflr = PageFollowers.objects.filter(page = currpage, user = request.user).exists()
             print(newflr)
-            if newflr==None:
+            if newflr==False:
                 newflr = PageFollowers(user = request.user, page = currpage)
                 newflr.save()
+        
+        if request.GET.get('tag') == 'unfollowpage':
+            PageFollowers.objects.filter(page = currpage, user = request.user).delete()
 
     return render(request,'baseapp/Pages.html',context)
+
+def pagesPage(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
+    
+    context = {}
+
+    myPagesRaw = PageFollowers.objects.filter(user = request.user)
+    pagesFollowed = [a.page for a in PageFollowers.objects.filter(user = request.user)]
+    
+
+    pagesCreated = [a for a in Pages.objects.filter(PageAdmin = request.user)]
+
+    megaOthers = pagesFollowed + pagesCreated
+    allOthers = [page for page in (Pages.objects.filter(~Q(PageID__in=[o.PageID for o in megaOthers])))]
+
+    context['follow'] = pagesFollowed
+    context['created'] = pagesCreated
+    context['others'] = allOthers
+
+    if request.method == 'GET':
+
+        if request.GET.get('tag') == 'followpage':
+            pid = request.GET.get('pageid')
+
+            pagemodel = Pages.objects.get(PageID=pid)
+            newflr = PageFollowers(user = request.user, page = pagemodel)
+            newflr.save()
+
+    if request.method=="POST":
+        newpage = Pages()
+        newpage.PageAdmin = request.user
+        newpage.PageName = request.POST.get('Page name:')
+        newpage.About = request.POST.get('About') if 'About' in request.POST else None
+        newpage.PageImage = request.FILES['PostImage'] if 'PostImage' in request.FILES else None
+
+        newpage.save()
+
+    return render(request, 'baseapp/allPages.html',context)
+
+

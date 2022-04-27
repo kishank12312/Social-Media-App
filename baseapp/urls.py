@@ -13,5 +13,6 @@ urlpatterns = [
     path('user/<str:name>/',views.userpage,name='profile'),
     path('accountSetup',views.accountSetup,name='accountSetup'),
     path('edituser',views.editProfile,name='editProfile'),
-    path('page/<int:id>',views.pagesPage,name='pages')
+    path('page/<int:id>',views.aboutPage,name='pages'),
+    path('allPages',views.pagesPage,name='allPages')
 ]
