@@ -280,6 +280,11 @@ def userpage(request,name):
             final_posts_with_likes = []
             for post in postsMade:
                 final_posts.append(post)
+
+            myposts= Posts.objects.filter(user=request.user)
+            for post in myposts:
+                final_posts.append(post) 
+
             final_posts.sort(key=lambda x:x.PostedOn)
             for post in final_posts:
                 if PostLikes.objects.filter(post=post,user=request.user).first():
@@ -410,7 +415,7 @@ def aboutPage(request,id):
         context['allowfollow'] = True
     else:
         context['allowfollow'] = False
-    context['followers'] = pageFollows
+    context['followers'] = checker
 
     if request.method == 'GET':
 
@@ -459,9 +464,11 @@ def pagesPage(request):
         newpage.PageAdmin = request.user
         newpage.PageName = request.POST.get('PageName')
         newpage.About = request.POST.get('About') if 'About' in request.POST else None
-        newpage.PageImage = request.FILES['PostImage'] if 'PostImage' in request.FILES else None
+        newpage.PageImage = request.FILES['PageImage'] if 'PageImage' in request.FILES else None
 
         newpage.save()
+        PageFollowers(page = newpage, user = request.user).save()
+
 
     return render(request, 'baseapp/allPages.html',context)
 

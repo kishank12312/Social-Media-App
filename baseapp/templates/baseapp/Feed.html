@@ -237,7 +237,7 @@
             <p class="right--text">Pages you follow</p>
             {% for page in pagesFollowed %}
             <div class="pages--followed">
-                <i class="material-icons">auto_stories</i><a href="#">{{ page.PageName }}</a>
+                <i class="material-icons">auto_stories</i><a href="{% url 'pages' page.PageID %}">{{ page.PageName }}</a>
             </div>
             {% endfor %}
         </div>

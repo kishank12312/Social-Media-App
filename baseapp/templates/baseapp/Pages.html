@@ -64,15 +64,29 @@
     </div>
 
     <div class="main--page">
-        <div class="col s3">
-            <p class="left--text"> Page Followers</p>
-            {% for flwr in followers %}
-            <div class="followers">
-                <!--<img src="{% static 'images/testimg.jpg' %}" class="profilePic" alt=""> -->
-                
-                <p class="left--accountName"><a href = "/profile/{{ flwr.username }}">{{ flwr.user }}</a></p>
+        <div class="left--panel">
+            <div class="row">
+                <div class="col s12 m12">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                    <span class="card-title">Friends</span>
+                        
+                    <ul style="border: none !important;" class="collection ">
+                        {% for friend in followers %}
+                        <li style="background-color: #263238; min-height: 60px !important;" class="collection-item avatar">
+                            <a href="/user/{{ friend.username }}">
+                                <img src="{{ friend|profilepicfromuser }}" alt="" class="circle">
+                                <span class="title">{{ friend.username }}</span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                      </ul>    
+
+
+                    </div>
+                </div>
+                </div>
             </div>
-            {% endfor %}
         </div>
 
         <div class="col s9">
