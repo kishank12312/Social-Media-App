@@ -231,11 +231,27 @@ def friends(request):
     if request.method == 'GET':
         if request.GET.get('tag') == 'sendrequest':
             uname = request.GET.get('userid')
-            print(uname,request)
             usermodel = User.objects.get(username=uname)
             frnd = Friends(Requester = request.user, Requested = usermodel, Confirmed = False)
             frnd.save()
-
+        elif request.GET.get('tag') == 'friendrequest':
+            req = request.GET.get('type')
+            uname = request.GET.get('userid')
+            print(uname,request)
+            usermodel = User.objects.get(username=uname)
+            if req == 'accept':
+                frnd = Friends.objects.get(Requester=usermodel, Requested=request.user)
+                frnd.Confirmed = True
+                frnd.save()
+            if req == 'reject':
+                frnd = Friends.objects.get(Requester=usermodel, Requested=request.user)
+                frnd.delete()
+        elif request.GET.get('tag') == 'unfriend':
+            print('something')
+            uname = request.GET.get('userid')
+            usermodel = User.objects.get(username=uname)
+            frnd = Friends.objects.get(Requester=usermodel, Requested=request.user)
+            frnd.delete()
  
     return render(request,'baseapp/Friends.html',context)
 
