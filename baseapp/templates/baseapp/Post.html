@@ -165,7 +165,7 @@
                         <div class="col xl2">
                             <a href="#commentlikes{{ cwl.0.CommentID }}" class="modal-trigger">
                                 <div class="row" style="color: aqua; margin-bottom: 10px;">
-                                    <div class="col xl1"><p style="font-size: 15px; margin-bottom: 0px;" id="commentlikeCount1">{{ cwl.2 }}</p></div>
+                                    <div class="col xl1"><p style="font-size: 15px; margin-bottom: 0px;" id="commentlikeCount{{ cwl.0.CommentID }}">{{ cwl.2 }}</p></div>
                                     <div class="col xl9"><p style="font-size: 15px; margin-bottom: 0px;">Likes</p></div>
                                 </div>
                             </a>
@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
             newp.innerHTML = "{{ request.user.username }}";
             newliker.appendChild(newp);
             newliker.id = String(commentID) + "commentLiker{{ request.user.username }}"
-            document.getElementById("commentLikesModal1").appendChild(newliker);
+            document.getElementById("commentLikesModal" + String(commentID)).appendChild(newliker);
             }
         });
       }

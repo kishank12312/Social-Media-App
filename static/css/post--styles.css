@@ -15,32 +15,42 @@ body {
     align-items: center;
     width: 100%;
     justify-content: flex-end;
-    color: #dee2e6;
-    background-color: #343a40;
+    color: #4dd0e1;
+    background-color: #212121;
     margin: 0px;
     padding: 0px;
+    position: fixed;
+    box-shadow: 1px 1px 10px #37474f;
 }
 
 .navbar--appname{
-    padding: 30px;
-    
+    padding-left: 30px;
+    margin-top: 25px;
+    margin-bottom: 25px;
     margin-right: auto;
+    font-weight: 600;
+    font-size: large;
+    color: #4dd0e1;
 }
 
 .navbar--icons{
-    padding: 30px;
+    padding-right: 30px;
     justify-content: flex-end;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
-.link{
-    color: #4CAF50 !important;
-}
 
-.navbar--icons > .material-icons{
+
+.navbar--icons > a > .material-icons{
     align-content: flex-end;
     width: 24px;
     margin: 10px;
-    
+    color: #4dd0e1 !important; 
+}
+
+.material-icons:hover{
+    opacity: 50%;
 }
 
 .commentTitle{
@@ -49,23 +59,12 @@ body {
     font-size: 25px; 
     color: white;
 }
-.material-icons:hover{
-    opacity: 50%;
-}
 
-.main--page{
-    display: flex;
-    overflow: hidden;
-    height: 100vh;
-    position: relative;
-    width: 100%;
-    backface-visibility: hidden;
-    will-change: overflow;
-}
 
-.left--panel,
-.middle--panel,
-.right--panel {
+
+
+
+.middle--panel {
     overflow: auto;
     height: auto;
     
@@ -73,28 +72,17 @@ body {
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
 }
-.left--panel{
-    width: 20%;
-    border-right: solid 1px #343a40;
-}
 
-.left--text{
-    color: #dee2e6;
-}
 
 
 .middle--panel{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
+    
 }
 
-.right--panel{
-    width: 20%;
-    border-left: solid 1px #343a40;
-    color: #dee2e6;
-}
+
 
 body::-webkit-scrollbar,
 .left--panel::-webkit-scrollbar,

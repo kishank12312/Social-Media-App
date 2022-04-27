@@ -56,22 +56,22 @@
 
     <div class="navbar">
         <p class="navbar--appname">Uni Network</p>
-        <div class="navbar--icons">
+        <!-- <div class="navbar--icons">
             <a class="link" href=""><i class="material-icons">create</i></a>
             <a class="link" href=""><i class="material-icons">pages</i></a>
             <a class="link" href="/friends"><i class="material-icons">people</i></a>
             <a class="link" href=""><i class="material-icons">person</i></a>
-        </div>
+        </div> -->
 
     </div>
     <br>
-    <div class="row center-align">
+    <div class="row center-align" style="margin-top: 80px;">
         <div class="col s12 m4 offset-m4">
           <div class="card" style="background-color: #90a4ae; border: 1px solid white; border-radius: 5px;">
             <div class="card-content white-text" style="padding-left: 1%;">
               <span style="color: #263238;" class="card-title">Signup</span>
               <br><br>
-              <form action="" method="POST" id="SignupForm">
+              <form action="" method="POST" id="SignupForm" autocomplete="off">
                 {% csrf_token %}
                 {% for field in form %}
                 <div class="row" style="display: flex; align-items: center; margin-left: 0%;">
