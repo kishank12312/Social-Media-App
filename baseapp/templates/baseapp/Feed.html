@@ -114,12 +114,15 @@
         <div class="left--panel">
             <p class="left--text">Pending Friend Request</p>
             {% for requester in friendRequests %}
-            <div class="pending--friends">
+            <div class="pending--friends post--card" style="width: 369px;">
                 <img src="{% static 'images/testimg.jpg' %}" class="profilePic" alt="">
                 &nbsp;&nbsp;
                 <p class="left--accountName">{{ requester.username }}</p>
-                <button class="friendRequest" id="accept{{ requester.username }}">Accept</button>
-                <button class="friendRequest" id="reject{{ requester.username }}">Reject</button>
+                <div style="text-align: right;width: 193px;" id="{{ requester.username }}buttons">
+                    <button class="friendRequest friendaccept waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-right: 2px;" id="accept{{ requester.username }}">Accept</button>
+                    <button class="friendRequest friendreject waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px;" id="reject{{ requester.username }}">Reject</button>
+                    <!-- <button class="friendRequest disabled waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px; background-color: #2f5d3e !important;" id="reject{{ requester.username }}">Request Accepted</button> -->
+                </div>
             </div>
             {% endfor %}
         </div>
@@ -244,6 +247,7 @@
 <script>
     $(document).on('click', '.friendRequest', function(event){
     event.preventDefault();
+    var elem = event.currentTarget;
     var id = event.target.id;
     var type = id.slice(0,6);
     var userid = id.slice(6);
@@ -257,7 +261,13 @@
                   userid:userid,
               },  
               success:function(){
-              
+                  var accepted = document.createElement('button');
+                  accepted.className = "friendRequest disabled waves-effect btn";
+                  accepted.setAttribute('style',"font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px; background-color: #2f5d3e !important;");
+                  accepted.innerHTML = "Request Accepted";
+                  document.getElementById(userid+"buttons").appendChild(accepted);
+                  document.getElementById("accept"+userid).remove();
+                  document.getElementById("reject"+userid).remove();
               }
           });
       }
@@ -271,10 +281,13 @@
                   userid:userid,
               },  
               success:function(){
-              elem = $('#popupmessage-add');
-              elem.fadeIn(400);
-              elem.delay(2200);
-              elem.fadeOut(400);
+                var rejected = document.createElement('button');
+                  rejected.className = "friendRequest disabled waves-effect btn";
+                  rejected.setAttribute('style',"font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px; background-color: #5d2f33 !important;");
+                  rejected.innerHTML = "Request Rejected";
+                  document.getElementById(userid+"buttons").appendChild(rejected);
+                  document.getElementById("accept"+userid).remove();
+                  document.getElementById("reject"+userid).remove();
               
               }
           });

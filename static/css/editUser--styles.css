@@ -41,6 +41,8 @@ body {
     margin-bottom: 25px;
 }
 
+
+
 .navbar--icons > a > .material-icons{
     align-content: flex-end;
     width: 24px;
@@ -55,57 +57,6 @@ body {
 body::-webkit-scrollbar {
     display: none;
 }
-
-.main--page{
-    display: flex;
-    overflow: hidden;
-    height: 100vh;
-    position: relative;
-    width: 100%;
-    backface-visibility: hidden;
-    will-change: overflow;
-}
-
-.middle--panel{
-    overflow: auto;
-    height: auto;
-    
-    padding: .5rem;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 60%;
-}
-
-body::-webkit-scrollbar,
-.left--panel::-webkit-scrollbar,
-.middle--panel::-webkit-scrollbar,
-.right--panel::-webkit-scrollbar {
-    display: none;
-}
-
-
-
-.post--card{
-    height: fit-content;
-    width: 600px;
-    border: solid 2px;
-    border-color: #343a40;
-    background-color: #343a40;
-    color: #dee2e6;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-}
-
-
-a{
-    color: #dee2e6;
-    text-decoration: none;
-}
-
 
 .likebuttonUnliked{
     margin: 5px;
@@ -154,3 +105,9 @@ color: #263238;
 #loginbutton:hover{
     text-decoration: underline;
 }
+
+.checkbox-blue-grey-darken-4[type="checkbox"].filled-in:checked+span:not(.lever):after {
+    border: 2px solid #263238;
+    background-color: #263238;
+    color: #90a4ae;
+  }
