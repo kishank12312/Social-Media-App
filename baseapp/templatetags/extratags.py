@@ -28,4 +28,4 @@ def likedpost(thispost,user):
 @register.filter
 def isNotFriendOf(user1,user2):
     print(user1,user2)
-    return checkFriends(user1.user2)
+    return checkFriends(user1,user2)

@@ -1,4 +1,5 @@
 {% load static %}
+{% load extratags %}
 <html lang="en">
 
 <head>
@@ -12,6 +13,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <title>Post</title>
+    <style>
+        .friendname{
+            color: #263238;
+            font-size: medium;
+            margin: 5%;
+        }
+        .friendname:hover{
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,14 +37,14 @@
     </div>
 
     <div class="main--page">
-        <div class="left--panel">
-            <p class="left--text">Pending Friend Request</p>
+        <div class="left--panel" style="width: 33% !important; text-align: center;">
+            <p style="font-size: 30px;" class="left--text">Pending Friend Request</p>
             {% for requester in friendRequests %}
-            <div class="pending--friends post--card" style="width: 369px;">
+            <div id="requestcard{{ requester.username }}" style="margin-left: 42px;" class="pending--friends post--card">
                 <img src="{% static 'images/testimg.jpg' %}" class="profilePic" alt="">
                 &nbsp;&nbsp;
                 <p class="left--accountName">{{ requester.username }}</p>
-                <div style="text-align: right;width: 193px;" id="{{ requester.username }}buttons">
+                <div id="{{ requester.username }}buttons">
                     <button class="friendRequest friendaccept waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-right: 2px;" id="accept{{ requester.username }}">Accept</button>
                     <button class="friendRequest friendreject waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px;" id="reject{{ requester.username }}">Reject</button>
                     <!-- <button class="friendRequest disabled waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px; background-color: #2f5d3e !important;" id="reject{{ requester.username }}">Request Accepted</button> -->
@@ -43,36 +54,40 @@
         </div>
         
 
-        <div class="middle--panel">
-            <p class="left--text">My Friends</p>
+        <div id="middlepanel" class="middle--panel" style="width: 33% !important; text-align: center;">
+            <p style="font-size: 30px;" class="left--text">My Friends</p>
             {% for friend in myFriends %}
-            <div class="pending--friends">
-                <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
-                &nbsp;&nbsp;
-                <p class="left--accountName"><a href="/user/{{ friend.username }}">{{ friend.username }}</a></p>
+            <div id="existingFriend{{ friend.username }}" class="pending--friends post--card " style="display: inline-flex; justify-content: center;">
+                <a href="{% url 'profile' friend.username %}">
+                    <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                </a>
+                <a href="{% url 'profile' friend.username %}" class="friendname ">{{ friend.username }}</a>
+                <a class="likebuttonUnliked waves-effect btn unfriend" id="unfriend{{ friend.username }}">❌UNFRIEND</a>
             </div>
             {% endfor %}
         </div>
-        <div class="right--panel">
-            <p class="right--text">Explore</p>
-            {% for person in unknownPeople %}
-            <div class="pending--friends">
-                <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
-                &nbsp;&nbsp;
-                <p class="left--accountName"><a href="/user/{{ person.username }}">{{ person.username }} </a></p>
-                &nbsp;&nbsp;
-                <button class="sendRequest" id="{{person.username}}"> Send Request </button>
-
-            </div>
-            {% endfor %}
+        <div id="rightpanel" class="right--panel" style="width: 33% !important; text-align: center;">
+            <p style="font-size: 30px;" class="right--text">Add New Friends</p><br>
             {% for person in mySentPendingReqs %}
-            <div class="pending--friends">
-                <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
-                &nbsp;&nbsp;
-                <p class="left--accountName"><a href="/user/{{ person.username }}">{{ person.username }} </a></p>
-                <button type="button" disabled>Friend request sent</button>
+            <div class="pending--friends post--card " style="display: inline-flex; justify-content: center;">
+                <a href="{% url 'profile' person.username %}">
+                    <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                </a>
+                <a href="{% url 'profile' person.username %}" class="friendname">{{ person.username }}</a>
+                <button class="disabled waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px; background-color: #5f6568 !important;">Friend request sent</button>
 
             </div>
+            <br>
+            {% endfor %}
+            {% for person in unknownPeople %}
+            <div id="randompeople{{ person.username }}" class="pending--friends post--card " style="display: inline-flex; justify-content: center;">
+                <a href="{% url 'profile' person.username %}">
+                    <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                </a>
+                <a href="{% url 'profile' person.username %}" class="friendname">{{ person.username }}</a>
+                <a class="sendRequest likebuttonUnliked waves-effect btn" style="font-size: small;" id="{{person.username}}">Send Friend Request</a>
+            </div>
+            <br>
             {% endfor %}
         </div>
 
@@ -82,7 +97,8 @@
 <script>
     $(document).on('click', '.sendRequest', function(event){
     event.preventDefault();
-    var id = event.target.id;
+    var id = event.currentTarget.id;
+    var elem = event.currentTarget;
     var userid = id;
     $.ajax({
         type:'GET',
@@ -92,10 +108,12 @@
             userid:userid,
         },
         success:function(){
-        elem = $('#popupmessage-add');
-              elem.fadeIn(400);
-              elem.delay(2200);
-              elem.fadeOut(400);
+            var rejected = document.createElement('button');
+            rejected.className = "disabled waves-effect btn";
+            rejected.setAttribute('style',"font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px; background-color: #5f6568 !important;");
+            rejected.innerHTML = "Friend request sent";
+            document.getElementById("randompeople" + userid).appendChild(rejected);
+            elem.remove();
               
               }
           });
@@ -106,6 +124,8 @@
     $(document).on('click', '.friendRequest', function(event){
     event.preventDefault();
     var id = event.target.id;
+    var elem = event.currentTarget;
+    console.log(elem);
     var type = id.slice(0,6);
     var userid = id.slice(6);
     if(type === 'accept'){
@@ -118,11 +138,30 @@
                   userid:userid,
               },  
               success:function(){
-              elem = $('#popupmessage-add');
-              elem.fadeIn(400);
-              elem.delay(2200);
-              elem.fadeOut(400);
-              
+                document.getElementById("requestcard"+userid).remove();
+                var newfriend = document.createElement('div');
+                var innerlink1 = document.createElement('a');
+                var innerlink2 = document.createElement('a');
+                var innerlink3 = document.createElement('a');
+                var innerimage = document.createElement('img');
+                innerimage.className = "profilePic";
+                innerimage.src = "{% static 'images/testimg.jpg' %}";
+                innerlink1.href = "http://127.0.0.1:8000/user/"+userid;
+                innerlink1.appendChild(innerimage);
+                innerlink2.href = "http://127.0.0.1:8000/user/"+userid;
+                innerlink2.className = "friendname ";
+                innerlink2.innerHTML = userid
+                newfriend.className = "pending--friends post--card";
+                newfriend.setAttribute('style', "display: inline-flex; justify-content: center;");
+                newfriend.appendChild(innerlink1);
+                newfriend.appendChild(innerlink2);
+                newfriend.id = "existingFriend" + userid;
+                innerlink3.className = "unfriend likebuttonUnliked waves-effect btn"
+                innerlink3.setAttribute('style',"font-size: small;")
+                innerlink3.id = "unfriend" + userid;
+                innerlink3.innerHTML = "❌UNFRIEND";
+                newfriend.appendChild(innerlink3);
+                document.getElementById('middlepanel').appendChild(newfriend);
               }
           });
       }
@@ -136,16 +175,64 @@
                   userid:userid,
               },  
               success:function(){
-              elem = $('#popupmessage-add');
-              elem.fadeIn(400);
-              elem.delay(2200);
-              elem.fadeOut(400);
+                var rejected = document.createElement('button');
+                rejected.className = "friendRequest disabled waves-effect btn";
+                  rejected.setAttribute('style',"font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px; background-color: #5d2f33 !important;");
+                  rejected.innerHTML = "Request Rejected";
+                  document.getElementById(userid+"buttons").appendChild(rejected);
+                  document.getElementById("accept"+userid).remove();
+                  document.getElementById("reject"+userid).remove();
               
               }
           });
     }
     
     });
+
+
+</script>
+<script>
+    $(document).on('click', '.unfriend', function(event){
+    event.preventDefault();
+    var id = event.currentTarget.id;
+    var userid = id.slice(8,);
+    $.ajax({
+        type:'GET',
+        url:'',
+        data:{
+            tag:'unfriend',
+            userid:userid,
+        },
+        success:function(){
+                document.getElementById("existingFriend" + userid).remove();
+                var newfriend = document.createElement('div');
+                var innerlink1 = document.createElement('a');
+                var innerlink2 = document.createElement('a');
+                var innerlink3 = document.createElement('a');
+                var innerimage = document.createElement('img');
+                innerimage.className = "profilePic";
+                innerimage.src = "{% static 'images/testimg.jpg' %}";
+                innerlink1.href = "http://127.0.0.1:8000/user/"+userid;
+                innerlink1.appendChild(innerimage);
+                innerlink2.href = "http://127.0.0.1:8000/user/"+userid;
+                innerlink2.className = "friendname ";
+                innerlink2.innerHTML = userid
+                newfriend.className = "pending--friends post--card";
+                newfriend.setAttribute('style', "display: inline-flex; justify-content: center;");
+                newfriend.appendChild(innerlink1);
+                newfriend.appendChild(innerlink2);
+                innerlink3.className = "sendRequest likebuttonUnliked waves-effect btn"
+                innerlink3.setAttribute('style',"font-size: small;")
+                innerlink3.id = userid;
+                innerlink3.innerHTML = "Send Friend Request";
+                newfriend.id = "randompeople" + userid;
+                newfriend.appendChild(innerlink3);
+                document.getElementById('rightpanel').appendChild(newfriend);
+              }
+          });
+    });
+
+    
 
 
 </script>
