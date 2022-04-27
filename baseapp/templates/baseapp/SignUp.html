@@ -55,7 +55,7 @@
 <body>
 
     <div class="navbar">
-        <p class="navbar--appname">Uni Network</p>
+        <p class="navbar--appname"><a href="{% url 'home' %}" style="color: inherit;">UniNetwork</a></p>
         <!-- <div class="navbar--icons">
             <a class="link" href=""><i class="material-icons">create</i></a>
             <a class="link" href=""><i class="material-icons">pages</i></a>
@@ -85,7 +85,7 @@
                             {{ field }} 
                             {{ field.label_tag }}
                             {% for error in field.errors %}
-                            <p style="color: red;">{{ error }}</p>
+                            <p style="color: rgb(167, 1, 1);">{{ error }}</p>
                             {% endfor %}
                         </div>
                         </div>
