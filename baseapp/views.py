@@ -431,7 +431,6 @@ def editProfile(request):
  
         details.Name = request.POST.get('Name')
         details.PhoneNumber = request.POST.get('PhoneNumber')
-        details.Gender = request.POST.get('Gender')
         details.About = request.POST.get('About')
         details.Private = 'Private' in request.POST
         details.ProfilePic = request.FILES['ProfilePic']
