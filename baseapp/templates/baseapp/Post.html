@@ -18,8 +18,85 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <title>Post</title>
     <style>
-        #commentModal{
-            width: 500px;
+        .input-field {
+            width: 95%;
+        }
+
+        .input-field label {
+            color: #90a4ae;
+        }
+
+        .input-field input[type=text]:focus+label {
+            color: #90a4ae;
+        }
+
+        .input-field input:focus+label {
+            color: #546e7a !important;
+        }
+
+        /* label underline focus color */
+        .row .input-field input:focus {
+            border-bottom: 1px solid #607d8b !important;
+            box-shadow: 0 1px 0 0 #263238 !important
+        }
+
+        .input-field .prefix.active {
+            color: #263238;
+        }
+
+        .input-field input[type=text].valid {
+            border-bottom: 1px solid #263238;
+            box-shadow: 0 1px 0 0 #263238;
+        }
+
+        .input-field input[type=text].invalid {
+            border-bottom: 1px solid #263238;
+            box-shadow: 0 1px 0 0 #263238;
+        }
+
+        input:not([type]),
+        input[type=text]:not(.browser-default),
+        input[type=password]:not(.browser-default),
+        input[type=email]:not(.browser-default),
+        input[type=url]:not(.browser-default),
+        input[type=time]:not(.browser-default),
+        input[type=date]:not(.browser-default),
+        input[type=datetime]:not(.browser-default),
+        input[type=datetime-local]:not(.browser-default),
+        input[type=tel]:not(.browser-default),
+        input[type=number]:not(.browser-default),
+        input[type=search]:not(.browser-default),
+        textarea.materialize-textarea {
+            border-bottom: 1px solid #90a4ae;
+        }
+
+
+        .input-field textarea:focus+label {
+            color: #90a4ae;
+        }
+
+        .input-field textarea:focus+label {
+            color: #546e7a !important;
+        }
+
+        /* label underline focus color */
+        .row .input-field textarea:focus {
+            border-bottom: 1px solid #607d8b  !important;
+            box-shadow: 0 1px 0 0 #263238 !important
+        }
+
+        .input-field .prefix.active {
+            color: #263238;
+        }
+
+        .input-field textarea.valid {
+            border-bottom: 1px solid #90a4ae;
+            box-shadow: 0 1px 0 0 #263238;
+        }
+
+        .input-field textarea.invalid {
+            border-bottom: 1px solid #607d8b ;
+            box-shadow: 0 1px 0 0 #263238;
         }
     </style>
 </head>
@@ -38,6 +115,7 @@
 
     <div class="main--page">
         <div class="middle--panel">
+            <br><br><br><br><br>
             <!-- POST CARD BEGIN -->
             <div class="post--card">
                 <div class="card--navbar">
@@ -112,21 +190,21 @@
                 </div>
             </div>
             <div id="commentModal" class="modal">
-                <div class="modal-content">
-                  <h4>Add a new comment</h4>
+                <div class="modal-content" style="background-color: #263238;">
+                  <h4 style="color:#90a4ae">Add a new comment</h4>
                   <form action="" method="POST">
                       {% csrf_token %}
                     <div style="margin-top: 1px; margin-bottom: 1px;" class="row">
                         <div class="col s12">
                           <div style="width: 100% !important;" class="input-field inline">
-                            <input required name="comment" id="postTtile" type="text">
-                            <label for="postTtile">Comment</label>
+                            <input required name="comment" id="postTtile" type="text" style="color: #90a4ae;">
+                            <label for="postTtile" >Comment</label>
                           </div>
                         </div>
                       </div>
                     
                 <div style="text-align: center !important;" class="modal-footer">
-                    <button type="submit" class="waves-effect waves-green btn">Comment</button>
+                    <button type="submit" class="likebuttonUnliked waves-effect waves-light btn modal-trigger">Comment</button>
                 </div>
             </form>
               </div>

@@ -63,14 +63,15 @@ def feed(request):
     context['pagesFollowed'] = userPages
     for friend in userFriends:
         for post in findUserPosts(friend):
-            final_posts.append(post)
+            if post.page == None:
+                final_posts.append(post)
     for page in userPages:
         for post in findPagePosts(page):
-            final_posts.append(post)
-    
+                final_posts.append(post)
     myposts= Posts.objects.filter(user=request.user)
     for post in myposts:
-        final_posts.append(post) 
+        if post not in final_posts:
+            final_posts.append(post) 
     
     final_posts.sort(key=lambda x:x.PostedOn)
     final_posts.reverse()
@@ -84,7 +85,6 @@ def feed(request):
     #FRIEND REQUESTS
     requestingUsers = friendRequests(request.user)
     context['friendRequests'] = requestingUsers
-
     if request.method=="POST":
         newpost = Posts()
         newpost.user = request.user
@@ -316,7 +316,8 @@ def userpage(request,name):
         final_posts_with_likes = []
         for post in postsMade:
             final_posts.append(post)
-        final_posts.sort(key=lambda x:x.PostedOn, reverse=True)
+        final_posts.sort(key=lambda x:x.PostedOn)
+        final_posts.reverse()
         for post in final_posts:
             if PostLikes.objects.filter(post=post,user=request.user).first():
                 final_posts_with_likes.append((post,True))

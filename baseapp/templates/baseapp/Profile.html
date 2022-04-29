@@ -71,15 +71,6 @@
                         {% if accesseduser == request.user %}
                             <a href = "/edituser" class="likebuttonUnliked btn">Edit Profile</a>
                         {% endif %}
-                        {% if accesseduser != request.user %}
-                            {% if request.user|isNotFriendOf:accesseduser %}
-                                <a class="sendRequest likebuttonUnliked btn"> Send Request </a>
-                            {% else %}
-                            <button class="friendRequest disabled waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px; background-color: #2f5d3e !important;">
-                                <i class="material-icons left">done</i>Friends
-                            </button>
-                            {% endif %}
-                        {% endif %}
                     </div>
                 </div>
             </div>
