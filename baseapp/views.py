@@ -1,4 +1,3 @@
-from re import L
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
@@ -15,10 +14,13 @@ cursor = connection.cursor()
 
 # Create your views here.
 def home(request):
-
+    if request.user.is_authenticated:
+        return redirect(reverse('feed'))
     return render(request, 'baseapp/home.html')
 
 def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('feed'))
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -36,23 +38,33 @@ def loginPage(request):
     return render(request, 'baseapp/Login.html')
 
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('feed'))
     form = CreateUserForm()
     if request.method == "POST":
         form = CreateUserForm(request.POST)
+        username = request.POST.get('username')
         if form.is_valid():
             form.save()
+            usermodel = User.objects.get(username=username)
+            login(request,usermodel)
+            return redirect(reverse('accountSetup'))
 
     context = {'form': form}
     return render(request, 'baseapp/SignUp.html', context)
 
 def logoutPage(request):
     logout(request)
-    return redirect(reverse('login'))
+    return redirect(reverse('home'))
 
 def feed(request):
     if not request.user.is_authenticated:
+        messages.info(request, 'You need to login to be able to access this feature.')
         return redirect(reverse('login'))
-    
+    if not UserDetails.objects.filter(user=request.user).first():
+        messages.info(request,'Please set up your account first.')
+        return redirect(reverse('accountSetup'))
+
     context = {}
 
     #POSTS
@@ -139,14 +151,19 @@ def feed(request):
 def posts(request,postID):
     context = {}
     post = Posts.objects.get(PostID=postID)
-    #postedUserDetail = UserDetails.objects.get(user=post.user)
-
-    #CHECKING PRIVACY
-    # if postedUserDetail.Private:
-    #     if (not request.user.is_authenticated):
-    #         return redirect(reverse('login'))
-    #     elif (not checkFriends(post.user, request.user)):
-    #         return redirect(reverse('feed'))
+    postedUserDetail = UserDetails.objects.get(user=post.user)
+    
+    if (not request.user.is_authenticated):
+        messages.info(request, 'You need to login to be able to access this feature.')
+        return redirect(reverse('login'))
+    if not UserDetails.objects.filter(user=request.user).first():
+            messages.info(request,'Please set up your account first.')
+            return redirect(reverse('accountSetup'))
+    # CHECKING PRIVACY
+    if postedUserDetail.Private:
+        if (not checkFriends(post.user, request.user)) and (request.user != post.user) :
+            messages.info(request,"This post is private, only the friends of the user who made this post can view this.")
+            return redirect(reverse('feed'))
     
     postlikeobjects = PostLikes.objects.filter(post=post)
     postLikers = [i.user for i in postlikeobjects]
@@ -217,8 +234,14 @@ def abcd(request):
 def friends(request):
     context = {}
     if not request.user.is_authenticated:
+        messages.info(request, 'You need to login to be able to access this feature.')
         return redirect(reverse('login'))
     
+    if not UserDetails.objects.filter(user=request.user).first():
+        messages.info(request,'Please set up your account first.')
+        return redirect(reverse('accountSetup'))
+
+
     userFriends = findfriends(request.user)
     context['myFriends'] = userFriends
  
@@ -234,7 +257,14 @@ def friends(request):
     
     context['unknownPeople'] = unrequisitedFellas
     context['mySentPendingReqs'] = requestedFellas
+    
+    jsonobject = {}
+    allusers = UserDetails.objects.all()
+    for i in allusers:
+        jsonobject[i.user.username] = i.ProfilePic.url
 
+    context['images'] = jsonobject
+    
     if request.method == 'GET':
         if request.GET.get('tag') == 'sendrequest':
             uname = request.GET.get('userid')
@@ -257,7 +287,7 @@ def friends(request):
             print('something')
             uname = request.GET.get('userid')
             usermodel = User.objects.get(username=uname)
-            frnd = Friends.objects.get(Requester=usermodel, Requested=request.user)
+            frnd = returnFriend(usermodel, request.user)
             frnd.delete()
  
     return render(request,'baseapp/Friends.html',context)
@@ -266,14 +296,24 @@ def friends(request):
 
 def userpage(request,name):
     context = {}
+    accessuser = User.objects.get(username = name)
+    accessUserDetails = UserDetails.objects.get(user = accessuser)
     if not request.user.is_authenticated:
+        messages.info(request, 'You need to login to be able to access this feature.')
         return redirect(reverse('login'))
     
+    if accessUserDetails.Private:
+        if (not checkFriends(accessuser, request.user)) and (request.user != accessuser) :
+            messages.info(request,"This profile is private, only the friends of this user can view this.")
+            return redirect(reverse('feed'))
+
+    if not UserDetails.objects.filter(user=request.user).first():
+        messages.info(request,'Please set up your account first.')
+        return redirect(reverse('accountSetup'))
+
     userPages = findFollowedPages(request.user)
     context['pagesFollowed'] = userPages
-    accessuser = User.objects.get(username = name)
     context['accesseduser']=accessuser
-    accessUserDetails = UserDetails.objects.get(user = accessuser)
     context['them']=accessUserDetails.Name
     if accessUserDetails.Private:
         if checkFriends(accessuser, request.user) |( accessuser == request.user):
@@ -352,8 +392,13 @@ def userpage(request,name):
 
 def accountSetup(request):
     if not request.user.is_authenticated:
+        messages.info(request, 'You need to login to be able to access this feature.')
         return redirect(reverse('login'))
-        
+    
+    if not UserDetails.objects.filter(user=request.user).first():
+        messages.info(request,'Please set up your account first.')
+        return redirect(reverse('accountSetup'))
+
     context = {}
     if request.method == "POST":
         details = UserDetails()
@@ -373,8 +418,13 @@ def accountSetup(request):
     
 def editProfile(request):
     if not request.user.is_authenticated:
+        messages.info(request, 'You need to login to be able to access this feature.')
         return redirect(reverse('login'))
     
+    if not UserDetails.objects.filter(user=request.user).first():
+        messages.info(request,'Please set up your account first.')
+        return redirect(reverse('accountSetup'))
+
     context = {}
     if request.method == "POST":
         details = UserDetails.objects.get(user = request.user)
@@ -393,8 +443,13 @@ def editProfile(request):
 
 def aboutPage(request,id):
     if not request.user.is_authenticated:
+        messages.info(request, 'You need to login to be able to access this feature.')
         return redirect(reverse('login'))
     
+    if not UserDetails.objects.filter(user=request.user).first():
+        messages.info(request,'Please set up your account first.')
+        return redirect(reverse('accountSetup'))
+
     context = {}
     
     currpage = Pages.objects.get(PageID=id)
@@ -423,6 +478,11 @@ def aboutPage(request,id):
         context['allowfollow'] = True
     else:
         context['allowfollow'] = False
+    
+    if request.user == pageOwner:
+        context['creator'] = True
+    
+
     context['followers'] = checker
 
     if request.method == 'GET':
@@ -441,8 +501,13 @@ def aboutPage(request,id):
 
 def pagesPage(request):
     if not request.user.is_authenticated:
+        messages.info(request, 'You need to login to be able to access this feature.')
         return redirect(reverse('login'))
     
+    if not UserDetails.objects.filter(user=request.user).first():
+        messages.info(request,'Please set up your account first.')
+        return redirect(reverse('accountSetup'))
+
     context = {}
 
     myPagesRaw = PageFollowers.objects.filter(user = request.user)

@@ -54,3 +54,9 @@ def parsedDate(stringdate):
     parts = [int(i) for i in parts]
     dateval = datetime.date(parts[0],parts[1],parts[2])
     return dateval
+
+def returnFriend(user1,user2):
+    one = Friends.objects.filter(Requester=user1,Requested=user2,Confirmed=True).first()
+    two = Friends.objects.filter(Requester=user2,Requested=user1,Confirmed=True).first()
+    if one: return one
+    else: return two

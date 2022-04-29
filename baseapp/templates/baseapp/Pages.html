@@ -23,10 +23,11 @@
     <div class="navbar">
         <p class="navbar--appname"><a href="{% url 'feed' %}" style="color: inherit">UniNetwork</a></p>
         <div class="navbar--icons">
-            <a href="{% url 'feed' %}"><i class="material-icons">create</i></a>
-            <a href="{% url 'allPages' %}"><i class="material-icons">pages</i></a>
-            <a href="{% url 'friends' %}"><i class="material-icons">people</i></a>
-            <a href="{% url 'profile' request.user.username %}"><i class="material-icons">person</i></a>
+            <a href="{% url 'feed' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Create a Post"><i class="material-icons">create</i></a>
+            <a href="{% url 'allPages' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Find Pages"><i class="material-icons">pages</i></a>
+            <a href="{% url 'friends' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Explore"><i class="material-icons">people</i></a>
+            <a href="{% url 'profile' request.user.username %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="My Profile"><i class="material-icons">person</i></a>
+            <a href="{% url 'logout' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Logout"><i class="material-icons">logout</i></a>
         </div>
     </div>
     <div id="index-banner">
@@ -51,7 +52,7 @@
                                     &nbsp;&nbsp;
                                     {% if allowfollow %}
                                         <button class="followPage"> Follow the page </button>
-                                    {% else %}
+                                    {% elif not creator %}
                                         <button class="unfollowPage"> Unfollow the page </button>
                                     {% endif %}
                                 </div>
@@ -295,6 +296,12 @@
     var elems2 = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems2);
     var instances = M.Modal.init(elems);
+  });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
   });
 </script>
 

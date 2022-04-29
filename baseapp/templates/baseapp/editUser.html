@@ -280,9 +280,10 @@
     <div class="navbar">
         <p class="navbar--appname"><a href="{% url 'feed' %}" style="color: inherit; opacity: 100% !important;">UniNetwork</a></p>
         <div class="navbar--icons">
-            <a href="{% url 'allPages' %}"><i class="material-icons">pages</i></a>
-            <a href="{% url 'friends' %}"><i class="material-icons">people</i></a>
-            <a href="{% url 'profile' request.user.username %}"><i class="material-icons">person</i></a>
+            <a href="{% url 'allPages' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Create a Post"><i class="material-icons">pages</i></a>
+            <a href="{% url 'friends' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Explore"><i class="material-icons">people</i></a>
+            <a href="{% url 'profile' request.user.username %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="My Profile"><i class="material-icons">person</i></a>
+            <a href="{% url 'logout' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Logout"><i class="material-icons">logout</i></a>
         </div>
     </div>
     <br>
@@ -387,5 +388,11 @@
         form.submit();
         return true;
     }   
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
+  });
 </script>
 </html>

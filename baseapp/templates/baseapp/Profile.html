@@ -15,7 +15,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
                 
         <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
-        <title>Post</title>
+        <title>My Profile</title>
     </head>
 
 <body>
@@ -23,9 +23,10 @@
     <div class="navbar">
         <p class="navbar--appname"><a href="{% url 'feed' %}" style="color: #4dd0e1">UniNetwork</a></p>
         <div class="navbar--icons">
-            <a href="{% url 'feed' %}"><i class="material-icons">create</i></a>
-            <a href="{% url 'allPages' %}"><i class="material-icons">pages</i></a>
-            <a href="{% url 'friends' %}"><i class="material-icons">people</i></a>
+            <a href="{% url 'feed' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Create a Post"><i class="material-icons">create</i></a>
+            <a href="{% url 'allPages' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Find Pages"><i class="material-icons">pages</i></a>
+            <a href="{% url 'friends' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Explore"><i class="material-icons">people</i></a>
+            <a href="{% url 'logout' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Logout"><i class="material-icons">logout</i></a>
         </div>
 
     </div>
@@ -260,5 +261,10 @@
     
     });
 </script>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
+  });
+</script>
 </html>

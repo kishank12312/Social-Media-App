@@ -12,7 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
-    <title>Post</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <title>My Friends</title>
     <style>
         .friendname{
             color: #263238;
@@ -29,9 +30,10 @@
     <div class="navbar">
         <p class="navbar--appname"><a href="{% url 'feed' %}" style="color: inherit">UniNetwork</a></p>
         <div class="navbar--icons">
-            <a href="{% url 'feed' %}"><i class="material-icons">create</i></a>
-            <a href="{% url 'allPages' %}"><i class="material-icons">pages</i></a>
-            <a href="{% url 'profile' request.user.username %}"><i class="material-icons">person</i></a>
+            <a href="{% url 'feed' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Create a Post"><i class="material-icons">create</i></a>
+            <a href="{% url 'allPages' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Find Pages"><i class="material-icons">pages</i></a>
+            <a href="{% url 'profile' request.user.username %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="My Profile"><i class="material-icons">person</i></a>
+            <a href="{% url 'logout' %}" class="modal-trigger tooltipped" data-position="bottom" data-tooltip="Logout"><i class="material-icons">logout</i></a>
         </div>
 
     </div>
@@ -41,7 +43,7 @@
             <p style="font-size: 30px;" class="left--text">Pending Friend Request</p>
             {% for requester in friendRequests %}
             <div id="requestcard{{ requester.username }}" style="margin-left: 42px;" class="pending--friends post--card">
-                <img src="{% static 'images/testimg.jpg' %}" class="profilePic" alt="">
+                <img src="{{ requester|profilepicfromuser }}" class="profilePic" alt="">
                 &nbsp;&nbsp;
                 <p class="left--accountName">{{ requester.username }}</p>
                 <div id="{{ requester.username }}buttons">
@@ -59,7 +61,7 @@
             {% for friend in myFriends %}
             <div id="existingFriend{{ friend.username }}" class="pending--friends post--card " style="display: inline-flex; justify-content: center;">
                 <a href="{% url 'profile' friend.username %}">
-                    <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                    <img class = "profilePic" src="{{ friend|profilepicfromuser }}" alt="">
                 </a>
                 <a href="{% url 'profile' friend.username %}" class="friendname ">{{ friend.username }}</a>
                 <a class="likebuttonUnliked waves-effect btn unfriend" id="unfriend{{ friend.username }}">❌UNFRIEND</a>
@@ -71,7 +73,7 @@
             {% for person in mySentPendingReqs %}
             <div class="pending--friends post--card " style="display: inline-flex; justify-content: center;">
                 <a href="{% url 'profile' person.username %}">
-                    <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                    <img class = "profilePic" src="{{ person|profilepicfromuser }}" alt="">
                 </a>
                 <a href="{% url 'profile' person.username %}" class="friendname">{{ person.username }}</a>
                 <button class="disabled waves-effect btn" style="font-family: 'Nunito', sans-serif; font-size: small; margin-left: 2px; background-color: #5f6568 !important;">Friend request sent</button>
@@ -82,7 +84,7 @@
             {% for person in unknownPeople %}
             <div id="randompeople{{ person.username }}" class="pending--friends post--card " style="display: inline-flex; justify-content: center;">
                 <a href="{% url 'profile' person.username %}">
-                    <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                    <img class = "profilePic" src="{{ person|profilepicfromuser }}" alt="">
                 </a>
                 <a href="{% url 'profile' person.username %}" class="friendname">{{ person.username }}</a>
                 <a class="sendRequest likebuttonUnliked waves-effect btn" style="font-size: small;" id="{{person.username}}">Send Friend Request</a>
@@ -95,6 +97,7 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+    var images = {{ images|safe }};
     $(document).on('click', '.sendRequest', function(event){
     event.preventDefault();
     var id = event.currentTarget.id;
@@ -117,9 +120,7 @@
               
               }
           });
-      }
-
-    );
+      });
 
     $(document).on('click', '.friendRequest', function(event){
     event.preventDefault();
@@ -145,7 +146,7 @@
                 var innerlink3 = document.createElement('a');
                 var innerimage = document.createElement('img');
                 innerimage.className = "profilePic";
-                innerimage.src = "{% static 'images/testimg.jpg' %}";
+                innerimage.src = images[userid];
                 innerlink1.href = "http://127.0.0.1:8000/user/"+userid;
                 innerlink1.appendChild(innerimage);
                 innerlink2.href = "http://127.0.0.1:8000/user/"+userid;
@@ -192,6 +193,7 @@
 
 </script>
 <script>
+    var images = {{ images|safe }};
     $(document).on('click', '.unfriend', function(event){
     event.preventDefault();
     var id = event.currentTarget.id;
@@ -211,7 +213,7 @@
                 var innerlink3 = document.createElement('a');
                 var innerimage = document.createElement('img');
                 innerimage.className = "profilePic";
-                innerimage.src = "{% static 'images/testimg.jpg' %}";
+                innerimage.src = images[userid];;
                 innerlink1.href = "http://127.0.0.1:8000/user/"+userid;
                 innerlink1.appendChild(innerimage);
                 innerlink2.href = "http://127.0.0.1:8000/user/"+userid;
@@ -235,6 +237,12 @@
     
 
 
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
+  });
 </script>
 
 </html>

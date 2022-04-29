@@ -29,3 +29,8 @@ def likedpost(thispost,user):
 def isNotFriendOf(user1,user2):
     print(user1,user2)
     return checkFriends(user1,user2)
+@register.filter
+def loadImageJS(username):
+    userobject = User.objects.get(username=username)
+    userdetail = UserDetails.objects.get(user=userobject)
+    return userdetail.ProfilePic.url
