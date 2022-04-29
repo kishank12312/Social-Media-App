@@ -287,3 +287,16 @@ a{
     background-color: #5d2f33 !important;
     color: white !important;
 }
+.profile--name{
+    margin-top: 15px;
+    margin-bottom: 7px;
+    font-size: 17px;
+    color: black;
+}
+.friendname{
+    color: #000000;
+    font-size: medium;
+}
+.friendname:hover{
+    text-decoration: underline;
+}

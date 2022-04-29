@@ -114,10 +114,10 @@
                                 &nbsp;
                                 <div class="name--time--page">
                                     <div class="name--page">
-                                        <p class="profile--name" ><a href="/user/{{ post.0.user.username }}"> {{ post.0.user.username }}</a></p>
+                                        <p class="profile--name"><a class="friendname" href="{% url 'profile' post.0.user.username %}"> {{ post.0.user.username }}</a></p>
                                         {% if post.0.page != None %}
-                                            <i class="material-icons">play_arrow</i>
-                                            <a href="{% url 'pages' post.0.page.PageID %}" class="page--name">{{ post.0.page.PageName }}</a>
+                                            <i class="material-icons profile--name">play_arrow</i>
+                                            <p class="profile--name" style="width: 300px;"><a class="friendname" href="{% url 'pages' post.0.page.PageID %}">{{post.0.page.PageName}}</a></p>
                                         {% endif %}
                                     </div>
                                     <div class="time">

@@ -29,13 +29,11 @@
  
     <div class="main--page">
  
-        <div class="left--panel">
-            <p class="left--text">Pages you created</p>
+        <div class="left--panel" >
+            <p style="font-size: 26px;" class="left--text">Pages you created</p>
             {% for page in created %}
-            <div class="pending--friends">
-                <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
-                &nbsp;&nbsp;
-                <p class="left--accountName"><a href="/page/{{ page.PageID }}">{{ page.PageName }}</a></p>
+            <div style="padding-left: 25px;" class="pending--friends">
+                <p class="left--accountName friendname"><a href="{% url 'pages' page.PageID %}">{{ page.PageName }}</a></p>
                 &nbsp;&nbsp;
             </div>
             {% endfor %}
@@ -87,24 +85,20 @@
         </div>
  
         
-        <p class="left--text">Pages you follow</p>
+        <p style="font-size: 26px;" class="left--text">Pages you follow</p>
         {% for page in follow %}
         <div class="pending--friends">
-            <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
-            &nbsp;&nbsp;
-            <p class="left--accountName"><a href="/page/{{ page.PageID }}">{{ page.PageName }}</a></p>
+            <p class="left--accountName friendname"><a href="{% url 'pages' page.PageID %}">{{ page.PageName }}</a></p>
         </div>
         {% endfor %}
     </div>
  
  
         <div class="right--panel">
-            <p class="right--text">Explore</p>
+            <p style="font-size: 26px;" class="right--text">Follow New Pages</p>
             {% for page in others %}
             <div class="pending--friends">
-                <img class = "profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
-                &nbsp;&nbsp;
-                <p class="left--accountName"><a href="/page/{{ page.PageID }}">{{ page.PageName }} </a></p>
+                <p class="left--accountName friendname"><a href="{% url 'pages' page.PageID %}">{{ page.PageName }} </a></p>
                 &nbsp;&nbsp;
                 <button class="followPage" id="{{page.PageID}}"> Follow </button>
             {% endfor %}

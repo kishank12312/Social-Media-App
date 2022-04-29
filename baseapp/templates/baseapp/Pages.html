@@ -74,11 +74,7 @@
                     &nbsp;
                     <div class="name--time--page">
                         <div class="name--page">
-                            <p class="profile--name">{{ post.0.user.username }}</p>
-                            {% if post.0.page != None %}
-                                <i class="material-icons">play_arrow</i>
-                                <p class="page--name">{{ post.0.page.PageName }}</p>
-                            {% endif %}
+                            <p class="profile--name"><a class="friendname" href="{% url 'profile' post.0.user.username %}"> {{ post.0.user.username }}</a></p>
                         </div>
                         <div class="time">
                             <p class="post--time">{{ post.0.PostedOn }}</p>
@@ -98,13 +94,23 @@
                 </div>
 
                 <div class="like--comment">
-                    <i class="material-icons">thumb_up_off_alt</i>
-                    <p class="like">Like</p>
-                    <p class="likenumber">{{ post.0.LikeCount }}</p>
-
-                    <i class="material-icons">chat_bubble_outline</i>
-                    <p class="comment">Comment</p>
-                    <p class="comment">{{ post.0.CommentCount }}</p>
+                    {% if post.1 %}
+                    <a id="unlikePost{{ post.0.PostID }}" class="likebuttonLiked waves-effect waves-light btn likepost">
+                        <i class="material-icons left">thumb_up_off_alt</i>LIKED
+                    </a>
+                    {% else %}
+                    <a id="likePost{{ post.0.PostID }}" class="likebuttonUnliked waves-effect waves-light btn likepost">
+                        <i class="material-icons left">thumb_up_off_alt</i>LIKE
+                    </a>
+                    {% endif %}
+                    &nbsp;  
+                    <a id="likenumber{{ post.0.PostID }}" href="{% url 'post' post.0.PostID %}" class="likenumber">{{ post.0.LikeCount }}</a>
+                    
+                    <a href="{% url 'post' post.0.PostID %}" class="likebuttonUnliked waves-effect waves-light btn" style="width: 157px;display: inline-flex;align-items: center;">
+                        <i class="material-icons">chat_bubble_outline</i> &nbsp;
+                        Comment
+                        <p class="comment">{{ post.0.CommentCount }}</p>
+                    </a>
                 </div>
 
             </div>
@@ -165,57 +171,39 @@
     var classes = elem.classList;
     
     if(classes.contains('likebuttonUnliked')){
-        
+        var id = parseInt(elem.id.slice(8,));
         $.ajax({
             type:'GET',
             url:'',
             data:{
                 tag:'likepost',
+                id:id,
+                
             },  
             success:function(){
-        //   elem = $('#popupmessage-add');
-        //   elem.fadeIn(400);
-        //   elem.delay(2200);
-        //   elem.fadeOut(400);
-            elem.childNodes[2].nodeValue = "LIKED";
-            elem.className = "likebuttonLiked waves-effect waves-light btn likepost";
-            var lk = document.getElementById("PostlikeCount");
-            lk.innerHTML = String(parseInt(lk.innerHTML) + 1);
-            var newliker = document.createElement('a');
-            var prpic = document.createElement('img');
-            prpic.src = "{{ request.user|profilepicfromuser }}";
-            prpic.className = "commentprofilePic";
-            newliker.appendChild(prpic);
-            newliker.className = "liker";
-            newliker.href = "";
-            newliker.innerHTML += '&nbsp;&nbsp;';
-            var newp = document.createElement("p");
-            newp.className = "left--accountName";
-            newp.innerHTML = "{{ request.user.username }}";
-            newliker.appendChild(newp);
-            newliker.id = "postLiker{{ request.user.username }}"
-            document.getElementById("postlikesmodal").appendChild(newliker);
+                elem.childNodes[2].nodeValue = "LIKED";
+                elem.className = "likebuttonLiked waves-effect waves-light btn likepost";
+                elem.id = "unlikePost" + String(id);    
+                var lk = document.getElementById("likenumber" + String(id));
+                lk.innerHTML = String(parseInt(lk.innerHTML) + 1);
             }
         });
-      }
+    }
     else{
+        var id = parseInt(elem.id.slice(10,));
         $.ajax({
             type:'GET',
             url:'',
             data:{
                 tag:'unlikepost',
+                id:id,
             },  
             success:function(){
-        //   elem = $('#popupmessage-add');
-        //   elem.fadeIn(400);
-        //   elem.delay(2200);
-        //   elem.fadeOut(400);
             elem.childNodes[2].nodeValue = "LIKE";
             elem.className = "likebuttonUnliked waves-effect waves-light btn likepost";
-            var lk = document.getElementById("PostlikeCount");
+            elem.id = "likePost" + String(id);    
+            var lk = document.getElementById("likenumber" + String(id));
             lk.innerHTML = String(parseInt(lk.innerHTML) - 1);
-            var liker = document.getElementById("postLiker{{ request.user.username }}");
-            liker.remove();
             }
         });
     }

@@ -114,8 +114,8 @@ body::-webkit-scrollbar,
     width: 600px;
     border: solid 2px;
     border-color: #343a40;
-    background-color: #343a40;
-    color: #dee2e6;
+    background-color: #90a4ae;
+    color: #263238;
     margin-top: 15px;
     margin-bottom: 15px;
     border-radius: 5px;
@@ -190,21 +190,35 @@ a{
 }
 .likebuttonUnliked{
     margin: 5px;
+    color: #263238 !important;
     background-color: rgba(0, 0, 0, 0.1) !important;
-    border: 2px solid #4CAF50 !important;
-    border-radius: 10px !important;
-}
-.likebuttonLiked{
-    margin: 5px;
-    background-color: #4CAF50 !important;
-    border: 2px solid #4CAF50 !important;
+    border: 2px solid #263238 !important;
     border-radius: 10px !important;
 }
 
 .likebuttonUnliked:hover {
-    background-color: #4CAF50 !important;
-    color: white;
-  }
+    background-color: #263238 !important;
+    color: white !important;
+}
+.likebuttondiff{
+    margin: 5px;
+    color: #90a4ae !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 2px solid #90a4ae !important;
+    border-radius: 10px !important;
+}
+
+.likebuttondiff:hover {
+    background-color: #90a4ae !important;
+    color: #263238 !important;
+}
+
+.likebuttonLiked{
+    margin: 5px;
+    background-color: #263238 !important;
+    border: 2px solid #263238 !important;
+    border-radius: 10px !important;
+}
 .comment{
     margin-left: 10px;
 }
@@ -240,4 +254,17 @@ a{
 }
 .modal-footer{
     background-color: #263238 !important;
+}
+.profile--name{
+    margin-top: 15px;
+    margin-bottom: 7px;
+    font-size: 17px;
+    color: black;
+}
+.friendname{
+    color: #000000;
+    font-size: medium;
+}
+.friendname:hover{
+    text-decoration: underline;
 }

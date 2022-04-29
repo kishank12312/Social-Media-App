@@ -6,8 +6,7 @@ from django.contrib.auth.models import User
 class UserDetails(models.Model):
     GENDERS = (
         ('Male','Male'),
-        ('Female','Female'),
-        ('Others','Others')
+        ('Female','Female')
     )
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     Name = models.CharField(max_length=150,null=True,blank=True)

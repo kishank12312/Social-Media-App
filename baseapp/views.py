@@ -426,6 +426,8 @@ def editProfile(request):
         return redirect(reverse('accountSetup'))
 
     context = {}
+    context['userdetail'] = UserDetails.objects.get(user=request.user)
+
     if request.method == "POST":
         details = UserDetails.objects.get(user = request.user)
  
@@ -433,7 +435,8 @@ def editProfile(request):
         details.PhoneNumber = request.POST.get('PhoneNumber')
         details.About = request.POST.get('About')
         details.Private = 'Private' in request.POST
-        details.ProfilePic = request.FILES['ProfilePic']
+        if 'ProfilePic' in request.FILES:
+            details.ProfilePic = request.FILES['ProfilePic']
  
         details.save()
  
@@ -485,7 +488,6 @@ def aboutPage(request,id):
     context['followers'] = checker
 
     if request.method == 'GET':
-
         if request.GET.get('tag') == 'followpage':
             newflr = PageFollowers.objects.filter(page = currpage, user = request.user).exists()
             print(newflr)
@@ -493,9 +495,22 @@ def aboutPage(request,id):
                 newflr = PageFollowers(user = request.user, page = currpage)
                 newflr.save()
         
-        if request.GET.get('tag') == 'unfollowpage':
+        elif request.GET.get('tag') == 'unfollowpage':
             PageFollowers.objects.filter(page = currpage, user = request.user).delete()
-
+        elif request.GET.get('tag') == 'likepost':
+            post_id = int(request.GET.get('id'))
+            postobject = Posts.objects.get(PostID = post_id)
+            newlike = PostLikes(post=postobject, user=request.user)
+            newlike.save()
+            postobject.LikeCount += 1
+            postobject.save()
+        elif request.GET.get('tag') == 'unlikepost':
+            post_id = int(request.GET.get('id'))
+            postobject = Posts.objects.get(PostID = post_id)
+            existinglike = PostLikes.objects.get(post=postobject, user=request.user)
+            existinglike.delete()
+            postobject.LikeCount -= 1
+            postobject.save()
     return render(request,'baseapp/Pages.html',context)
 
 def pagesPage(request):
@@ -539,7 +554,7 @@ def pagesPage(request):
         newpage.PageImage = request.FILES['PageImage'] if 'PageImage' in request.FILES else None
 
         newpage.save()
-        pagefollower =  PageFollowers(page = newpage, user = request.user)
+        pagefollower = PageFollowers(page = newpage, user = request.user)
         pagefollower.save()
 
         return redirect(reverse('allPages'))

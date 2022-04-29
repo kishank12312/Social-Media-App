@@ -124,10 +124,10 @@
                     &nbsp;
                     <div class="name--time--page">
                         <div class="name--page">
-                            <p class="profile--name">{{ this_post.user.username }}</p>
+                            <p class="profile--name"><a class="friendname" href="{% url 'profile' this_post.user.username %}"> {{ this_post.user.username }}</a></p>
                             {% if this_post.page != None %}
-                                <i class="material-icons">play_arrow</i>
-                                <p class="page--name">L Merchants</p>
+                                <i class="material-icons profile--name">play_arrow</i>
+                                <p class="profile--name" style="width: 300px;"><a class="friendname" href="{% url 'pages' this_post.page.PageID %}">{{this_post.page.PageName}}</a></p>
                             {% endif %}
                         </div>
                         <div class="time">
@@ -160,7 +160,7 @@
                         {% endif %}
                     </div>
                     <div class="col xl6">
-                    <a href="#postlikes" class="modal-trigger">
+                    <a href="#postlikes" class="modal-trigger friendname">
                         <div class="row">
                             <div class="col xl1"><p style="font-size: 16px" id="PostlikeCount">{{ this_post.LikeCount }}</p></div>
                             <div class="col xl9"><p style="font-size: 16px">People Have liked this post</p></div>
@@ -168,7 +168,7 @@
                     </a>
                     <div id="postlikes" class="modal">
                         <div id="postlikesmodal" class="modal-content">
-                          <h5>People Who liked this post</h5>
+                          <h5 style="color: white;">People Who liked this post</h5>
                           <br>
                           {% for liker in postLikers %}
                           <a href="" class="liker" id="postLiker{{ liker.username }}">
@@ -205,7 +205,7 @@
                       </div>
                     
                 <div style="text-align: center !important;" class="modal-footer">
-                    <button type="submit" class="likebuttonUnliked waves-effect waves-light btn modal-trigger">Comment</button>
+                    <button type="submit" class="likebuttondiff waves-effect waves-light btn modal-trigger">Comment</button>
                 </div>
             </form>
               </div>

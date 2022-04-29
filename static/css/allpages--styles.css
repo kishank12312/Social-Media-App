@@ -272,3 +272,10 @@ a{
     background-color: #5d2f33 !important;
     color: white !important;
 }
+.friendname{
+    color: #90a4ae;
+    font-size: 16px;
+}
+.friendname:hover{
+    text-decoration: underline;
+}

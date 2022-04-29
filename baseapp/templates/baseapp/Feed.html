@@ -114,7 +114,7 @@
 
     <div class="main--page">
         <div class="left--panel">
-            <p class="left--text">Pending Friend Request</p>
+            <p style="font-size: 26px;" class="left--text">Pending Friend Requests</p>
             {% for requester in friendRequests %}
             <div class="pending--friends post--card" style="width: 369px;">
                 <img src="{% static 'images/testimg.jpg' %}" class="profilePic" alt="">
@@ -127,6 +127,7 @@
                 </div>
             </div>
             {% endfor %}
+
         </div>
         <div class="middle--panel">
 
@@ -188,14 +189,14 @@
             {% for post in posts %}
             <div class="post--card">
                 <div class="card--navbar">
-                    <img class="profilePic" src="{% static 'images/testimg.jpg' %}" alt="">
+                    <img class="profilePic" src="{{ post.0.user|profilepicfromuser }}" alt="">
                     &nbsp;
                     <div class="name--time--page">
                         <div class="name--page">
-                            <p class="profile--name" ><a href="/user/{{ post.0.user.username }}"> {{ post.0.user.username }}</a></p>
+                            <p class="profile--name"><a class="friendname" href="{% url 'profile' post.0.user.username %}"> {{ post.0.user.username }}</a></p>
                             {% if post.0.page != None %}
-                                <i class="material-icons">play_arrow</i>
-                                <p class="page--name">{{post.0.page.PageName}}</p>
+                                <i class="material-icons profile--name">play_arrow</i>
+                                <p class="profile--name" style="width: 300px;"><a class="friendname" href="{% url 'pages' post.0.page.PageID %}">{{post.0.page.PageName}}</a></p>
                             {% endif %}
                         </div>
                         <div class="time">
@@ -239,7 +240,7 @@
             {% endfor %}
         </div>
         <div class="right--panel">
-            <p class="right--text">Pages you follow</p>
+            <p style="font-size: 26px;" class="right--text">Pages you follow</p>
             {% for page in pagesFollowed %}
             <div class="pages--followed">
                 <i class="material-icons">auto_stories</i><a href="{% url 'pages' page.PageID %}">{{ page.PageName }}</a>

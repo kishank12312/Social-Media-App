@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'SocialMediaApp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testdb',
+        'NAME': 'UniNetworkDB',
         'USER' : 'root',
         'PASSWORD' : 'root',
         'HOST' : 'localhost',

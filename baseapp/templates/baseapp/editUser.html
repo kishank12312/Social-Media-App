@@ -296,20 +296,24 @@
               <form id="mainform" enctype="multipart/form-data" action="" method="post" autocomplete="off">
                   {% csrf_token %}
                 <div style="width: 90%;" class="input-field inline">
-                    <input required type="text" name="Name" maxlength="150" id="id_Name">
+                    <input required type="text" name="Name" maxlength="150" id="id_Name" value="{{userdetail.Name}}">
                     <label for="id_Name">Update Name:</label>
                 </div>
                 <div style="width: 90%;" class="input-field inline">
-                    <input required type="text" name="PhoneNumber" maxlength="10" required id="id_PhoneNumber">
+                    <input required type="text" name="PhoneNumber" maxlength="10" required id="id_PhoneNumber" value="{{userdetail.PhoneNumber}}">
                     <label for="id_PhoneNumber">Update PhoneNumber:</label>
                 </div>
                 <div style="width: 90%;" class="input-field inline">
-                    <input required type="text" name="About" maxlength="300" id="id_About">
+                    <input required type="text" name="About" maxlength="300" id="id_About" value="{{userdetail.About}}">
                     <label for="id_About">Update About:</label>
                 </div>
                 <div style="width: 90%;" class="input-field inline">
                     <label>
+                        {% if userdetail.Private %}
+                        <input required type="checkbox" name="Private" id="id_Private" checked="checked" class="filled-in checkbox-blue-grey-darken-4"/>
+                        {% else %}
                         <input required type="checkbox" name="Private" id="id_Private" class="filled-in checkbox-blue-grey-darken-4"/>
+                        {% endif %}
                         <span style=" font-size: 15px; font-weight: 500; color: #263238;">Set Account to Private</span>
                     </label>
                 </div>
@@ -347,12 +351,11 @@
         var form = document.getElementById("mainform");
         var elements = document.getElementsByTagName("input")
         var inputs = Array();
-        var ar = ['id_Name', 'id_DateOfBirth', 'id_PhoneNumber', 'id_About', 'id_Private', 'id_ProfilePic']
+        var ar = ['id_Name', 'id_DateOfBirth', 'id_PhoneNumber', 'id_About', 'id_Private',]
         for(var element of elements){
             if(ar.includes(element.id)){
                 if(element.id == 'id_About'){
                     inputs.push(element);
-                    inputs.push(document.getElementById('id_Gender'));
  
                 }
                 else{
@@ -363,12 +366,6 @@
         console.log(inputs);
         for(var input of inputs){
             if(input.name == "Private" || input.type == "button"){
-            }
-            else if(input.name == "Gender"){
-                if(input.value == ""){
-                    alert("Please choose a " + input.name);
-                    return false;
-                }
             }
             else{
                 if(input.value == ""){
