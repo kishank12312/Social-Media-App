@@ -34,7 +34,7 @@
             <div class="container">
                 <br><br>
                 <div class="row center">
-                    <img class="image" src="{{ page.PageImage.url }}" alt="" style="height: 350px; width: 350px;">
+                    <img class="image" src="{{ page.PageImage.url }}" alt="" style="max-height: 350px;">
                     <h3 class="header" style="color:white; padding-top: 50;">{{ page.PageName }}</h3>
                 </div>
                 <br>
@@ -64,36 +64,12 @@
     </div>
 
     <div class="main--page">
-        <div class="left--panel">
-            <div class="row">
-                <div class="col s12 m12">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                    <span class="card-title">Friends</span>
-                        
-                    <ul style="border: none !important;" class="collection ">
-                        {% for friend in followers %}
-                        <li style="background-color: #263238; min-height: 60px !important;" class="collection-item avatar">
-                            <a href="/user/{{ friend.username }}">
-                                <img src="{{ friend|profilepicfromuser }}" alt="" class="circle">
-                                <span class="title">{{ friend.username }}</span>
-                            </a>
-                        </li>
-                        {% endfor %}
-                      </ul>    
-
-
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-
+        <div class="middle--panel">
         <div class="col s9">
             {% for post in posts %}
             <div class="post--card">
                 <div class="card--navbar">
-                    <!-- <img class="profilePic" src="{% static 'images/testimg.jpg' %}" alt=""> -->
+                    <img class="profilePic" src="{{ post.0.user|profilepicfromuser  }}" alt="">
                     &nbsp;
                     <div class="name--time--page">
                         <div class="name--page">
@@ -114,6 +90,10 @@
                 <div class="card--title">{{ post.0.Title }}</div>
                 <div class="card--content">
                     {{ post.0.Body }}
+                    <br><br>
+                    {% if post.0.Image != None and post.0.Image != "" %}
+                        <img src="{{ post.0.Image.url }}" alt="" style="max-width: 100%;">
+                    {% endif %}
                 </div>
 
                 <div class="like--comment">
@@ -129,7 +109,7 @@
             </div>
             {% endfor %}
         </div>
-
+        </div>
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

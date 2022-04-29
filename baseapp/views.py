@@ -67,7 +67,13 @@ def feed(request):
     for page in userPages:
         for post in findPagePosts(page):
             final_posts.append(post)
+    
+    myposts= Posts.objects.filter(user=request.user)
+    for post in myposts:
+        final_posts.append(post) 
+    
     final_posts.sort(key=lambda x:x.PostedOn)
+    final_posts.reverse()
     for post in final_posts:
         if PostLikes.objects.filter(post=post,user=request.user).first():
             final_posts_with_likes.append((post,True))
@@ -93,6 +99,7 @@ def feed(request):
         newpost.Image = request.FILES['PostImage'] if 'PostImage' in request.FILES else None
 
         newpost.save()
+        return redirect(reverse('feed'))
 
 
     if request.method == 'GET':
@@ -281,11 +288,10 @@ def userpage(request,name):
             for post in postsMade:
                 final_posts.append(post)
 
-            myposts= Posts.objects.filter(user=request.user)
-            for post in myposts:
-                final_posts.append(post) 
 
             final_posts.sort(key=lambda x:x.PostedOn)
+            final_posts.reverse()
+
             for post in final_posts:
                 if PostLikes.objects.filter(post=post,user=request.user).first():
                     final_posts_with_likes.append((post,True))
@@ -310,13 +316,13 @@ def userpage(request,name):
         final_posts_with_likes = []
         for post in postsMade:
             final_posts.append(post)
-        final_posts.sort(key=lambda x:x.PostedOn)
+        final_posts.sort(key=lambda x:x.PostedOn, reverse=True)
         for post in final_posts:
             if PostLikes.objects.filter(post=post,user=request.user).first():
                 final_posts_with_likes.append((post,True))
             else:
                 final_posts_with_likes.append((post,False))
-        context['theirPosts'] = final_posts_with_likes 
+        context['theirPosts'] = final_posts_with_likes
 
         #ABOUT THEM
         context['theirInfo'] = accessUserDetails
@@ -398,6 +404,7 @@ def aboutPage(request,id):
     for post in postsMade:
         final_posts.append(post)
     final_posts.sort(key=lambda x:x.PostedOn)
+    final_posts.reverse()
     for post in final_posts:
         if PostLikes.objects.filter(post=post,user=request.user).first():
             final_posts_with_likes.append((post,True))
@@ -467,7 +474,10 @@ def pagesPage(request):
         newpage.PageImage = request.FILES['PageImage'] if 'PageImage' in request.FILES else None
 
         newpage.save()
-        PageFollowers(page = newpage, user = request.user).save()
+        pagefollower =  PageFollowers(page = newpage, user = request.user)
+        pagefollower.save()
+
+        return redirect(reverse('allPages'))
 
 
     return render(request, 'baseapp/allPages.html',context)

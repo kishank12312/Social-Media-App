@@ -62,6 +62,10 @@
                 <div class="card--title">{{ this_post.Title }}</div>
                 <div class="card--content">
                     {{ this_post.Body }}
+                    <br><br>
+                    {% if this_post.Image != None and this_post.Image != "" %}
+                        <img src="{{ this_post.Image.url }}" alt="" style="max-width: 100%;">
+                    {% endif %}
                 </div>
 
                 <div class="row">

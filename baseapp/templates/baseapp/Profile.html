@@ -139,6 +139,10 @@
                             <div class="card--title">{{ post.0.Title }}</div>
                             <div class="card--content">
                                 {{ post.0.Body }}
+                                {% if post.0.Image != None and post.0.Image != "" %}
+                                <br><br>
+                                    <img src="{{ post.0.Image.url }}" alt="" style="max-width: 100%;">
+                                {% endif %}
                             </div>
             
                             <div class="like--comment">

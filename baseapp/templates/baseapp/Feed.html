@@ -194,7 +194,7 @@
                             <p class="profile--name" ><a href="/user/{{ post.0.user.username }}"> {{ post.0.user.username }}</a></p>
                             {% if post.0.page != None %}
                                 <i class="material-icons">play_arrow</i>
-                                <p class="page--name">L Merchants</p>
+                                <p class="page--name">{{post.0.page.PageName}}</p>
                             {% endif %}
                         </div>
                         <div class="time">
@@ -208,6 +208,10 @@
                 <div class="card--title">{{ post.0.Title }}</div>
                 <div class="card--content">
                     {{ post.0.Body }}
+                    {% if post.0.Image != None and post.0.Image != "" %}
+                    <br><br>
+                        <img src="{{ post.0.Image.url }}" alt="" style="max-width: 100%;">
+                    {% endif %}
                 </div>
 
                 <div class="like--comment">
