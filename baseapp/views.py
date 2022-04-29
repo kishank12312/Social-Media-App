@@ -8,6 +8,7 @@ from .functions import *
 from django.db.models import Q
 from .forms import CreateUserForm
 from django.contrib import messages
+import time
 
 
 cursor = connection.cursor()
@@ -395,9 +396,6 @@ def accountSetup(request):
         messages.info(request, 'You need to login to be able to access this feature.')
         return redirect(reverse('login'))
     
-    if not UserDetails.objects.filter(user=request.user).first():
-        messages.info(request,'Please set up your account first.')
-        return redirect(reverse('accountSetup'))
 
     context = {}
     if request.method == "POST":
@@ -412,6 +410,8 @@ def accountSetup(request):
         details.ProfilePic = request.FILES['ProfilePic']
  
         details.save()
+
+        time.sleep(3)
  
         return redirect(reverse('feed'))
     return render(request,'baseapp/accountSetup.html',context)
